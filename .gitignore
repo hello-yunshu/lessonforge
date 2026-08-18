@@ -8,6 +8,9 @@
 /var/
 **/visual-semantics/data/
 
+# 项目任务/需求说明文档（含教材产业分析，私有不发布）
+/新版苏教版小学数学三年级上册教材数字化解析与例题练习识别系统.txt
+
 # 原始教材 / 教师用书 / 课程标准 PDF（版权资料）
 *.pdf
 
@@ -39,6 +42,8 @@ htmlcov/
 *.local
 
 # ---- 编辑器 / 操作系统 ----
+.trae/
+.traefik/
 .vscode/*
 !.vscode/extensions.json
 .idea

@@ -22,3 +22,18 @@ dist/
 build/
 var/mlops/*
 !var/mlops/.gitkeep
+
+# 运行期教材解析数据（含教材版权内容），不随源码发布
+var/structures/*
+!var/structures/.gitkeep
+var/textbook/*
+var/rill-shadow/*
+var/visual-semantic/*
+
+# 运行期领域数据包与解析结果
+var/domain-packs/*
+!var/domain-packs/.gitkeep
+var/domain-results/*
+!var/domain-results/.gitkeep
+var/domain-reviews/*
+!var/domain-reviews/.gitkeep
