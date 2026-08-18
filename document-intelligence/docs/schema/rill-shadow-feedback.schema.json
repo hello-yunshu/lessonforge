@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "FeedbackSeverity": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "title": "FeedbackSeverity",
+      "type": "string"
+    },
+    "ShadowAction": {
+      "enum": [
+        "ACCEPT",
+        "RETRY",
+        "REPROCESS_HIGH_RES",
+        "USE_SECONDARY_PARSER",
+        "USE_SPECIALIST_PARSER",
+        "USE_DOMAIN_ADAPTER",
+        "VLM_REVIEW",
+        "HUMAN_REVIEW",
+        "QUARANTINE"
+      ],
+      "title": "ShadowAction",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "feedback_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Feedback Id",
+      "type": "string"
+    },
+    "evaluation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evaluation Id",
+      "type": "string"
+    },
+    "decision_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "selected_arm": {
+      "minimum": 0,
+      "title": "Selected Arm",
+      "type": "integer"
+    },
+    "actual_action": {
+      "$ref": "#/$defs/ShadowAction"
+    },
+    "decision_correct": {
+      "title": "Decision Correct",
+      "type": "boolean"
+    },
+    "error_scope": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Error Scope",
+      "type": "string"
+    },
+    "error_type": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Error Type",
+      "type": "string"
+    },
+    "severity": {
+      "$ref": "#/$defs/FeedbackSeverity"
+    },
+    "human_edit_seconds": {
+      "maximum": 86400.0,
+      "minimum": 0.0,
+      "title": "Human Edit Seconds",
+      "type": "number"
+    },
+    "eligible_for_training": {
+      "title": "Eligible For Training",
+      "type": "boolean"
+    },
+    "reward": {
+      "maximum": 10.0,
+      "minimum": -100.0,
+      "title": "Reward",
+      "type": "number"
+    },
+    "runtime_feedback_accepted": {
+      "title": "Runtime Feedback Accepted",
+      "type": "boolean"
+    },
+    "runtime_error_code": {
+      "anyOf": [
+        {
+          "maxLength": 127,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Error Code"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "feedback_id",
+    "evaluation_id",
+    "decision_id",
+    "selected_arm",
+    "actual_action",
+    "decision_correct",
+    "error_scope",
+    "error_type",
+    "severity",
+    "human_edit_seconds",
+    "eligible_for_training",
+    "reward",
+    "runtime_feedback_accepted"
+  ],
+  "title": "ShadowFeedbackRecord",
+  "type": "object"
+}

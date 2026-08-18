@@ -1,0 +1,33 @@
+schema_version: "0.6"
+mode: qualification-gated-tier1-assist
+bounded_auto: false
+default_enabled: false
+allowed_actions:
+  - RETRY
+  - REPROCESS_HIGH_RES
+  - USE_SECONDARY_PARSER
+  - USE_SPECIALIST_PARSER
+  - HUMAN_REVIEW
+  - QUARANTINE
+required_qualification:
+  expert_feedback: true
+  production_like_evidence: true
+  no_p0_p1_false_accept: true
+  not_below_static_baseline: true
+  no_active_drift: true
+  fixed_runtime_model_handler_digests: true
+  runtime_inspect_artifact_attestation: true
+  human_activation: true
+forbidden_actions:
+  - replace_existing_result
+  - modify_standard_or_gold_data
+  - publish_model_or_rule
+  - execute_shell
+  - enable_bounded_auto
+  - accept_reference_runtime_as_production
+parser_circuit_breaker:
+  automatic: false
+  requires_verified_drift_alert: true
+  requires_operator: true
+  reversible: true
+  native_pdf_fallback_suspendable: false

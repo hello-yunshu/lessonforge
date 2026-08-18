@@ -1,0 +1,26 @@
+format_version: 1
+id: generic-document
+version: 0.2.0
+core_schema: '>=1.1,<2.0'
+engine: '>=0.4,<2.0'
+supported_languages: []
+capabilities:
+- object-classification
+- validation
+- review-export
+permissions:
+- object-classification
+- validation
+- review-export
+entrypoints:
+  rules: rules/main.yaml
+  validators: validators/main.yaml
+  review: review/labelu.yaml
+file_digests:
+  labels.yaml: e31bba3afbf658aa183a53f8a650b63c891f57b799637c1487125085cab1f9ad
+  ontology.yaml: 91ed100f75722355a3fdd38b1235bba9efb49f65d554eb4386305b9ba37edb04
+  review/labelu.yaml: 13617c4c6b6dcf76d523f15cd3a5147b99801cfa74943b9599bb58c91880ccd7
+  rules/main.yaml: 32b661d783d504578a0bbd0f744b6fdf5a53507994826a54efd7c1780b09f0d5
+  validators/main.yaml: 67ddda1f996c03beafbf86fb29bc002881299122701b19ba9461410db0acba75
+signing_key_id: null
+signature: null

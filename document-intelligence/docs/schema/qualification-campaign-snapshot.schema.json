@@ -1,0 +1,320 @@
+{
+  "$defs": {
+    "CampaignEvidenceKind": {
+      "enum": [
+        "dataset",
+        "parser",
+        "scale",
+        "supply-chain",
+        "license",
+        "pilot",
+        "report"
+      ],
+      "title": "CampaignEvidenceKind",
+      "type": "string"
+    },
+    "CampaignState": {
+      "enum": [
+        "planned",
+        "running",
+        "paused",
+        "completed",
+        "cancelled"
+      ],
+      "title": "CampaignState",
+      "type": "string"
+    },
+    "CampaignStepKind": {
+      "enum": [
+        "gold-dataset",
+        "challenge-dataset",
+        "parser-qualification",
+        "scale-soak",
+        "supply-chain",
+        "license-review",
+        "pilot",
+        "qualification-report"
+      ],
+      "title": "CampaignStepKind",
+      "type": "string"
+    },
+    "CampaignStepSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/CampaignStepKind"
+        },
+        "state": {
+          "$ref": "#/$defs/CampaignStepState"
+        },
+        "depends_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Depends On",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceLink"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "lease": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StepLease"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "checkpoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StepCheckpointRequest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "failure_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Note"
+        }
+      },
+      "required": [
+        "step_id",
+        "kind",
+        "state",
+        "depends_on"
+      ],
+      "title": "CampaignStepSnapshot",
+      "type": "object"
+    },
+    "CampaignStepState": {
+      "enum": [
+        "pending",
+        "leased",
+        "completed",
+        "failed"
+      ],
+      "title": "CampaignStepState",
+      "type": "string"
+    },
+    "EvidenceLink": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "evidence_kind": {
+          "$ref": "#/$defs/CampaignEvidenceKind"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "evidence_semantic_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Semantic Sha256",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "step_id",
+        "evidence_kind",
+        "evidence_id",
+        "evidence_semantic_sha256",
+        "passed"
+      ],
+      "title": "EvidenceLink",
+      "type": "object"
+    },
+    "StepCheckpointRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "worker_id_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Worker Id Hash",
+          "type": "string"
+        },
+        "lease_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Lease Id",
+          "type": "string"
+        },
+        "completed_units": {
+          "minimum": 0,
+          "title": "Completed Units",
+          "type": "integer"
+        },
+        "total_units": {
+          "minimum": 1,
+          "title": "Total Units",
+          "type": "integer"
+        },
+        "cursor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Cursor Sha256",
+          "type": "string"
+        },
+        "metrics": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "maxProperties": 64,
+          "title": "Metrics",
+          "type": "object"
+        }
+      },
+      "required": [
+        "worker_id_hash",
+        "lease_id",
+        "completed_units",
+        "total_units",
+        "cursor_sha256"
+      ],
+      "title": "StepCheckpointRequest",
+      "type": "object"
+    },
+    "StepLease": {
+      "additionalProperties": false,
+      "properties": {
+        "lease_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Lease Id",
+          "type": "string"
+        },
+        "worker_id_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Worker Id Hash",
+          "type": "string"
+        },
+        "expires_at": {
+          "format": "date-time",
+          "title": "Expires At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lease_id",
+        "worker_id_hash",
+        "expires_at"
+      ],
+      "title": "StepLease",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "campaign_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "state": {
+      "$ref": "#/$defs/CampaignState"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/CampaignStepSnapshot"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "event_count": {
+      "minimum": 0,
+      "title": "Event Count",
+      "type": "integer"
+    },
+    "last_event_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Event Sha256"
+    },
+    "production_report_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Production Report Id"
+    },
+    "production_qualified": {
+      "default": false,
+      "title": "Production Qualified",
+      "type": "boolean"
+    },
+    "automatic_release_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Release Authorized",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "manifest_sha256",
+    "state",
+    "steps",
+    "event_count"
+  ],
+  "title": "CampaignSnapshot",
+  "type": "object"
+}

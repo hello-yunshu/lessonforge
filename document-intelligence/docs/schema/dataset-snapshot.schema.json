@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "DatasetRole": {
+      "enum": [
+        "train",
+        "validation",
+        "gold",
+        "challenge"
+      ],
+      "title": "DatasetRole",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "role": {
+      "$ref": "#/$defs/DatasetRole"
+    },
+    "dataset_name": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Dataset Name",
+      "type": "string"
+    },
+    "dvc_repo_revision": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Dvc Repo Revision",
+      "type": "string"
+    },
+    "dvc_data_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Dvc Data Hash",
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "schema_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Schema Sha256",
+      "type": "string"
+    },
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "record_count": {
+      "minimum": 1,
+      "title": "Record Count",
+      "type": "integer"
+    },
+    "file_count": {
+      "minimum": 1,
+      "title": "File Count",
+      "type": "integer"
+    },
+    "parent_snapshot_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Snapshot Id"
+    },
+    "expert_approved": {
+      "default": false,
+      "title": "Expert Approved",
+      "type": "boolean"
+    },
+    "approver_id_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approver Id Hash"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "role",
+    "dataset_name",
+    "dvc_repo_revision",
+    "dvc_data_hash",
+    "manifest_sha256",
+    "schema_sha256",
+    "source_commit_sha",
+    "record_count",
+    "file_count"
+  ],
+  "title": "DatasetSnapshot",
+  "type": "object"
+}

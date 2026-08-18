@@ -1,0 +1,147 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "standard_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Standard Id",
+      "type": "string"
+    },
+    "fingerprint_version": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Fingerprint Version",
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "page_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Page Id",
+      "type": "string"
+    },
+    "page_index": {
+      "minimum": 0,
+      "title": "Page Index",
+      "type": "integer"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "page_image_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Page Image Sha256",
+      "type": "string"
+    },
+    "thumbnail_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Thumbnail Sha256",
+      "type": "string"
+    },
+    "feature_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Sha256",
+      "type": "string"
+    },
+    "perceptual_hash": {
+      "pattern": "^[0-9a-f]{16}$",
+      "title": "Perceptual Hash",
+      "type": "string"
+    },
+    "normalized_text": {
+      "title": "Normalized Text",
+      "type": "string"
+    },
+    "text_ngram_hashes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Text Ngram Hashes",
+      "type": "array"
+    },
+    "layout_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Layout Digest",
+      "type": "string"
+    },
+    "width": {
+      "exclusiveMinimum": 0,
+      "title": "Width",
+      "type": "integer"
+    },
+    "height": {
+      "exclusiveMinimum": 0,
+      "title": "Height",
+      "type": "integer"
+    },
+    "page_image_ref": {
+      "title": "Page Image Ref",
+      "type": "string"
+    },
+    "thumbnail_ref": {
+      "title": "Thumbnail Ref",
+      "type": "string"
+    },
+    "feature_ref": {
+      "title": "Feature Ref",
+      "type": "string"
+    },
+    "keypoint_count": {
+      "minimum": 0,
+      "title": "Keypoint Count",
+      "type": "integer"
+    },
+    "previous_page_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Previous Page Id"
+    },
+    "next_page_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Page Id"
+    }
+  },
+  "required": [
+    "standard_id",
+    "fingerprint_version",
+    "document_id",
+    "page_id",
+    "page_index",
+    "source_sha256",
+    "page_image_sha256",
+    "thumbnail_sha256",
+    "feature_sha256",
+    "perceptual_hash",
+    "normalized_text",
+    "layout_digest",
+    "width",
+    "height",
+    "page_image_ref",
+    "thumbnail_ref",
+    "feature_ref",
+    "keypoint_count"
+  ],
+  "title": "PageFingerprint",
+  "type": "object"
+}

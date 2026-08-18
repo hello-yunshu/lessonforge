@@ -1,0 +1,40 @@
+{
+  "phase": 5,
+  "passed": true,
+  "summary": {
+    "cases": 7,
+    "passed_cases": 7,
+    "production_actions_executed": 0
+  },
+  "cases": [
+    {
+      "name": "idempotent-observe-decide",
+      "passed": true
+    },
+    {
+      "name": "shadow-never-executes",
+      "passed": true
+    },
+    {
+      "name": "delayed-feedback-roundtrip",
+      "passed": true
+    },
+    {
+      "name": "snapshot-idempotent-and-verifiable",
+      "passed": true
+    },
+    {
+      "name": "inspect-explicitly-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "runtime-failure-safe-isolation",
+      "passed": true
+    },
+    {
+      "name": "reference-backend-distinct-identity",
+      "passed": true
+    }
+  ],
+  "scope": "Deterministic Rill Shadow lifecycle and failure-isolation regression only; not a production routing-quality or real-runtime accuracy claim."
+}

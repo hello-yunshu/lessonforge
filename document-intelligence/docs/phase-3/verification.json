@@ -1,0 +1,58 @@
+{
+  "phase": 3,
+  "passed": true,
+  "checks": [
+    {
+      "name": "structure-semantic-determinism",
+      "passed": true
+    },
+    {
+      "name": "structure-store-roundtrip-integrity",
+      "passed": true
+    },
+    {
+      "name": "reading-order-complete",
+      "passed": true
+    },
+    {
+      "name": "all-relations-have-evidence",
+      "passed": true
+    },
+    {
+      "name": "source-semantic-digest-bound",
+      "passed": true
+    },
+    {
+      "name": "phase3-benchmark-gate",
+      "passed": true
+    },
+    {
+      "name": "synthetic-relation-false-positive-gate",
+      "passed": true
+    },
+    {
+      "name": "structure-schema-exported",
+      "passed": true
+    },
+    {
+      "name": "rill-structure-signals-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "release-structure-store-clean",
+      "passed": true
+    },
+    {
+      "name": "runtime-structure-namespace-present",
+      "passed": true
+    },
+    {
+      "name": "cli-test-has-no-release-absolute-config-path",
+      "passed": true
+    },
+    {
+      "name": "phase3-errors-in-taxonomy",
+      "passed": true
+    }
+  ]
+}

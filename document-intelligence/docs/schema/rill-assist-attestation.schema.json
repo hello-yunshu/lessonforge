@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "AssistEvidenceOrigin": {
+      "enum": [
+        "production",
+        "gold",
+        "challenge",
+        "synthetic",
+        "legacy_unclassified"
+      ],
+      "title": "AssistEvidenceOrigin",
+      "type": "string"
+    },
+    "AssistReviewerRole": {
+      "enum": [
+        "reviewer",
+        "domain_expert"
+      ],
+      "title": "AssistReviewerRole",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "attestation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Attestation Id",
+      "type": "string"
+    },
+    "feedback_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Feedback Id",
+      "type": "string"
+    },
+    "reviewer_role": {
+      "$ref": "#/$defs/AssistReviewerRole"
+    },
+    "evidence_origin": {
+      "$ref": "#/$defs/AssistEvidenceOrigin"
+    },
+    "reviewer_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Reviewer Id Hash",
+      "type": "string"
+    },
+    "dataset_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Id"
+    },
+    "approved_for_qualification": {
+      "default": false,
+      "title": "Approved For Qualification",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "attestation_id",
+    "feedback_id",
+    "reviewer_role",
+    "evidence_origin",
+    "reviewer_id_hash"
+  ],
+  "title": "AssistEvidenceAttestation",
+  "type": "object"
+}

@@ -1,0 +1,76 @@
+version: 1
+object_rules:
+- id: contract-party
+  domain_type: party
+  base_types:
+  - heading
+  - text
+  text_starts_with_any:
+  - 甲方
+  - 乙方
+  - Party A
+  - Party B
+  require_text: true
+  confidence: 0.92
+- id: contract-clause
+  domain_type: clause
+  base_types:
+  - heading
+  - text
+  - list
+  text_starts_with_any:
+  - 第一条
+  - 第二条
+  - 第三条
+  - Article 1
+  - Section 1
+  require_text: true
+  confidence: 0.88
+- id: contract-money
+  domain_type: monetary_term
+  base_types:
+  - text
+  - table
+  text_contains_any:
+  - 人民币
+  - 元
+  - USD
+  - $
+  - payment
+  require_text: true
+  confidence: 0.78
+- id: contract-date
+  domain_type: date_term
+  base_types:
+  - text
+  text_contains_any:
+  - 生效日期
+  - 签订日期
+  - 年
+  - Effective Date
+  require_text: true
+  confidence: 0.7
+- id: contract-signature
+  domain_type: signature_block
+  base_types:
+  - text
+  - input_area
+  text_contains_any:
+  - 签字
+  - 盖章
+  - Signature
+  - Seal
+  require_text: true
+  confidence: 0.9
+relation_rules:
+- id: contract-party-clause
+  domain_type: party_bound_by
+  source_domain_types:
+  - party
+  target_domain_types:
+  - clause
+  base_relation_types:
+  - associated_with
+  - precedes
+  max_reading_distance: 12
+  confidence: 0.72

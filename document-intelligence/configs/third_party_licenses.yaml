@@ -1,0 +1,109 @@
+version: 4
+status: release-candidate-core-cleared-optional-components-review-required
+runtime_components:
+- name: FastAPI
+  installed_version: 0.128.2
+  license: MIT
+- name: HTTPX
+  installed_version: 0.28.1
+  license: BSD-3-Clause
+- name: NumPy
+  installed_version: 2.3.5
+  license: BSD-3-Clause
+  notes: Binary wheels may bundle compatibly licensed numerical runtime libraries; preserve notices.
+- name: opencv-python-headless
+  installed_version: 4.13.0.92
+  license: Apache-2.0
+- name: packaging
+  installed_version: '25.0'
+  license: Apache-2.0 OR BSD-2-Clause
+- name: cryptography
+  installed_version: 46.0.4
+  license: Apache-2.0 OR BSD-3-Clause
+  notes: Used for optional Ed25519 Domain Pack signature verification.
+- name: Pillow
+  installed_version: 12.2.0
+  license: MIT-CMU
+- name: Pydantic
+  installed_version: 2.13.4
+  license: MIT
+- name: pydantic-settings
+  installed_version: 2.14.1
+  license: MIT
+- name: python-multipart
+  installed_version: 0.0.29
+  license: Apache-2.0
+- name: PyYAML
+  installed_version: 6.0.3
+  license: MIT
+- name: Uvicorn
+  installed_version: 0.48.0
+  license: BSD-3-Clause
+- name: pypdf
+  installed_version: 5.9.0
+  license: BSD-3-Clause
+  notes: Base native-PDF text/image extraction backend; does not render pages.
+  blocker: false
+optional_components:
+- name: PyMuPDF
+  role: optional-pdf-renderer
+  pinned_version: 1.26.7
+  license: AGPL-3.0-or-later OR Artifex commercial license
+  production_review: mandatory
+  notes: Not installed by the base distribution. Production profile rejects this renderer unless DI_PYMUPDF_LICENSE_RESOLVED=true.
+  blocker: true
+- name: PaddleOCR
+  role: optional-primary-parser
+  pinned_version: 3.7.0
+  license: Apache-2.0
+  source: https://github.com/PaddlePaddle/PaddleOCR
+  production_review: required
+- name: OpenOCR/OpenDoc
+  role: optional-secondary-parser
+  pinned_version: 0.1.5
+  license: Apache-2.0
+  source: https://github.com/Topdu/OpenOCR
+  production_review: required
+- name: MinerU
+  role: benchmark-only-parser
+  pinned_version: '3.3'
+  license: MinerU-Open-Source-License
+  source: https://github.com/opendatalab/MinerU
+  production_review: mandatory
+- name: LabelU
+  role: optional-review-ui
+  pinned_version: 1.4.1
+  license: Apache-2.0
+  source: https://github.com/opendatalab/labelU
+  production_review: required
+- name: RillML / rill-runtime
+  role: optional-shadow-and-assist-runtime
+  pinned_versions: stable 1.1.0; preview runtime IPC v3 0.15.0
+  license: MIT
+  source: https://github.com/hello-yunshu/rill-ml
+  production_review: mandatory
+  notes: Use only signed and digest-pinned runtime, model, and handler artifacts. Phase 6 permits only qualification-gated Tier-1 Assist; boundedAuto stays disabled and IPC v3 remains Preview.
+- name: DVC
+  role: optional-dataset-lineage-system
+  pinned_version: external deployment managed
+  license: Apache-2.0
+  source: https://github.com/iterative/dvc
+  production_review: required
+  notes: Phase 7 records immutable DVC revision and data hashes; DVC is not a runtime dependency.
+- name: MLflow
+  role: optional-experiment-and-model-registry
+  pinned_version: external deployment managed
+  license: Apache-2.0
+  source: https://github.com/mlflow/mlflow
+  production_review: required
+  notes: Phase 7 stores bounded run attestations and artifact digests; no tracking URI secrets are persisted.
+production_qualification:
+  phase: 12
+  status: blocked-until-evidence-recorded
+  required_evidence:
+  - fixed-container-and-model-digests
+  - formal-ruff-and-mypy-ci
+  - optional-renderer-license-if-enabled
+  - project-license-and-notice
+  - sbom-and-vulnerability-scan
+  notes: The release candidate removes PyMuPDF from base dependencies. Optional renderers and all production quality claims remain qualification-gated.

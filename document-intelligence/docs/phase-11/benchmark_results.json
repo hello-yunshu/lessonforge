@@ -1,0 +1,50 @@
+{
+  "phase": 11,
+  "passed": true,
+  "checks": [
+    {
+      "name": "empty-campaign-store-has-no-qualification",
+      "passed": true
+    },
+    {
+      "name": "external-data-authorization-required",
+      "passed": true
+    },
+    {
+      "name": "manifest-and-start-are-immutable",
+      "passed": true
+    },
+    {
+      "name": "dependency-order-is-enforced",
+      "passed": true
+    },
+    {
+      "name": "checkpoints-and-evidence-survive-replay",
+      "passed": true
+    },
+    {
+      "name": "qualification-report-is-linked",
+      "passed": true
+    },
+    {
+      "name": "qualification-never-authorizes-release",
+      "passed": true
+    },
+    {
+      "name": "sealed-bundle-has-no-raw-documents",
+      "passed": true
+    },
+    {
+      "name": "bundle-restore-is-idempotent",
+      "passed": true
+    },
+    {
+      "name": "event-chain-is-contiguous",
+      "passed": true
+    }
+  ],
+  "production_evidence_origin": "deterministic-test-fixtures-only",
+  "production_qualification_claimed": false,
+  "automatic_release_authorized": false,
+  "bounded_auto": false
+}

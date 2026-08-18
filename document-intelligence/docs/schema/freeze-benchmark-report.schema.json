@@ -1,0 +1,103 @@
+{
+  "$defs": {
+    "FreezeBenchmarkCase": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "details": {
+          "additionalProperties": true,
+          "title": "Details",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "passed"
+      ],
+      "title": "FreezeBenchmarkCase",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "phase": {
+      "const": 9,
+      "default": 9,
+      "title": "Phase",
+      "type": "integer"
+    },
+    "project_version": {
+      "title": "Project Version",
+      "type": "string"
+    },
+    "manifest_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    },
+    "contract_count": {
+      "minimum": 10,
+      "title": "Contract Count",
+      "type": "integer"
+    },
+    "audit_record_count": {
+      "minimum": 1,
+      "title": "Audit Record Count",
+      "type": "integer"
+    },
+    "api_operation_count": {
+      "minimum": 1,
+      "title": "Api Operation Count",
+      "type": "integer"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/FreezeBenchmarkCase"
+      },
+      "minItems": 1,
+      "title": "Cases",
+      "type": "array"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "production_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Production Qualified",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "project_version",
+    "manifest_digest",
+    "contract_count",
+    "audit_record_count",
+    "api_operation_count",
+    "cases",
+    "passed"
+  ],
+  "title": "FreezeBenchmarkReport",
+  "type": "object"
+}

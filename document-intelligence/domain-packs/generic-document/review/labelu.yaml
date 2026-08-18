@@ -1,0 +1,4 @@
+version: 1
+adapter: labelu-json-v1
+object_labels: [section, paragraph, illustration, tabular_content]
+relation_labels: []

@@ -1,0 +1,34 @@
+format_version: 1
+id: education-content
+version: 0.2.0
+core_schema: '>=1.1,<2.0'
+engine: '>=0.4,<2.0'
+supported_languages:
+- zh-CN
+- en
+capabilities:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+permissions:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+entrypoints:
+  rules: rules/main.yaml
+  validators: validators/main.yaml
+  review: review/labelu.yaml
+  family: family.yaml
+file_digests:
+  family.yaml: cc3d7fbe1ba39a4fbb0156fa0f859c225e7edd905a54c21c70d02b0ab8ebc9f7
+  labels.yaml: 0a6d70e4d0f87b988261b353c3d9f3c6b26b7e78b91578702e0acd99b16c2866
+  ontology.yaml: 3903dbdf0c33ac8cfd12f99323e7c7f58cfd502ff682071ab4277fab8629af21
+  review/labelu.yaml: acc2ccd3c38e847176c34fd9e2359194ae7ff3e0d47ca79ded605acfdde4c6ad
+  rules/main.yaml: 658ac1e041ecc3989775807402173224b86859fbf654da85d2380a90728e7eb5
+  validators/main.yaml: a372e9f090227c5d558c210c7dfe2dd4e94ff1837bab6dddd01b3c511942e1df
+signing_key_id: null
+signature: null

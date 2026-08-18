@@ -1,0 +1,79 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "format_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "bundle_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "campaign_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "campaign_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Campaign Manifest Sha256",
+      "type": "string"
+    },
+    "event_chain_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Event Chain Sha256"
+    },
+    "files": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "maxProperties": 512,
+      "minProperties": 2,
+      "title": "Files",
+      "type": "object"
+    },
+    "contains_raw_documents": {
+      "const": false,
+      "default": false,
+      "title": "Contains Raw Documents",
+      "type": "boolean"
+    },
+    "automatic_release_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Release Authorized",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bundle_id",
+    "campaign_id",
+    "campaign_manifest_sha256",
+    "files"
+  ],
+  "title": "CampaignBundleManifest",
+  "type": "object"
+}

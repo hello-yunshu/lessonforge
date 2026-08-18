@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "DomainRegressionCaseResult": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "expected_pack_id": {
+          "title": "Expected Pack Id",
+          "type": "string"
+        },
+        "detected_pack_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detected Pack Id"
+        },
+        "detected_family_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detected Family Id"
+        },
+        "annotation_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Annotation Types",
+          "type": "array"
+        },
+        "error_findings": {
+          "minimum": 0,
+          "title": "Error Findings",
+          "type": "integer"
+        },
+        "family_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Family Score",
+          "type": "number"
+        },
+        "source_unchanged": {
+          "title": "Source Unchanged",
+          "type": "boolean"
+        },
+        "evidence_complete": {
+          "title": "Evidence Complete",
+          "type": "boolean"
+        },
+        "isolated_results": {
+          "title": "Isolated Results",
+          "type": "boolean"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "case_id",
+        "passed",
+        "expected_pack_id",
+        "error_findings",
+        "family_score",
+        "source_unchanged",
+        "evidence_complete",
+        "isolated_results"
+      ],
+      "title": "DomainRegressionCaseResult",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.8",
+      "default": "0.8",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "suite_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Suite Digest",
+      "type": "string"
+    },
+    "engine_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Engine Digest",
+      "type": "string"
+    },
+    "detector_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Detector Digest",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "total_cases": {
+      "minimum": 0,
+      "title": "Total Cases",
+      "type": "integer"
+    },
+    "passed_cases": {
+      "minimum": 0,
+      "title": "Passed Cases",
+      "type": "integer"
+    },
+    "family_accuracy": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Family Accuracy",
+      "type": "number"
+    },
+    "core_schema_unchanged": {
+      "title": "Core Schema Unchanged",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/DomainRegressionCaseResult"
+      },
+      "title": "Cases",
+      "type": "array"
+    }
+  },
+  "required": [
+    "suite_digest",
+    "engine_digest",
+    "detector_digest",
+    "passed",
+    "total_cases",
+    "passed_cases",
+    "family_accuracy",
+    "core_schema_unchanged",
+    "cases"
+  ],
+  "title": "CrossDomainRegressionReport",
+  "type": "object"
+}

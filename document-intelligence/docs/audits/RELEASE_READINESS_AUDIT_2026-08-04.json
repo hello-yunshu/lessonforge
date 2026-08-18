@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "audit_id": "release-readiness-2026-08-04-phase11-1.0.2",
+  "generated_at": "2026-08-04T10:01:24.181655+00:00",
+  "baseline": {
+    "project": "document-intelligence",
+    "version": "1.0.2",
+    "zip": "document-intelligence_phase11_1.0.2.zip",
+    "sha256": "ad6bb3ba73af01620d61c913fbd7c6d2be42ad2150b646bb6fec42deb84c35e2",
+    "zip_file_count": 490,
+    "source_manifest_entries": 489
+  },
+  "verification": {
+    "zip_integrity": true,
+    "source_manifest_verified": true,
+    "tests_collected": 232,
+    "test_files_executed_individually": 55,
+    "test_files_passed": 55,
+    "test_file_timeout_seconds": 45,
+    "sum_process_seconds": 262,
+    "max_test_file_seconds": 11,
+    "combined_coverage_percent": 80.20819251047722,
+    "statement_coverage_percent": 84.8175687359502,
+    "branch_coverage_percent": 63.69268897149938,
+    "wheel_reproducible_bytes": false,
+    "wheel_extracted_content_identical": true,
+    "wheel_hash_a": "e0a6cf820fafdaa5093d6bd409a89cbb4603901d26e81e0965347ff6e33eb3c9",
+    "wheel_hash_b": "30c09b71e33c952985b6ac5b13923028ef20cad7fab27c96c2ba48ddb4370f8f"
+  },
+  "decision": {
+    "public_production_stable": "NO_GO",
+    "public_sensitive_document_service": "NO_GO",
+    "restricted_single_node_engineering_preview": "CONDITIONAL_GO",
+    "next_target": "1.0.3-rc.1",
+    "next_phase": "Phase 12 - Release Candidate Hardening",
+    "stable_release_requires_real_qualification": true
+  },
+  "severity_counts": {
+    "P0": 7,
+    "P1": 9,
+    "P2": 1
+  },
+  "findings": [
+    {
+      "id": "P0-01",
+      "severity": "P0",
+      "title": "核心解析、结果读取与领域执行接口缺少统一认证和限流",
+      "evidence": [
+        "src/document_intelligence/api/main.py:437-487 的 /v1/parse、/v1/runs/{run_id}、/v1/structure/recover、/v1/structures/{structure_id} 未要求令牌。",
+        "src/document_intelligence/api/main.py:520-547 的 /v1/match 默认无需令牌。",
+        "src/document_intelligence/api/main.py:654-682 的 /v1/domain/apply 与 /v1/domain-results/{id} 未要求令牌。",
+        "deployments/compose/docker-compose.yml:6-7 将 8080 映射到宿主；Docker 内 Uvicorn 监听 0.0.0.0。",
+        "未发现全局速率限制、租户隔离或反向代理强制认证。"
+      ],
+      "impact": "网络暴露后可被未授权上传最大50 MiB文档、触发CPU/内存密集解析、枚举或读取解析结果，形成数据泄漏和拒绝服务风险。",
+      "required_fix": "引入部署配置档。生产档必须在启动时校验全局认证、请求大小、并发、速率限制和反向代理信任；核心读写接口统一鉴权，文档与结果绑定租户/主体；OpenAPI文档生产默认关闭。",
+      "acceptance": "未认证请求全部返回401/403；跨租户ID不可读取；上传、解析和查询均有并发/速率门禁；安全测试覆盖绕过、重放和ID枚举。"
+    },
+    {
+      "id": "P0-02",
+      "severity": "P0",
+      "title": "发行包缺少项目 LICENSE/NOTICE，Python包元数据也未声明许可证",
+      "evidence": [
+        "项目根目录无 LICENSE、NOTICE。",
+        "pyproject.toml [project] 无 license 字段。",
+        "构建出的 wheel METADATA 仅有 Name/Version，未出现 License、License-Expression、Classifier 或 Project-URL。"
+      ],
+      "impact": "外部用户无法确定项目本身的复制、修改和分发权利；依赖通知也无法随发行包传递。",
+      "required_fix": "明确项目发行策略，加入项目许可证、第三方NOTICE、版权信息、依赖许可证生成流程，并同步wheel元数据。",
+      "acceptance": "源码ZIP、wheel、容器镜像均包含相同LICENSE/NOTICE；许可证扫描无未知或冲突项；法务/维护者签署发行结论。"
+    },
+    {
+      "id": "P0-03",
+      "severity": "P0",
+      "title": "PyMuPDF生产发行许可证仍未解决",
+      "evidence": [
+        "configs/third_party_licenses.yaml:33-38 将 PyMuPDF 1.26.7 标记为 AGPL-3.0-or-later 或商业许可，blocker=true。",
+        "docs/phase-11/DEPENDENCY_LOCK.md 明确非兼容产品在法务审查/商业许可前不得生产发行。"
+      ],
+      "impact": "在闭源或不兼容AGPL的发行方式下，可能产生重大许可证合规风险。",
+      "required_fix": "三选一：取得Artifex商业许可；按AGPL兼容方式完整发行；替换Native PDF渲染器并完成回归。",
+      "acceptance": "存在可审计的许可证证明或替换提交；SBOM/NOTICE与实际二进制一致；生产资格报告不再出现该阻断码。"
+    },
+    {
+      "id": "P0-04",
+      "severity": "P0",
+      "title": "尚无真实多领域生产资格证据",
+      "evidence": [
+        "docs/phase-10/LOCAL_QUALIFICATION_STATUS.json 标记 production_qualified=false。",
+        "缺失真实黄金/挑战数据、固定外部解析器产物、168小时Soak、正式Ruff/Mypy、PyMuPDF解决和真实试运行证据。",
+        "Phase 8跨领域结果为确定性合成回归，不是生产准确率。"
+      ],
+      "impact": "无法证明OCR、结构、关系、文档族识别和人工成本指标在真实数据、长期运行和故障条件下满足目标。",
+      "required_fix": "使用Phase 10/11框架执行真实资格活动；数据来源、专家审核、错误分级、固定产物摘要和运行环境必须可追溯。",
+      "acceptance": "真实黄金集/挑战集、外部解析器资格、168小时Soak、恢复演练、试运行全部形成不可变证据，综合报告 qualified=true。"
+    },
+    {
+      "id": "P0-05",
+      "severity": "P0",
+      "title": "依赖、容器与构建未达到可复现发行要求",
+      "evidence": [
+        "pyproject.toml 使用版本范围；无带哈希的生产锁文件。",
+        "build-system 使用 setuptools>=75，构建后端无上限/摘要。",
+        "Dockerfile 使用 python:3.11-slim 可变标签，并直接 pip install .。",
+        "两次从同一源码构建wheel，SHA-256分别为 e0a6cf... 和 30c09b...；解压内容相同但容器字节不同。"
+      ],
+      "impact": "无法证明发布资产可从同一提交重复生成；依赖漂移会改变行为、漏洞面和许可证集合。",
+      "required_fix": "生成带哈希锁文件；固定构建工具、Python基础镜像摘要和系统包；使用SOURCE_DATE_EPOCH/规范ZIP时间；双构建逐字节比较。",
+      "acceptance": "干净环境两次构建的wheel、源码ZIP和容器镜像摘要一致；依赖锁与SBOM一致；构建不访问未声明依赖。"
+    },
+    {
+      "id": "P0-06",
+      "severity": "P0",
+      "title": "正式CI与发布入口落后于Phase 11，且缺少签名供应链",
+      "evidence": [
+        "Makefile report/package 只运行到Phase 10，package指向 scripts/package_phase10_release.sh。",
+        ".github/workflows/ci.yml 只执行 run/verify_phase1..phase10，遗漏Phase 11。",
+        "无正式release job、SBOM、漏洞扫描、容器扫描、SLSA/provenance、资产签名和发布回滚演练。",
+        "GitHub Actions使用可变major标签而非提交SHA。"
+      ],
+      "impact": "本地审计通过不能保证GitHub发布资产包含最新阶段能力；供应链篡改与错误资产发布无法被独立验证。",
+      "required_fix": "建立唯一release脚本/工作流，自动发现或显式运行全部阶段；固定Actions提交SHA；生成SBOM、扫描、签名、provenance和不可变Release。",
+      "acceptance": "同一提交CI全部绿；Phase 11/下一阶段门禁真实执行；发布资产、镜像、SBOM和provenance均有可验证签名。"
+    },
+    {
+      "id": "P0-07",
+      "severity": "P0",
+      "title": "产品能力声明与真实解析器资格仍需严格收窄",
+      "evidence": [
+        "Native PDF文本路线可运行；PaddleOCR、OpenDoc、MinerU仍为可选/默认禁用且未完成真实固定产物资格。",
+        "扫描件在无外部OCR时只能明确降级，不能视为生产OCR支持。",
+        "DVC/MLflow当前为证明和血缘接口，不代表已部署真实服务。"
+      ],
+      "impact": "若发布说明宣称“多领域高精度文档解析平台”，用户可能误解扫描OCR、复杂结构和持续学习已达到生产质量。",
+      "required_fix": "发布矩阵逐项标注 stable/preview/disabled/qualified；未资格能力默认禁用且UI/API明确返回资格状态。",
+      "acceptance": "发布说明与运行时health/capabilities一致；任何未资格解析器不能被生产档启用；扫描文档支持声明与实测一致。"
+    },
+    {
+      "id": "P1-01",
+      "severity": "P1",
+      "title": "缺少生产级可观测性、就绪探针和告警体系",
+      "evidence": [
+        "源码中未发现结构化logging、Prometheus/OpenTelemetry或/metrics。",
+        "/healthz只返回静态配置和简单状态，没有区分liveness/readiness，也不验证存储、解析器和Runtime依赖。"
+      ],
+      "impact": "无法定位请求、监测延迟/错误/队列/资源、判断实例是否可接流量或建立SLO。",
+      "required_fix": "加入结构化日志、request/trace/document/run关联ID、指标、liveness/readiness、依赖健康、审计主体和告警建议。",
+      "acceptance": "在故障注入下readiness正确下线；日志无敏感正文；核心延迟、错误率、队列、存储和Rill状态可监控。"
+    },
+    {
+      "id": "P1-02",
+      "severity": "P1",
+      "title": "数据治理不足：无完整保留、删除、加密和访问审计",
+      "evidence": [
+        "原文档与结果按内容寻址长期保存，但无统一TTL、删除/匿名化和法律保留策略。",
+        "未提供租户级加密密钥、静态加密集成或读取审计。",
+        "各管理域使用共享静态摘要令牌，缺少角色、轮换和主体身份。"
+      ],
+      "impact": "处理合同、试卷、教育资料等敏感文档时难以满足最小化、删除请求和访问追责。",
+      "required_fix": "引入主体/租户模型、RBAC、令牌轮换、保留策略、删除墓碑、备份同步删除和KMS接口。",
+      "acceptance": "跨租户隔离测试通过；删除/过期可审计；备份恢复不复活已删除数据；敏感字段不进入普通日志。"
+    },
+    {
+      "id": "P1-03",
+      "severity": "P1",
+      "title": "当前存储与并发模型应明确限定为单节点",
+      "evidence": [
+        "主要状态使用本地文件系统、O_EXCL锁和原子重命名。",
+        "Compose只部署一个API服务；无分布式队列、数据库事务或对象存储一致性层。",
+        "Phase 11 Bundle不是完整工作区备份/迁移工具。"
+      ],
+      "impact": "多副本部署、共享存储、故障转移和大规模并发下的语义未经证明。",
+      "required_fix": "下一发布明确“单节点自托管”；加入完整工作区备份/恢复、迁移和灾难恢复演练。多节点能力另立阶段。",
+      "acceptance": "发布文档明确拓扑；单节点恢复RPO/RTO有实测；不支持的多副本配置启动即拒绝或明显告警。"
+    },
+    {
+      "id": "P1-04",
+      "severity": "P1",
+      "title": "覆盖率门禁过于依赖综合百分比，关键分支覆盖不足",
+      "evidence": [
+        "docs/phase-11/coverage.json 综合覆盖80.208%，但纯分支覆盖仅63.693%。",
+        "cli.py 62.67%、structure/store.py 64.14%、production/service.py 66.25%、api/main.py 72.09%、matching/library.py 72.5%。",
+        "当前fail_under=80计算综合覆盖，无法阻止关键错误分支缺测。"
+      ],
+      "impact": "异常、并发、损坏、权限和回滚分支仍可能在发布后首次触发。",
+      "required_fix": "为安全关键模块设分支覆盖阈值；增加并发、短写、损坏、权限绕过、超时和恢复测试。",
+      "acceptance": "总体分支覆盖达到约75%及以上，安全关键模块分支覆盖至少80%，任何豁免有书面风险接受。"
+    },
+    {
+      "id": "P1-05",
+      "severity": "P1",
+      "title": "测试超时和总时长没有正式治理",
+      "evidence": [
+        "单进程完整pytest未在当前审计执行窗口内完成。",
+        "重新逐文件执行55个测试文件均通过，无单文件超过45秒；累计进程耗时约262秒，最慢文件11秒。",
+        "项目未配置pytest-timeout、慢测标记、持续时长预算或duration基线。"
+      ],
+      "impact": "CI可能因锁等待、资源泄漏或慢回归无限拖延；无法区分工具总时限与真实挂死。",
+      "required_fix": "加入单测/集成测试超时、--durations、慢测分类、并行策略和总时间预算。",
+      "acceptance": "任一测试超时会明确失败；冷启动CI在预算内完成；连续多次运行无时间显著漂移。"
+    },
+    {
+      "id": "P1-06",
+      "severity": "P1",
+      "title": "生产代码使用assert承载运行时不变量",
+      "evidence": [
+        "rill/assist.py、family/detector.py、parsers/http_gateway.py、mlops/service.py存在生产assert。"
+      ],
+      "impact": "python -O会删除assert，可能使原本的失败关闭变成None访问、错误路径或无验证执行。",
+      "required_fix": "全部替换为显式校验和稳定错误码，并补python -O测试。",
+      "acceptance": "src中无运行时assert；优化模式下完整安全门禁通过。"
+    },
+    {
+      "id": "P1-07",
+      "severity": "P1",
+      "title": "容器构建与运行硬化不完整",
+      "evidence": [
+        "无.dockerignore，构建上下文可能包含.env、运行数据、dist和本地敏感文件。",
+        "Dockerfile无HEALTHCHECK，Compose无CPU/内存/PID限制、init和网络边界。",
+        "Compose默认将8080公开映射。",
+        "已有优点：非root、read_only、tmpfs、no-new-privileges。"
+      ],
+      "impact": "远程构建器可能收到不必要的敏感上下文；资源耗尽和僵尸进程风险未约束。",
+      "required_fix": "添加.dockerignore、digest pin、健康检查、资源限制、init、默认loopback绑定或反向代理网络。",
+      "acceptance": "构建上下文清单可审计；容器扫描通过；资源超限可控；生产Compose不直接公开未认证API。"
+    },
+    {
+      "id": "P1-08",
+      "severity": "P1",
+      "title": "发行元数据和维护治理文件不完整",
+      "evidence": [
+        "缺少SECURITY.md、CHANGELOG、支持矩阵、漏洞披露和维护周期。",
+        "pyproject缺少project URLs、分类器和许可证元数据。",
+        ".gitignore只覆盖部分早期var命名空间。"
+      ],
+      "impact": "用户无法判断安全报告渠道、兼容环境、升级影响和维护承诺；运行态文件可能误提交。",
+      "required_fix": "补齐安全政策、变更日志、兼容矩阵、发布说明模板和完整运行态忽略规则。",
+      "acceptance": "发行资产包含所有治理文档；版本升级可追溯；干净工作区测试不会产生未跟踪运行数据。"
+    },
+    {
+      "id": "P1-09",
+      "severity": "P1",
+      "title": "正式Ruff/Mypy/SBOM/漏洞扫描证据缺失",
+      "evidence": [
+        "当前审计环境未安装Ruff、Mypy、CycloneDX，项目文档也明确未将替代检查冒充正式证据。",
+        "static_sanity.py只覆盖语法、行长、通配符导入、eval/exec等有限规则。"
+      ],
+      "impact": "严格类型、依赖漏洞、许可证和供应链完整性未由正式工具验证。",
+      "required_fix": "在受控CI镜像中固定工具版本和摘要，生成并保留原始输出、SBOM、漏洞例外审批。",
+      "acceptance": "Ruff、Mypy strict、SBOM、pip/OS/container漏洞扫描全部真实执行；高危漏洞为零或有到期例外。"
+    },
+    {
+      "id": "P2-01",
+      "severity": "P2",
+      "title": "历史阶段脚本和状态快照需要归档与唯一入口",
+      "evidence": [
+        "scripts目录保留Phase 2—11多个独立package脚本，Makefile仍引用旧脚本。",
+        "Phase 10 LOCAL_QUALIFICATION_STATUS仍显示1.0.1与216项测试，容易被误读为当前状态。"
+      ],
+      "impact": "维护者可能调用错误入口或引用过期指标。",
+      "required_fix": "保留历史只读归档，新增唯一release入口和current状态文件；历史快照显著标记版本与生成时间。",
+      "acceptance": "默认命令只指向当前阶段；过期状态不会被health、文档首页或发行脚本当作当前结论。"
+    }
+  ]
+}

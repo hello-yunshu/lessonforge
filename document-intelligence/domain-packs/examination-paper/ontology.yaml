@@ -1,0 +1,40 @@
+version: 1
+object_types:
+  question:
+    base_types:
+    - heading
+    - text
+    - callout
+    description: Question stem or numbered question.
+  option:
+    base_types:
+    - text
+    - list
+    description: Selectable answer option.
+  score_marker:
+    base_types:
+    - text
+    - callout
+    description: Score or point marker.
+  answer_area:
+    base_types:
+    - input_area
+    description: Area reserved for an answer.
+  candidate_identity:
+    base_types:
+    - text
+    - input_area
+    description: Candidate name or identifier field.
+relation_types:
+  question_has_option:
+    base_type: contains
+    source_types:
+    - question
+    target_types:
+    - option
+  question_has_answer_area:
+    base_type: associated_with
+    source_types:
+    - question
+    target_types:
+    - answer_area

@@ -1,0 +1,45 @@
+{
+  "phase": 6,
+  "passed": true,
+  "summary": {
+    "cases": 8,
+    "passed_cases": 8,
+    "bounded_auto_enabled": false,
+    "production_assist_activated": false
+  },
+  "cases": [
+    {
+      "name": "reference-runtime-never-qualifies",
+      "passed": true
+    },
+    {
+      "name": "artifact-digests-are-mandatory",
+      "passed": true
+    },
+    {
+      "name": "qualified-additive-review-is-idempotent",
+      "passed": true
+    },
+    {
+      "name": "rate-limit-block-is-audited",
+      "passed": true
+    },
+    {
+      "name": "secondary-parser-produces-isolated-candidate",
+      "passed": true
+    },
+    {
+      "name": "parser-circuit-breaker-is-drift-bound-and-reversible",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-remains-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "assist-does-not-replace-existing-results",
+      "passed": true
+    }
+  ],
+  "scope": "Deterministic qualification, additive Tier-1 execution, rate-limit and circuit-breaker regression only. Synthetic fixtures cannot qualify a real production deployment and no production Assist activation is claimed."
+}

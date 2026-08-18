@@ -1,0 +1,10 @@
+version: 1
+required_types:
+- code: PAPER_NO_ABSTRACT
+  domain_types:
+  - abstract
+  min_count: 1
+  severity: warning
+  message: No abstract was identified; verify whether the document is an academic
+    paper.
+relation_endpoints: []

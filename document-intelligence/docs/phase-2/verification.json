@@ -1,0 +1,62 @@
+{
+  "phase": 2,
+  "passed": true,
+  "checks": [
+    {
+      "name": "request-context-prevents-run-id-collision",
+      "passed": true
+    },
+    {
+      "name": "unsafe-identifiers-rejected",
+      "passed": true
+    },
+    {
+      "name": "source-retained-by-content-address",
+      "passed": true
+    },
+    {
+      "name": "standard-document-digest-bound",
+      "passed": true
+    },
+    {
+      "name": "matching-regression-gate",
+      "passed": true
+    },
+    {
+      "name": "unknown-never-force-standard",
+      "passed": true
+    },
+    {
+      "name": "standard-writes-default-disabled",
+      "passed": true
+    },
+    {
+      "name": "standard-access-default-denied",
+      "passed": true
+    },
+    {
+      "name": "release-standard-store-clean",
+      "passed": true
+    },
+    {
+      "name": "rill-remains-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "native-pdf-license-route-cleared",
+      "passed": true
+    },
+    {
+      "name": "optional-pymupdf-license-blocker-explicit",
+      "passed": true
+    },
+    {
+      "name": "runtime-store-layout-preserved",
+      "passed": true
+    },
+    {
+      "name": "error-taxonomy-matches-runtime-exceptions",
+      "passed": true
+    }
+  ]
+}

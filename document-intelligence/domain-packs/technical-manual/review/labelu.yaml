@@ -1,0 +1,10 @@
+version: 1
+adapter: labelu-json-v1
+object_labels:
+- procedure_step
+- warning
+- component
+- specification
+- troubleshooting_item
+relation_labels:
+- step_uses_component

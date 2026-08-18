@@ -1,0 +1,161 @@
+{
+  "core_python": [
+    {
+      "name": "fastapi",
+      "installed": true,
+      "version": "0.128.2",
+      "tree_sha256": "7a3d1d7d44bd33597669284b130057111dd3d7e29edbd20b841d05830960b80c",
+      "license_expression": "MIT",
+      "license": null
+    },
+    {
+      "name": "httpx",
+      "installed": true,
+      "version": "0.28.1",
+      "tree_sha256": "2ab39e7e592599331023529a5d1348fc1fb3e15382e956efe337e861239cb26f",
+      "license_expression": null,
+      "license": "BSD-3-Clause"
+    },
+    {
+      "name": "Pillow",
+      "installed": true,
+      "version": "12.2.0",
+      "tree_sha256": "3bd6f3ff142c0c0b2fd83efb5861a9a0f2d838c0a914fe87c0d7e6eb2543dbd8",
+      "license_expression": "MIT-CMU",
+      "license": null
+    },
+    {
+      "name": "pydantic",
+      "installed": true,
+      "version": "2.13.4",
+      "tree_sha256": "2499a54a636eec4ececb4270d09dcd109c5915e40cdb07d34bcdbfe342dbbe0d",
+      "license_expression": "MIT",
+      "license": null
+    },
+    {
+      "name": "pydantic-settings",
+      "installed": true,
+      "version": "2.14.1",
+      "tree_sha256": "6db5e7d6083182504c1239199c13b0e78a810d9982f29988313900b2c0b4a7c9",
+      "license_expression": "MIT",
+      "license": null
+    },
+    {
+      "name": "PyMuPDF",
+      "installed": true,
+      "version": "1.26.7",
+      "tree_sha256": "6ceaa7971ea1254eb4cc2cf02fad6f03de3bd3fdde25cb4621e28cc790ae40c3",
+      "license_expression": null,
+      "license": "Dual Licensed - GNU AFFERO GPL 3.0 or Artifex Commercial License"
+    },
+    {
+      "name": "numpy",
+      "installed": true,
+      "version": "2.3.5",
+      "tree_sha256": "fc76c1f87a92a707a897c562cd75623a3c5381754b6ac2c944d6626d4ea1d903",
+      "license_expression": null,
+      "license": "Copyright (c) 2005-2025, NumPy Developers."
+    },
+    {
+      "name": "opencv-python-headless",
+      "installed": true,
+      "version": "4.13.0.92",
+      "tree_sha256": "718aff963694b590729e186dcde52b0254b4b14954ddb8f2ba82d7a45834b9ae",
+      "license_expression": null,
+      "license": "Apache 2.0"
+    },
+    {
+      "name": "packaging",
+      "installed": true,
+      "version": "25.0",
+      "tree_sha256": "56c4464a9d8313259aa6ffba91713fb7114c074c253e304064aff5de7e1823c4",
+      "license_expression": null,
+      "license": null
+    },
+    {
+      "name": "cryptography",
+      "installed": true,
+      "version": "46.0.4",
+      "tree_sha256": "79fd506811755361e35747a461414f6dce8c64e5a5b94f0b640902624e718f5c",
+      "license_expression": "Apache-2.0 OR BSD-3-Clause",
+      "license": null
+    },
+    {
+      "name": "python-multipart",
+      "installed": true,
+      "version": "0.0.29",
+      "tree_sha256": "711ff1f5e02687f8fb577db1e4ca96e5b2f4d56dcc0069ea224f122ca7bb7e56",
+      "license_expression": "Apache-2.0",
+      "license": null
+    },
+    {
+      "name": "PyYAML",
+      "installed": true,
+      "version": "6.0.3",
+      "tree_sha256": "1ee7c0bfc54933c35c0b5b2c5f63ccbf2e0a78dd0956fbbd0b7ae417c3f27d10",
+      "license_expression": null,
+      "license": "MIT"
+    },
+    {
+      "name": "uvicorn",
+      "installed": true,
+      "version": "0.48.0",
+      "tree_sha256": "3c1f5b4577e3568b8587d93ff107f292722d3ae19a38f3ec7325f23d3afee4ef",
+      "license_expression": "BSD-3-Clause",
+      "license": null
+    },
+    {
+      "name": "pytest",
+      "installed": true,
+      "version": "9.0.2",
+      "tree_sha256": "42d0a31aee7a2d13a6d038f9e725aa13c820ec4d83d8c92cd1bd775d0290fdd2",
+      "license_expression": "MIT",
+      "license": null
+    },
+    {
+      "name": "coverage",
+      "installed": true,
+      "version": "7.13.3",
+      "tree_sha256": "e9e0f45b04f6db8990605dba50fe111637a20c92ec72a9a4ffb40d3636fca6a0",
+      "license_expression": null,
+      "license": "Apache-2.0"
+    }
+  ],
+  "optional_parsers": [
+    {
+      "name": "paddleocr",
+      "installed": false
+    },
+    {
+      "name": "paddlepaddle",
+      "installed": false
+    },
+    {
+      "name": "openocr-python",
+      "installed": false
+    },
+    {
+      "name": "mineru",
+      "installed": false
+    },
+    {
+      "name": "dvc",
+      "installed": false
+    },
+    {
+      "name": "mlflow",
+      "installed": false
+    }
+  ],
+  "system_binaries": {
+    "tesseract": {
+      "path": "/usr/bin/tesseract",
+      "sha256": "74b76a5b994adcc18be362bf64ed5118082b2401d5d9a35242e92fc4c62e2b4b"
+    }
+  },
+  "license_gate": {
+    "production_status": "blocked-pending-review",
+    "reason": "PyMuPDF is dual licensed under AGPL-3.0-or-later or an Artifex commercial license."
+  },
+  "note": "tree_sha256 identifies the installed distribution tree in this build environment; production parser services also require image/model artifact SHA-256."
+}

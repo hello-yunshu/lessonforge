@@ -1,0 +1,157 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "workload_profile": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Workload Profile",
+      "type": "string"
+    },
+    "environment_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Environment Sha256",
+      "type": "string"
+    },
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "duration_hours": {
+      "exclusiveMinimum": 0.0,
+      "maximum": 8760,
+      "title": "Duration Hours",
+      "type": "number"
+    },
+    "max_concurrency": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Max Concurrency",
+      "type": "integer"
+    },
+    "document_count": {
+      "minimum": 1,
+      "title": "Document Count",
+      "type": "integer"
+    },
+    "page_count": {
+      "minimum": 1,
+      "title": "Page Count",
+      "type": "integer"
+    },
+    "latency_ms_p95": {
+      "minimum": 0.0,
+      "title": "Latency Ms P95",
+      "type": "number"
+    },
+    "latency_ms_p99": {
+      "minimum": 0.0,
+      "title": "Latency Ms P99",
+      "type": "number"
+    },
+    "peak_rss_mb": {
+      "minimum": 0.0,
+      "title": "Peak Rss Mb",
+      "type": "number"
+    },
+    "peak_disk_mb": {
+      "minimum": 0.0,
+      "title": "Peak Disk Mb",
+      "type": "number"
+    },
+    "error_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Error Rate",
+      "type": "number"
+    },
+    "duplicate_side_effects": {
+      "minimum": 0,
+      "title": "Duplicate Side Effects",
+      "type": "integer"
+    },
+    "restart_recovery_passed": {
+      "title": "Restart Recovery Passed",
+      "type": "boolean"
+    },
+    "idempotency_passed": {
+      "title": "Idempotency Passed",
+      "type": "boolean"
+    },
+    "disk_full_recovery_passed": {
+      "title": "Disk Full Recovery Passed",
+      "type": "boolean"
+    },
+    "corrupted_record_detection_passed": {
+      "title": "Corrupted Record Detection Passed",
+      "type": "boolean"
+    },
+    "index_rebuild_passed": {
+      "title": "Index Rebuild Passed",
+      "type": "boolean"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "workload_profile",
+    "environment_sha256",
+    "source_commit_sha",
+    "duration_hours",
+    "max_concurrency",
+    "document_count",
+    "page_count",
+    "latency_ms_p95",
+    "latency_ms_p99",
+    "peak_rss_mb",
+    "peak_disk_mb",
+    "error_rate",
+    "duplicate_side_effects",
+    "restart_recovery_passed",
+    "idempotency_passed",
+    "disk_full_recovery_passed",
+    "corrupted_record_detection_passed",
+    "index_rebuild_passed",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "ScaleQualificationEvidence",
+  "type": "object"
+}

@@ -1,0 +1,100 @@
+{
+  "$defs": {
+    "ModelAlias": {
+      "enum": [
+        "candidate",
+        "shadow",
+        "champion",
+        "rollback"
+      ],
+      "title": "ModelAlias",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "update_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Update Id",
+      "type": "string"
+    },
+    "alias": {
+      "$ref": "#/$defs/ModelAlias"
+    },
+    "candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "previous_candidate_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Previous Candidate Id"
+    },
+    "evaluation_report_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evaluation Report Id"
+    },
+    "approval_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approval Id"
+    },
+    "operator_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Operator Id Hash",
+      "type": "string"
+    },
+    "reason_code": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "deployed_at": {
+      "format": "date-time",
+      "title": "Deployed At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "update_id",
+    "alias",
+    "candidate_id",
+    "operator_id_hash",
+    "reason_code"
+  ],
+  "title": "AliasUpdateRecord",
+  "type": "object"
+}

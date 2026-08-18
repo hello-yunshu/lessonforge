@@ -1,0 +1,11 @@
+version: 1
+adapter: labelu-json-v1
+object_labels:
+- contract_title
+- party
+- clause
+- monetary_term
+- date_term
+- signature_block
+relation_labels:
+- party_bound_by

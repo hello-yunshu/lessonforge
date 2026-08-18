@@ -1,0 +1,4 @@
+version: 1
+adapter: labelu-json-v1
+object_labels: [example, try, think-do, exercise, operation, thinking-question, worked_example, practice, reflection_prompt, learner_character, speech]
+relation_labels: [speaks, practice_for]

@@ -1,0 +1,44 @@
+{
+  "phase": 10,
+  "passed": true,
+  "production_qualified": false,
+  "checks": [
+    {
+      "name": "phase10-benchmark",
+      "passed": true
+    },
+    {
+      "name": "version-is-phase10-compatible",
+      "passed": true
+    },
+    {
+      "name": "v1-freeze-remains-compatible",
+      "passed": true
+    },
+    {
+      "name": "production-writes-default-closed",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "production-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "new-workspace-has-no-qualification",
+      "passed": true
+    },
+    {
+      "name": "production-rest-operations-present",
+      "passed": true
+    },
+    {
+      "name": "release-has-no-production-evidence",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

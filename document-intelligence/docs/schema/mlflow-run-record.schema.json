@@ -1,0 +1,102 @@
+{
+  "$defs": {
+    "ExperimentStatus": {
+      "enum": [
+        "FINISHED",
+        "FAILED",
+        "KILLED"
+      ],
+      "title": "ExperimentStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "record_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Record Id",
+      "type": "string"
+    },
+    "experiment_id": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "run_id": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "tracking_uri_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Tracking Uri Sha256",
+      "type": "string"
+    },
+    "artifact_uri_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Artifact Uri Sha256",
+      "type": "string"
+    },
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "params_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Params Sha256",
+      "type": "string"
+    },
+    "model_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Artifact Sha256",
+      "type": "string"
+    },
+    "dataset_snapshot_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Dataset Snapshot Ids",
+      "type": "array"
+    },
+    "metrics": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Metrics",
+      "type": "object"
+    },
+    "status": {
+      "$ref": "#/$defs/ExperimentStatus"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "record_id",
+    "experiment_id",
+    "run_id",
+    "tracking_uri_sha256",
+    "artifact_uri_sha256",
+    "source_commit_sha",
+    "params_sha256",
+    "model_artifact_sha256",
+    "dataset_snapshot_ids",
+    "status"
+  ],
+  "title": "MLflowRunRecord",
+  "type": "object"
+}

@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# lessonforge 根目录 .gitignore
+# 公开仓库仅发布代码与文档；教材版权数据、本地私有数据一律不提交。
+# ---------------------------------------------------------------------------
+
+# ---- 私有数据（含教材版权内容），不随源码发布 ----
+.private/
+/var/
+**/visual-semantics/data/
+
+# 原始教材 / 教师用书 / 课程标准 PDF（版权资料）
+*.pdf
+
+# 教材扫描页图与解析产物
+web/public/verify/
+web/output/
+
+# document-intelligence 运行期教材解析资产与目录
+document-intelligence/src/var/
+
+# ---- 依赖与构建产物 ----
+node_modules/
+dist/
+dist-ssr/
+build/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.venv/
+
+# ---- 环境与密钥 ----
+.env
+!.env.example
+*.local
+
+# ---- 编辑器 / 操作系统 ----
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ---- 日志 ----
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

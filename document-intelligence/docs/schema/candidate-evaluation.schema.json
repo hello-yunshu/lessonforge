@@ -1,0 +1,228 @@
+{
+  "$defs": {
+    "MetricSet": {
+      "additionalProperties": false,
+      "properties": {
+        "accuracy": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Accuracy",
+          "type": "number"
+        },
+        "p0_errors": {
+          "minimum": 0,
+          "title": "P0 Errors",
+          "type": "integer"
+        },
+        "p1_errors": {
+          "minimum": 0,
+          "title": "P1 Errors",
+          "type": "integer"
+        },
+        "severe_error_rate": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Severe Error Rate",
+          "type": "number"
+        },
+        "standard_mismatch_rate": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Standard Mismatch Rate",
+          "type": "number"
+        },
+        "key_value_accuracy": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Key Value Accuracy",
+          "type": "number"
+        },
+        "relation_accuracy": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Relation Accuracy",
+          "type": "number"
+        },
+        "latency_ms_p95": {
+          "minimum": 0.0,
+          "title": "Latency Ms P95",
+          "type": "number"
+        },
+        "cost_usd_per_document": {
+          "minimum": 0.0,
+          "title": "Cost Usd Per Document",
+          "type": "number"
+        },
+        "family_accuracy": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Family Accuracy",
+          "type": "object"
+        }
+      },
+      "required": [
+        "accuracy",
+        "p0_errors",
+        "p1_errors",
+        "severe_error_rate",
+        "standard_mismatch_rate",
+        "key_value_accuracy",
+        "relation_accuracy",
+        "latency_ms_p95",
+        "cost_usd_per_document"
+      ],
+      "title": "MetricSet",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "baseline_candidate_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Candidate Id"
+    },
+    "gold_snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Gold Snapshot Id",
+      "type": "string"
+    },
+    "challenge_snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Challenge Snapshot Id",
+      "type": "string"
+    },
+    "candidate_gold": {
+      "$ref": "#/$defs/MetricSet"
+    },
+    "candidate_challenge": {
+      "$ref": "#/$defs/MetricSet"
+    },
+    "baseline_gold": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MetricSet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "baseline_challenge": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MetricSet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evaluator_version": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Evaluator Version",
+      "type": "string"
+    },
+    "evaluation_config_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evaluation Config Sha256",
+      "type": "string"
+    },
+    "reproducibility_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Reproducibility Sha256",
+      "type": "string"
+    },
+    "minimum_accuracy": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Minimum Accuracy",
+      "type": "number"
+    },
+    "minimum_challenge_improvement": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Minimum Challenge Improvement",
+      "type": "number"
+    },
+    "maximum_latency_ms_p95": {
+      "exclusiveMinimum": 0.0,
+      "title": "Maximum Latency Ms P95",
+      "type": "number"
+    },
+    "maximum_cost_usd_per_document": {
+      "minimum": 0.0,
+      "title": "Maximum Cost Usd Per Document",
+      "type": "number"
+    },
+    "maximum_family_regression": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Maximum Family Regression",
+      "type": "number"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "candidate_id",
+    "gold_snapshot_id",
+    "challenge_snapshot_id",
+    "candidate_gold",
+    "candidate_challenge",
+    "evaluator_version",
+    "evaluation_config_sha256",
+    "reproducibility_sha256",
+    "minimum_accuracy",
+    "minimum_challenge_improvement",
+    "maximum_latency_ms_p95",
+    "maximum_cost_usd_per_document",
+    "maximum_family_regression",
+    "passed"
+  ],
+  "title": "CandidateEvaluationReport",
+  "type": "object"
+}

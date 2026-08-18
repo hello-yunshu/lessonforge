@@ -1,0 +1,15 @@
+{
+  "phase": 9,
+  "passed": true,
+  "checked_files": 164,
+  "checks": [
+    "python-ast-parse",
+    "line-length-100",
+    "no-wildcard-imports",
+    "no-eval-or-exec",
+    "public-core-annotations",
+    "domain-neutral-core"
+  ],
+  "violations": [],
+  "note": "This deterministic local gate complements, but does not replace, Ruff and Mypy in CI."
+}

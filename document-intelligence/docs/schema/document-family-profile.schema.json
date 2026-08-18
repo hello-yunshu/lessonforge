@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "BaseType": {
+      "enum": [
+        "text",
+        "heading",
+        "image",
+        "figure",
+        "formula",
+        "table",
+        "icon",
+        "character",
+        "callout",
+        "list",
+        "footnote",
+        "page_number",
+        "input_area",
+        "separator",
+        "unknown"
+      ],
+      "title": "BaseType",
+      "type": "string"
+    },
+    "FamilyCue": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "terms": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Terms",
+          "type": "array"
+        },
+        "weight": {
+          "exclusiveMinimum": 0.0,
+          "maximum": 100.0,
+          "title": "Weight",
+          "type": "number"
+        },
+        "match_mode": {
+          "default": "contains",
+          "enum": [
+            "contains",
+            "starts_with",
+            "equals"
+          ],
+          "title": "Match Mode",
+          "type": "string"
+        },
+        "base_types": {
+          "items": {
+            "$ref": "#/$defs/BaseType"
+          },
+          "title": "Base Types",
+          "type": "array"
+        },
+        "subtypes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64,
+          "title": "Subtypes",
+          "type": "array"
+        },
+        "required": {
+          "default": false,
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "terms",
+        "weight"
+      ],
+      "title": "FamilyCue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "family_id": {
+      "pattern": "^[a-z][a-z0-9-]{0,62}$",
+      "title": "Family Id",
+      "type": "string"
+    },
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "title": "Aliases",
+      "type": "array"
+    },
+    "supported_mime_types": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "title": "Supported Mime Types",
+      "type": "array"
+    },
+    "priority": {
+      "default": 100,
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Priority",
+      "type": "integer"
+    },
+    "min_score": {
+      "default": 0.55,
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Min Score",
+      "type": "number"
+    },
+    "min_margin": {
+      "default": 0.1,
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Min Margin",
+      "type": "number"
+    },
+    "min_positive_cues": {
+      "default": 1,
+      "maximum": 128,
+      "minimum": 1,
+      "title": "Min Positive Cues",
+      "type": "integer"
+    },
+    "required_base_types": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/BaseType"
+      },
+      "title": "Required Base Types",
+      "type": "object"
+    },
+    "positive_cues": {
+      "items": {
+        "$ref": "#/$defs/FamilyCue"
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Positive Cues",
+      "type": "array"
+    },
+    "negative_cues": {
+      "items": {
+        "$ref": "#/$defs/FamilyCue"
+      },
+      "maxItems": 128,
+      "title": "Negative Cues",
+      "type": "array"
+    }
+  },
+  "required": [
+    "family_id",
+    "positive_cues"
+  ],
+  "title": "DocumentFamilyProfile",
+  "type": "object"
+}

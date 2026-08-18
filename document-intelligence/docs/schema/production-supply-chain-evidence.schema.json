@@ -1,0 +1,149 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "ci_provider": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Ci Provider",
+      "type": "string"
+    },
+    "ci_run_identity_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Ci Run Identity Sha256",
+      "type": "string"
+    },
+    "ruff_passed": {
+      "title": "Ruff Passed",
+      "type": "boolean"
+    },
+    "mypy_passed": {
+      "title": "Mypy Passed",
+      "type": "boolean"
+    },
+    "tests_passed": {
+      "title": "Tests Passed",
+      "type": "boolean"
+    },
+    "test_count": {
+      "minimum": 1,
+      "title": "Test Count",
+      "type": "integer"
+    },
+    "branch_coverage": {
+      "maximum": 100.0,
+      "minimum": 0.0,
+      "title": "Branch Coverage",
+      "type": "number"
+    },
+    "sbom_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sbom Sha256",
+      "type": "string"
+    },
+    "vulnerability_scan_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Vulnerability Scan Sha256",
+      "type": "string"
+    },
+    "critical_vulnerabilities": {
+      "minimum": 0,
+      "title": "Critical Vulnerabilities",
+      "type": "integer"
+    },
+    "high_vulnerabilities": {
+      "minimum": 0,
+      "title": "High Vulnerabilities",
+      "type": "integer"
+    },
+    "license_scan_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "License Scan Sha256",
+      "type": "string"
+    },
+    "container_image_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Container Image Sha256",
+      "type": "string"
+    },
+    "reproducible_build_passed": {
+      "title": "Reproducible Build Passed",
+      "type": "boolean"
+    },
+    "release_signature_verified": {
+      "title": "Release Signature Verified",
+      "type": "boolean"
+    },
+    "release_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Release Artifact Sha256",
+      "type": "string"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_commit_sha",
+    "ci_provider",
+    "ci_run_identity_sha256",
+    "ruff_passed",
+    "mypy_passed",
+    "tests_passed",
+    "test_count",
+    "branch_coverage",
+    "sbom_sha256",
+    "vulnerability_scan_sha256",
+    "critical_vulnerabilities",
+    "high_vulnerabilities",
+    "license_scan_sha256",
+    "container_image_sha256",
+    "reproducible_build_passed",
+    "release_signature_verified",
+    "release_artifact_sha256",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "SupplyChainQualificationEvidence",
+  "type": "object"
+}

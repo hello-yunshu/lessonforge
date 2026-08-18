@@ -1,0 +1,228 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "document-intelligence-1.0.3-rc.1",
+  "documentNamespace": "urn:uuid:034f8b33-e6c3-58fd-9e13-2983526fbd6c",
+  "creationInfo": {
+    "created": "2026-08-04T00:00:00Z",
+    "creators": [
+      "Tool: document-intelligence-generate-sbom/1"
+    ]
+  },
+  "documentDescribes": [
+    "SPDXRef-Package-DocumentIntelligence"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-DocumentIntelligence",
+      "name": "document-intelligence",
+      "versionInfo": "1.0.3-rc.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "06cd4d8b83eeedcc7da31410044381c43fe75b93a79d13b86a228d5862eea73a"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-1",
+      "name": "fastapi",
+      "versionInfo": "0.128.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7a3d1d7d44bd33597669284b130057111dd3d7e29edbd20b841d05830960b80c"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-2",
+      "name": "httpx",
+      "versionInfo": "0.28.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2ab39e7e592599331023529a5d1348fc1fb3e15382e956efe337e861239cb26f"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-3",
+      "name": "pillow",
+      "versionInfo": "12.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT-CMU",
+      "licenseDeclared": "MIT-CMU",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3bd6f3ff142c0c0b2fd83efb5861a9a0f2d838c0a914fe87c0d7e6eb2543dbd8"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-4",
+      "name": "pydantic",
+      "versionInfo": "2.13.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2499a54a636eec4ececb4270d09dcd109c5915e40cdb07d34bcdbfe342dbbe0d"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-5",
+      "name": "pydantic-settings",
+      "versionInfo": "2.14.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "6db5e7d6083182504c1239199c13b0e78a810d9982f29988313900b2c0b4a7c9"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-6",
+      "name": "pypdf",
+      "versionInfo": "5.9.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "99047eb292bb92803e1feeae740a371cbf001590da0626a55631f07155cdf8bc"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-7",
+      "name": "numpy",
+      "versionInfo": "2.3.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Copyright (c) 2005-2025, NumPy Developers.",
+      "licenseDeclared": "Copyright (c) 2005-2025, NumPy Developers.",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "fc76c1f87a92a707a897c562cd75623a3c5381754b6ac2c944d6626d4ea1d903"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-8",
+      "name": "opencv-python-headless",
+      "versionInfo": "4.13.0.92",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache 2.0",
+      "licenseDeclared": "Apache 2.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "718aff963694b590729e186dcde52b0254b4b14954ddb8f2ba82d7a45834b9ae"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-9",
+      "name": "python-multipart",
+      "versionInfo": "0.0.29",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "711ff1f5e02687f8fb577db1e4ca96e5b2f4d56dcc0069ea224f122ca7bb7e56"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-10",
+      "name": "PyYAML",
+      "versionInfo": "6.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "1ee7c0bfc54933c35c0b5b2c5f63ccbf2e0a78dd0956fbbd0b7ae417c3f27d10"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-11",
+      "name": "packaging",
+      "versionInfo": "25.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "56c4464a9d8313259aa6ffba91713fb7114c074c253e304064aff5de7e1823c4"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-12",
+      "name": "cryptography",
+      "versionInfo": "46.0.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0 OR BSD-3-Clause",
+      "licenseDeclared": "Apache-2.0 OR BSD-3-Clause",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "79fd506811755361e35747a461414f6dce8c64e5a5b94f0b640902624e718f5c"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Dependency-13",
+      "name": "uvicorn",
+      "versionInfo": "0.48.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3c1f5b4577e3568b8587d93ff107f292722d3ae19a38f3ec7325f23d3afee4ef"
+        }
+      ]
+    }
+  ]
+}

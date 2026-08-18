@@ -1,0 +1,38 @@
+version: 1
+object_types:
+  procedure_step:
+    base_types:
+    - heading
+    - text
+    - list
+    description: Installation or operation step.
+  warning:
+    base_types:
+    - heading
+    - text
+    - callout
+    description: Safety warning or caution.
+  component:
+    base_types:
+    - text
+    - list
+    - figure
+    description: Named component or part.
+  specification:
+    base_types:
+    - text
+    - table
+    description: Technical specification.
+  troubleshooting_item:
+    base_types:
+    - heading
+    - text
+    - list
+    description: Fault and remedy entry.
+relation_types:
+  step_uses_component:
+    base_type: associated_with
+    source_types:
+    - procedure_step
+    target_types:
+    - component

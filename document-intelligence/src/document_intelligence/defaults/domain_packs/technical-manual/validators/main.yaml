@@ -1,0 +1,11 @@
+version: 1
+required_types:
+- code: MANUAL_NO_PROCEDURE_OR_WARNING
+  domain_types:
+  - procedure_step
+  - warning
+  - specification
+  min_count: 1
+  severity: warning
+  message: No procedural, warning or specification content was identified.
+relation_endpoints: []

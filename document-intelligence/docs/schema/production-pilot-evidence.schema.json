@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "EvidenceOrigin": {
+      "enum": [
+        "real",
+        "production-like",
+        "synthetic"
+      ],
+      "title": "EvidenceOrigin",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "pilot_name": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Pilot Name",
+      "type": "string"
+    },
+    "origin": {
+      "$ref": "#/$defs/EvidenceOrigin"
+    },
+    "domain_families": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Domain Families",
+      "type": "array"
+    },
+    "duration_days": {
+      "exclusiveMinimum": 0.0,
+      "maximum": 3650,
+      "title": "Duration Days",
+      "type": "number"
+    },
+    "document_count": {
+      "minimum": 1,
+      "title": "Document Count",
+      "type": "integer"
+    },
+    "expert_reviewed_count": {
+      "minimum": 1,
+      "title": "Expert Reviewed Count",
+      "type": "integer"
+    },
+    "accuracy": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Accuracy",
+      "type": "number"
+    },
+    "p0_errors": {
+      "minimum": 0,
+      "title": "P0 Errors",
+      "type": "integer"
+    },
+    "p1_errors": {
+      "minimum": 0,
+      "title": "P1 Errors",
+      "type": "integer"
+    },
+    "severe_error_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Severe Error Rate",
+      "type": "number"
+    },
+    "human_edit_seconds_p95": {
+      "minimum": 0.0,
+      "title": "Human Edit Seconds P95",
+      "type": "number"
+    },
+    "rollback_drill_passed": {
+      "title": "Rollback Drill Passed",
+      "type": "boolean"
+    },
+    "incident_count": {
+      "minimum": 0,
+      "title": "Incident Count",
+      "type": "integer"
+    },
+    "unresolved_high_severity_incidents": {
+      "minimum": 0,
+      "title": "Unresolved High Severity Incidents",
+      "type": "integer"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "pilot_name",
+    "origin",
+    "domain_families",
+    "duration_days",
+    "document_count",
+    "expert_reviewed_count",
+    "accuracy",
+    "p0_errors",
+    "p1_errors",
+    "severe_error_rate",
+    "human_edit_seconds_p95",
+    "rollback_drill_passed",
+    "incident_count",
+    "unresolved_high_severity_incidents",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "PilotQualificationEvidence",
+  "type": "object"
+}

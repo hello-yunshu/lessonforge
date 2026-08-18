@@ -1,0 +1,17 @@
+version: 1
+required_types:
+- code: EXAM_NO_QUESTION
+  domain_types:
+  - question
+  min_count: 1
+  severity: error
+  message: No question was identified in an examination-paper document.
+relation_endpoints:
+- code: EXAM_OPTION_ENDPOINT_INVALID
+  relation_type: question_has_option
+  source_types:
+  - question
+  target_types:
+  - option
+  severity: error
+  message: Question-option relations must connect a question to an option.

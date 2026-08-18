@@ -1,0 +1,79 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "approval_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Approval Id",
+      "type": "string"
+    },
+    "candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "evaluation_report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evaluation Report Id",
+      "type": "string"
+    },
+    "shadow_validation_report_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Shadow Validation Report Id"
+    },
+    "approver_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Approver Id Hash",
+      "type": "string"
+    },
+    "approver_role": {
+      "enum": [
+        "release_manager",
+        "domain_expert"
+      ],
+      "title": "Approver Role",
+      "type": "string"
+    },
+    "approved": {
+      "const": true,
+      "default": true,
+      "title": "Approved",
+      "type": "boolean"
+    },
+    "reason_code": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "approved_at": {
+      "format": "date-time",
+      "title": "Approved At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "approval_id",
+    "candidate_id",
+    "evaluation_report_id",
+    "approver_id_hash",
+    "approver_role",
+    "reason_code"
+  ],
+  "title": "ReleaseApproval",
+  "type": "object"
+}

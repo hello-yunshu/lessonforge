@@ -1,0 +1,127 @@
+{
+  "$defs": {
+    "ReviewedObject": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Element Id",
+          "type": "string"
+        },
+        "labels": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Labels",
+          "type": "array"
+        }
+      },
+      "required": [
+        "element_id"
+      ],
+      "title": "ReviewedObject",
+      "type": "object"
+    },
+    "ReviewedRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "target_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Target Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "target_id",
+        "label"
+      ],
+      "title": "ReviewedRelation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adapter": {
+      "const": "labelu-json-v1",
+      "default": "labelu-json-v1",
+      "title": "Adapter",
+      "type": "string"
+    },
+    "export_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Export Id",
+      "type": "string"
+    },
+    "domain_result_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Domain Result Id",
+      "type": "string"
+    },
+    "source_domain_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Domain Digest",
+      "type": "string"
+    },
+    "reviewer": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "review_level": {
+      "enum": [
+        "reviewer",
+        "domain-expert"
+      ],
+      "title": "Review Level",
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    },
+    "objects": {
+      "items": {
+        "$ref": "#/$defs/ReviewedObject"
+      },
+      "title": "Objects",
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/ReviewedRelation"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "submitted_at": {
+      "format": "date-time",
+      "title": "Submitted At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "export_id",
+    "domain_result_id",
+    "source_domain_digest",
+    "reviewer",
+    "review_level",
+    "reason"
+  ],
+  "title": "LabelUReviewSubmission",
+  "type": "object"
+}

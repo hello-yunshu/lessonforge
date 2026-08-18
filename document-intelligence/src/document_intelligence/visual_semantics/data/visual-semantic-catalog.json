@@ -1,0 +1,180 @@
+{
+  "matching": {
+    "ambiguity_margin": 5,
+    "max_dhash_distance": 24,
+    "min_information_score": 0.08
+  },
+  "profiles": [
+    {
+      "category": "character",
+      "exact_sha256": [
+        "db794f53a50f5a34453e0a58639b69e5a36f214939dc7833d9e4f01accec4b73",
+        "5887cdadc583c6878fab5652373f5d7e6f0e0470f383913006080a1ea26f2ac0",
+        "6d3d81021b5cb2c93a787eefce961268f8e349f5a92469004c9a4f3ad7047494"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [
+        "188059001c407c44f924db20d990cd84cd806c6063c05900da90c680c6000100",
+        "0f802dc82dca054c0f8c168927888d826c80ed909d209a00dc40d8006c006a40",
+        "0b90079016a05f405e203f040b447a6cb8c92942d8c4ccc8ce0057000b201680"
+      ],
+      "review_status": "reviewed",
+      "role_name": "青椒",
+      "semantic_id": "sujiaoban.character.qingjiao",
+      "speaker_type": "student",
+      "special_meaning": "教材中的学生角色；其邻近气泡或对话应优先解释为学生观察、提问、猜想、方法表达等学习过程证据。"
+    },
+    {
+      "category": "character",
+      "exact_sha256": [
+        "506d7b06c83ee3f3e3a6850fdc03bdf9778ebe3c53676a5d77019a94dad70fa9"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [
+        "20205f08bb007c80ecd2d7c8d9f94939b929965956615b981d180f20170016d0"
+      ],
+      "review_status": "reviewed",
+      "role_name": "蘑菇",
+      "semantic_id": "sujiaoban.character.mogu",
+      "speaker_type": "student",
+      "special_meaning": "教材中的学生角色；其发言属于学生学习过程证据，不得误标为教师提示。"
+    },
+    {
+      "category": "character",
+      "exact_sha256": [
+        "d8685fe27ac8905bb46deed52f9d3fbbd2d04af9a62b687c3ead083f3a5e90a7",
+        "eeea6e6ef8db4b91cd3a80809eab4cf6907df6d6f883b77c9e1c9e33c3810fc8",
+        "8708599cdebc8fb6de541c879736fa9ba324f55949d82c51abc210407a6e4f62",
+        "e54e69981dc7b0b234ddfade4b89f23bca07722201ddf26c3f063c77f3a3c2f7"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [
+        "b000b8605ee23ac4790863442ec0590972a17330f148f4e01e005f8007600924",
+        "3920b00078604ee43ac4714873441d52bae07b29791978c11e010f4013480728",
+        "0200b080b0405cc03d88721072089f807a40b252b3a273825a101b2401a00580",
+        "048010902f881d40bb60b5b96d91e110a329f6c959711f84a68616ca04c00202"
+      ],
+      "review_status": "reviewed",
+      "role_name": "番茄",
+      "semantic_id": "sujiaoban.character.fanqie",
+      "speaker_type": "student",
+      "special_meaning": "教材中的学生角色；其发言用于呈现学生思路、发现、问题或交流。"
+    },
+    {
+      "category": "character",
+      "exact_sha256": [
+        "47b25126b2f6c5a1f69a2a6dfc3e60388cc9d89d74e66cde0714e6e079ed3233"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [
+        "03441b42b3a0b538bb2eb91a593e486c3cdf3d34dd2c368ce6e8c188e500e600"
+      ],
+      "review_status": "reviewed",
+      "role_name": "白菜",
+      "semantic_id": "sujiaoban.character.baicai",
+      "speaker_type": "teacher",
+      "special_meaning": "教材中的教师角色；其邻近气泡通常是组织、提示、追问、指导或解释，但具体话语功能必须结合原文证据再推断。"
+    },
+    {
+      "category": "character",
+      "exact_sha256": [],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": "豌豆",
+      "semantic_id": "sujiaoban.character.wandou",
+      "speaker_type": "teacher",
+      "special_meaning": "教材中的教师角色；不得仅凭文字内容把其发言误归为学生发现。"
+    },
+    {
+      "category": "character",
+      "exact_sha256": [
+        "0c5b0fc2e58fdae39e1aa12f0144ab94cf0bae9fae1cc8029fc89f652c2d10e4"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [
+        "16000f0086100610b690b79c85088cc8f8423c04da887d002e20170016200600"
+      ],
+      "review_status": "reviewed",
+      "role_name": "茄子",
+      "semantic_id": "sujiaoban.character.qiezi",
+      "speaker_type": "teacher",
+      "special_meaning": "教材中的教师角色；其发言可作为教师引导链候选，但话语功能属于派生解释而非教材直接事实。"
+    },
+    {
+      "category": "example-anchor",
+      "exact_sha256": [
+        "7c717598f1a226831d8b08547da0d14373a63e7ecb5fa33faa7a879d11310094"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": null,
+      "semantic_id": "sujiaoban.section.example-book-icon",
+      "speaker_type": null,
+      "special_meaning": "书本形图标与内部/叠加数字共同形成例题起始强锚点。"
+    },
+    {
+      "category": "section-anchor",
+      "exact_sha256": [
+        "842d16be6ba792ffc502deac2c7ec928fe9640e256e7efb818b03714bdf7ec44"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": null,
+      "semantic_id": "sujiaoban.section.try",
+      "speaker_type": null,
+      "special_meaning": "栏目图标与‘试一试’文字联合表示例题后的变式或迁移练习板块。"
+    },
+    {
+      "category": "section-anchor",
+      "exact_sha256": [
+        "b7e93ac6e354862d6f1f3ad685a4fa71eae33b9b30d95a9ab324f7d592b0b326"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": null,
+      "semantic_id": "sujiaoban.section.think-do",
+      "speaker_type": null,
+      "special_meaning": "铅笔类栏目图标与‘想想做做’文字联合表示课堂巩固练习板块。"
+    },
+    {
+      "category": "section-anchor",
+      "exact_sha256": [
+        "765916f87f42353e0580c327d8b9e268486cde5400f14f51ac968d44b311cdf6"
+      ],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": null,
+      "semantic_id": "sujiaoban.section.operation",
+      "speaker_type": null,
+      "special_meaning": "操作类栏目图标与‘动手做’文字联合表示实践操作活动板块。"
+    },
+    {
+      "category": "section-anchor",
+      "exact_sha256": [],
+      "max_aspect_ratio": 5.0,
+      "min_aspect_ratio": 0.2,
+      "perceptual_hashes": [],
+      "review_status": "reviewed",
+      "role_name": null,
+      "semantic_id": "sujiaoban.section.reflection",
+      "speaker_type": null,
+      "special_meaning": "评价与反思栏目强锚点；不得由普通正文中的‘想一想’关键词替代。"
+    }
+  ],
+  "schema_version": 1
+}

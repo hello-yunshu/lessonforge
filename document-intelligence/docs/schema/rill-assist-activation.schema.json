@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "Tier1AssistAction": {
+      "enum": [
+        "RETRY",
+        "REPROCESS_HIGH_RES",
+        "USE_SECONDARY_PARSER",
+        "USE_SPECIALIST_PARSER",
+        "HUMAN_REVIEW",
+        "QUARANTINE"
+      ],
+      "title": "Tier1AssistAction",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "activation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Activation Id",
+      "type": "string"
+    },
+    "qualification_report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Qualification Report Id",
+      "type": "string"
+    },
+    "qualification_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Qualification Digest",
+      "type": "string"
+    },
+    "approver_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Approver Id Hash",
+      "type": "string"
+    },
+    "allowed_actions": {
+      "items": {
+        "$ref": "#/$defs/Tier1AssistAction"
+      },
+      "minItems": 1,
+      "title": "Allowed Actions",
+      "type": "array"
+    },
+    "max_executions_per_hour": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Executions Per Hour",
+      "type": "integer"
+    },
+    "runtime_name": {
+      "maxLength": 96,
+      "minLength": 1,
+      "title": "Runtime Name",
+      "type": "string"
+    },
+    "runtime_version": {
+      "maxLength": 48,
+      "minLength": 1,
+      "title": "Runtime Version",
+      "type": "string"
+    },
+    "runtime_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Artifact Sha256",
+      "type": "string"
+    },
+    "model_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Artifact Sha256",
+      "type": "string"
+    },
+    "handler_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Handler Artifact Sha256",
+      "type": "string"
+    },
+    "model_generation": {
+      "minimum": 0,
+      "title": "Model Generation",
+      "type": "integer"
+    },
+    "minimum_state_generation": {
+      "minimum": 0,
+      "title": "Minimum State Generation",
+      "type": "integer"
+    },
+    "feature_schema_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Schema Hash",
+      "type": "string"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "activated_at": {
+      "format": "date-time",
+      "title": "Activated At",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "activation_id",
+    "qualification_report_id",
+    "qualification_digest",
+    "approver_id_hash",
+    "allowed_actions",
+    "max_executions_per_hour",
+    "runtime_name",
+    "runtime_version",
+    "runtime_artifact_sha256",
+    "model_artifact_sha256",
+    "handler_artifact_sha256",
+    "model_generation",
+    "minimum_state_generation",
+    "feature_schema_hash",
+    "expires_at"
+  ],
+  "title": "AssistActivationRecord",
+  "type": "object"
+}

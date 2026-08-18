@@ -1,0 +1,26 @@
+{
+  "phase": 2,
+  "passed": true,
+  "checks": [
+    {
+      "name": "wheel-built",
+      "passed": true
+    },
+    {
+      "name": "package-default-parser-config-included",
+      "passed": true
+    },
+    {
+      "name": "typed-marker-included",
+      "passed": true
+    },
+    {
+      "name": "wheel-import-from-arbitrary-cwd",
+      "passed": true
+    },
+    {
+      "name": "installed-cli-module-smoke",
+      "passed": true
+    }
+  ]
+}

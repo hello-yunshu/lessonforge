@@ -1,0 +1,118 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "evaluation_report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evaluation Report Id",
+      "type": "string"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "sample_count": {
+      "minimum": 1,
+      "title": "Sample Count",
+      "type": "integer"
+    },
+    "accuracy": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Accuracy",
+      "type": "number"
+    },
+    "p0_errors": {
+      "minimum": 0,
+      "title": "P0 Errors",
+      "type": "integer"
+    },
+    "p1_errors": {
+      "minimum": 0,
+      "title": "P1 Errors",
+      "type": "integer"
+    },
+    "severe_error_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Severe Error Rate",
+      "type": "number"
+    },
+    "latency_ms_p95": {
+      "minimum": 0.0,
+      "title": "Latency Ms P95",
+      "type": "number"
+    },
+    "cost_usd_per_document": {
+      "minimum": 0.0,
+      "title": "Cost Usd Per Document",
+      "type": "number"
+    },
+    "active_drift_alerts": {
+      "minimum": 0,
+      "title": "Active Drift Alerts",
+      "type": "integer"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "ended_at": {
+      "format": "date-time",
+      "title": "Ended At",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "candidate_id",
+    "evaluation_report_id",
+    "evidence_sha256",
+    "sample_count",
+    "accuracy",
+    "p0_errors",
+    "p1_errors",
+    "severe_error_rate",
+    "latency_ms_p95",
+    "cost_usd_per_document",
+    "active_drift_alerts",
+    "started_at",
+    "ended_at",
+    "passed"
+  ],
+  "title": "ShadowValidationReport",
+  "type": "object"
+}

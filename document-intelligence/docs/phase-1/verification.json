@@ -1,0 +1,40 @@
+{
+  "phase": 1,
+  "passed": true,
+  "checks": [
+    {
+      "name": "schema-exportable",
+      "passed": true
+    },
+    {
+      "name": "generic-domain-pack",
+      "passed": true
+    },
+    {
+      "name": "external-parser-fail-closed",
+      "passed": true
+    },
+    {
+      "name": "p0-never-auto-accept",
+      "passed": true
+    },
+    {
+      "name": "rill-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "standard-result-clean",
+      "passed": true
+    },
+    {
+      "name": "no-eval-exec-shell",
+      "passed": true,
+      "findings": []
+    },
+    {
+      "name": "core-domain-neutral",
+      "passed": true,
+      "findings": []
+    }
+  ]
+}

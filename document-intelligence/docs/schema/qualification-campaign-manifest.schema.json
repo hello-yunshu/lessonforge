@@ -1,0 +1,158 @@
+{
+  "$defs": {
+    "CampaignStepKind": {
+      "enum": [
+        "gold-dataset",
+        "challenge-dataset",
+        "parser-qualification",
+        "scale-soak",
+        "supply-chain",
+        "license-review",
+        "pilot",
+        "qualification-report"
+      ],
+      "title": "CampaignStepKind",
+      "type": "string"
+    },
+    "CampaignStepSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/CampaignStepKind"
+        },
+        "depends_on": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Depends On",
+          "type": "array"
+        },
+        "minimum_evidence_count": {
+          "default": 1,
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Minimum Evidence Count",
+          "type": "integer"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "step_id",
+        "kind"
+      ],
+      "title": "CampaignStepSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "campaign_name": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Campaign Name",
+      "type": "string"
+    },
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "environment_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Environment Sha256",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "created_by_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Created By Id Hash",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/CampaignStepSpec"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Steps",
+      "type": "array"
+    },
+    "external_data_authorized": {
+      "default": false,
+      "title": "External Data Authorized",
+      "type": "boolean"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "maxLength": 2000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "campaign_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Campaign Id",
+      "type": "string"
+    },
+    "automatic_release_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Release Authorized",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "campaign_name",
+    "source_commit_sha",
+    "environment_sha256",
+    "policy_sha256",
+    "created_by_id_hash",
+    "steps",
+    "campaign_id"
+  ],
+  "title": "CampaignManifest",
+  "type": "object"
+}

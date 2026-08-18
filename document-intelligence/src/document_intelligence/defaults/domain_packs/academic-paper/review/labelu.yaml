@@ -1,0 +1,11 @@
+version: 1
+adapter: labelu-json-v1
+object_labels:
+- paper_title
+- abstract
+- section_heading
+- citation
+- reference_entry
+- figure_caption
+relation_labels:
+- caption_describes

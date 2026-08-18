@@ -1,0 +1,83 @@
+{
+  "phase": 3,
+  "engine_version": "0.3.0",
+  "engine_digest": "b893599cbd55ac211f0cb95d6b44736c976a28f48fb8ef3f8a21dc5971fec381",
+  "passed": true,
+  "summary": {
+    "cases": 8,
+    "passed_cases": 8,
+    "reading_order_exact_accuracy": 1.0,
+    "relation_precision": 1.0,
+    "relation_recall": 1.0,
+    "false_positive_relations": 0,
+    "evidence_coverage": 1.0
+  },
+  "cases": [
+    {
+      "name": "two-column-reading-order",
+      "passed": true,
+      "actual": [
+        "h",
+        "l1",
+        "l2",
+        "r1",
+        "r2"
+      ],
+      "expected": [
+        "h",
+        "l1",
+        "l2",
+        "r1",
+        "r2"
+      ]
+    },
+    {
+      "name": "heading-hierarchy",
+      "passed": true,
+      "levels": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "caption-relation",
+      "passed": true,
+      "relations": [
+        [
+          "caption_of",
+          "caption",
+          "image"
+        ]
+      ]
+    },
+    {
+      "name": "far-text-not-caption",
+      "passed": true
+    },
+    {
+      "name": "cross-page-continuation",
+      "passed": true
+    },
+    {
+      "name": "terminal-text-not-cross-page",
+      "passed": true
+    },
+    {
+      "name": "repeated-margin-filtering",
+      "passed": true,
+      "excluded": [
+        "header_0",
+        "header_1",
+        "header_2",
+        "number_0",
+        "number_1",
+        "number_2"
+      ]
+    },
+    {
+      "name": "semantic-determinism",
+      "passed": true
+    }
+  ],
+  "scope": "Deterministic synthetic generic-document regression only; not a production accuracy claim."
+}

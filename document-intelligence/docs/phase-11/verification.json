@@ -1,0 +1,43 @@
+{
+  "phase": 11,
+  "passed": true,
+  "production_qualified": false,
+  "automatic_release_authorized": false,
+  "bounded_auto": false,
+  "checks": [
+    {
+      "name": "version-is-phase11-compatible",
+      "passed": true,
+      "version": "1.0.3rc1"
+    },
+    {
+      "name": "one-x-freeze-remains-compatible",
+      "passed": true
+    },
+    {
+      "name": "campaign-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "campaign-writes-default-disabled",
+      "passed": true
+    },
+    {
+      "name": "new-workspace-has-no-campaigns",
+      "passed": true
+    },
+    {
+      "name": "campaign-cannot-authorize-release",
+      "passed": true
+    },
+    {
+      "name": "campaign-rest-operations-present",
+      "passed": true
+    },
+    {
+      "name": "release-has-no-campaign-runtime-records",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+version: 1
+object_rules:
+  - id: education-example
+    domain_type: example
+    base_types: [heading, text, callout]
+    # 例题标题为"例"+数字（如"例1""例2"），OCR 可能在字符间插入空格，
+    # 引擎已做空白归一化。限定数字形式以排除正文"例如，"等误匹配。
+    text_starts_with_any:
+      - 例1
+      - 例2
+      - 例3
+      - 例4
+      - 例5
+      - 例6
+      - 例7
+      - 例8
+      - 例9
+      - 例10
+      - 例11
+      - 例12
+      - 例一
+      - 例二
+      - 例三
+      - 例四
+      - 例五
+      - Example
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-try
+    domain_type: try
+    base_types: [heading, text, callout]
+    text_starts_with_any: [试一试]
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-think-do
+    domain_type: think-do
+    base_types: [heading, text, callout]
+    text_starts_with_any: [想想做做]
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-exercise
+    domain_type: exercise
+    base_types: [heading, text, callout, input_area]
+    text_starts_with_any: [练习, Exercise, Practice]
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-operation
+    domain_type: operation
+    base_types: [heading, text, callout]
+    text_starts_with_any: [动手做]
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-thinking-question
+    domain_type: thinking-question
+    base_types: [heading, text, callout]
+    text_starts_with_any: [思考题]
+    require_text: true
+    confidence: 0.95
+    stop_on_match: true
+  - id: education-reflection
+    domain_type: reflection_prompt
+    base_types: [heading, text, callout]
+    text_contains_any: [想一想, 思考, 你发现了什么, Think, Reflect]
+    require_text: true
+    confidence: 0.86
+  - id: education-character
+    domain_type: learner_character
+    base_types: [character]
+    confidence: 0.88
+  - id: education-speech
+    domain_type: speech
+    base_types: [callout]
+    confidence: 0.88
+relation_rules:
+  - id: education-speaks
+    domain_type: speaks
+    source_domain_types: [learner_character]
+    target_domain_types: [speech]
+    base_relation_types: [associated_with, points_to]
+    max_reading_distance: 2
+    confidence: 0.82
+  - id: education-practice-for
+    domain_type: practice_for
+    source_domain_types: [worked_example]
+    target_domain_types: [practice]
+    base_relation_types: [precedes, follows, associated_with]
+    max_reading_distance: 12
+    confidence: 0.78

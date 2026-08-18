@@ -1,0 +1,14 @@
+version: 1
+labels:
+  contract_title:
+    en: Contract Title
+  party:
+    en: Party
+  clause:
+    en: Clause
+  monetary_term:
+    en: Monetary Term
+  date_term:
+    en: Date Term
+  signature_block:
+    en: Signature Block

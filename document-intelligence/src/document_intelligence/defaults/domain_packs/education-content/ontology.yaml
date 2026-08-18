@@ -1,0 +1,44 @@
+version: 1
+object_types:
+  example:
+    base_types: [heading, text, callout]
+    description: 例题（苏教版课时板块，如"例1"）。
+  try:
+    base_types: [heading, text, callout]
+    description: 试一试（紧随例题的变式练习板块）。
+  think-do:
+    base_types: [heading, text, callout]
+    description: 想想做做（课堂巩固练习板块）。
+  exercise:
+    base_types: [heading, text, callout, input_area]
+    description: 练习（节末/单元练习，如"练习一"）。
+  operation:
+    base_types: [heading, text, callout]
+    description: 动手做（操作实践板块）。
+  thinking-question:
+    base_types: [heading, text, callout]
+    description: 思考题（开放/拓展思考题）。
+  worked_example:
+    base_types: [heading, text, callout]
+    description: A worked or guided example.
+  practice:
+    base_types: [heading, text, callout, input_area]
+    description: A practice or exercise prompt.
+  reflection_prompt:
+    base_types: [heading, text, callout]
+    description: A reflection or inquiry prompt.
+  learner_character:
+    base_types: [character]
+    description: A learner-like character marker.
+  speech:
+    base_types: [callout]
+    description: A speech or thought callout.
+relation_types:
+  speaks:
+    base_type: associated_with
+    source_types: [learner_character]
+    target_types: [speech]
+  practice_for:
+    base_type: follows
+    source_types: [worked_example]
+    target_types: [practice]

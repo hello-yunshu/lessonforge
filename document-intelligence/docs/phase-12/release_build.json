@@ -1,0 +1,11 @@
+{
+  "phase": 12,
+  "version": "1.0.3-rc.1",
+  "source_archive": "document-intelligence_phase12_1.0.3-rc.1.zip",
+  "source_files": 532,
+  "wheel": "document_intelligence-1.0.3rc1-py3-none-any.whl",
+  "wheel_sha256": "dd9d885970b1300adb0a1119f350c9ef126357922a1c64b3e1fa562bca7a6790",
+  "wheel_reproducible_two_builds": true,
+  "source_zip_fixed_timestamp": "2026-08-04T00:00:00Z",
+  "production_qualification_claimed": false
+}

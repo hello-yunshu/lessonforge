@@ -1,0 +1,43 @@
+{
+  "phase": 7,
+  "passed": true,
+  "checks": [
+    {
+      "name": "phase7-benchmark",
+      "passed": true
+    },
+    {
+      "name": "version-at-least-0.7.0",
+      "passed": true
+    },
+    {
+      "name": "mlops-schema-0.7",
+      "passed": true
+    },
+    {
+      "name": "mlops-default-closed",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "phase7-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "production-model-not-claimed",
+      "passed": true
+    },
+    {
+      "name": "mlops-errors-in-taxonomy",
+      "passed": true
+    },
+    {
+      "name": "release-mlops-state-clean",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

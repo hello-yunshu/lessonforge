@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "valueType": "float64",
+  "missingValuePolicy": "explicit-zero-with-presence-flags",
+  "featureOrder": [
+    "parse.page_count",
+    "parse.element_count",
+    "parse.average_confidence",
+    "parse.minimum_confidence",
+    "parse.p0_warnings",
+    "parse.p1_warnings",
+    "parse.p2_warnings",
+    "parse.empty_native_text",
+    "parse.duration_ms_log1p",
+    "parse.estimated_cost_usd_log1p",
+    "match.present",
+    "match.top1_score",
+    "match.margin",
+    "match.candidate_count",
+    "match.safe_standard_reuse",
+    "structure.present",
+    "structure.reading_order_coverage",
+    "structure.relation_evidence_coverage",
+    "structure.consistency_score",
+    "structure.diagnostics_warning",
+    "structure.diagnostics_error",
+    "structure.cross_page_relations",
+    "domain.present",
+    "domain.fallback_used",
+    "domain.error_findings",
+    "domain.evidence_coverage"
+  ],
+  "actionArms": [
+    "ACCEPT",
+    "RETRY",
+    "REPROCESS_HIGH_RES",
+    "USE_SECONDARY_PARSER",
+    "USE_SPECIALIST_PARSER",
+    "USE_DOMAIN_ADAPTER",
+    "VLM_REVIEW",
+    "HUMAN_REVIEW",
+    "QUARANTINE"
+  ],
+  "normalization": {
+    "parse.duration_ms_log1p": "ln(1+x)",
+    "parse.estimated_cost_usd_log1p": "ln(1+x)",
+    "boolean": "0_or_1",
+    "confidence_and_coverage": "bounded_0_1"
+  },
+  "shadowOnly": true
+}

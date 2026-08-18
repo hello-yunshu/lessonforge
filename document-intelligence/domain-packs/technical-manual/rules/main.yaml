@@ -1,0 +1,80 @@
+version: 1
+object_rules:
+- id: manual-step
+  domain_type: procedure_step
+  base_types:
+  - heading
+  - text
+  - list
+  text_starts_with_any:
+  - 步骤
+  - 'Step '
+  - '1.'
+  - '2.'
+  - '3.'
+  require_text: true
+  confidence: 0.84
+- id: manual-warning
+  domain_type: warning
+  base_types:
+  - heading
+  - text
+  - callout
+  text_starts_with_any:
+  - 警告
+  - 注意
+  - WARNING
+  - CAUTION
+  require_text: true
+  confidence: 0.92
+- id: manual-spec
+  domain_type: specification
+  base_types:
+  - text
+  - table
+  text_contains_any:
+  - 规格
+  - 参数
+  - Voltage
+  - Dimensions
+  - Specifications
+  require_text: true
+  confidence: 0.82
+- id: manual-trouble
+  domain_type: troubleshooting_item
+  base_types:
+  - heading
+  - text
+  - list
+  text_contains_any:
+  - 故障排除
+  - 问题与解决
+  - Troubleshooting
+  - Problem
+  require_text: true
+  confidence: 0.86
+- id: manual-component
+  domain_type: component
+  base_types:
+  - text
+  - list
+  - figure
+  text_contains_any:
+  - 部件
+  - 零件
+  - Component
+  - Part
+  require_text: true
+  confidence: 0.72
+relation_rules:
+- id: manual-step-component
+  domain_type: step_uses_component
+  source_domain_types:
+  - procedure_step
+  target_domain_types:
+  - component
+  base_relation_types:
+  - associated_with
+  - precedes
+  max_reading_distance: 5
+  confidence: 0.72

@@ -1,0 +1,38 @@
+version: 1
+object_types:
+  contract_title:
+    base_types:
+    - heading
+    description: Contract or agreement title.
+  party:
+    base_types:
+    - heading
+    - text
+    description: Named contracting party.
+  clause:
+    base_types:
+    - heading
+    - text
+    - list
+    description: Contractual clause.
+  monetary_term:
+    base_types:
+    - text
+    - table
+    description: Monetary obligation or amount.
+  date_term:
+    base_types:
+    - text
+    description: Effective or deadline date.
+  signature_block:
+    base_types:
+    - text
+    - input_area
+    description: Signature or seal block.
+relation_types:
+  party_bound_by:
+    base_type: associated_with
+    source_types:
+    - party
+    target_types:
+    - clause

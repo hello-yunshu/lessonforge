@@ -1,0 +1,83 @@
+version: 1
+family_id: education-content
+aliases:
+- instructional-content
+- learning-material
+supported_mime_types:
+- application/pdf
+- image/png
+- image/jpeg
+priority: 30
+min_score: 0.42
+min_margin: 0.1
+min_positive_cues: 2
+required_base_types: {}
+positive_cues:
+- id: education-example-cue
+  terms:
+  - 例题
+  - 示例
+  - Example
+  weight: 1.5
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+  - callout
+- id: education-practice-cue
+  terms:
+  - 练一练
+  - 试一试
+  - 做一做
+  - Exercise
+  - Practice
+  weight: 1.5
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+  - callout
+- id: education-reflection-cue
+  terms:
+  - 想一想
+  - 思考
+  - 你发现了什么
+  - Reflect
+  weight: 1.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+  - callout
+- id: education-learning-cue
+  terms:
+  - 学习目标
+  - 学习任务
+  - Learning objectives
+  weight: 1.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+negative_cues:
+- id: education-contract-negative
+  terms:
+  - 本合同
+  - 甲方
+  - 乙方
+  - Agreement
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: education-paper-negative
+  terms:
+  - Abstract
+  - References
+  - 参考文献
+  weight: 1.5
+  match_mode: contains
+  base_types:
+  - heading
+  - text

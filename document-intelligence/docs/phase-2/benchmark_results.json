@@ -1,0 +1,106 @@
+{
+  "phase": 2,
+  "passed": true,
+  "fixture_scope": "small synthetic regression suite; not a production accuracy claim",
+  "cases": [
+    {
+      "case": "full:std_5987170714cb27a1360d14af:0",
+      "expected": "safe_standard_reuse",
+      "actual": "safe_standard_reuse",
+      "correct_page": true,
+      "top1_score": 1.0,
+      "margin": 0.5184114637853547,
+      "duration_ms": 487.871,
+      "passed": true
+    },
+    {
+      "case": "crop:std_5987170714cb27a1360d14af:0",
+      "expected": "safe_standard_reuse",
+      "actual": "safe_standard_reuse",
+      "correct_page": true,
+      "top1_score": 0.862299509039637,
+      "margin": 0.33435005898889625,
+      "local_inliers": 450,
+      "duration_ms": 318.989,
+      "passed": true
+    },
+    {
+      "case": "full:std_e7078c7b669687502ac6d08f:0",
+      "expected": "safe_standard_reuse",
+      "actual": "safe_standard_reuse",
+      "correct_page": true,
+      "top1_score": 1.0,
+      "margin": 0.5765039577790958,
+      "duration_ms": 387.891,
+      "passed": true
+    },
+    {
+      "case": "crop:std_e7078c7b669687502ac6d08f:0",
+      "expected": "safe_standard_reuse",
+      "actual": "safe_standard_reuse",
+      "correct_page": true,
+      "top1_score": 0.7860591970401654,
+      "margin": 0.21867937572179208,
+      "local_inliers": 260,
+      "duration_ms": 290.866,
+      "passed": true
+    },
+    {
+      "case": "full:std_e7078c7b669687502ac6d08f:1",
+      "expected": "safe_standard_reuse",
+      "actual": "safe_standard_reuse",
+      "correct_page": true,
+      "top1_score": 1.0,
+      "margin": 0.5759697413154448,
+      "duration_ms": 406.339,
+      "passed": true
+    },
+    {
+      "case": "strong-local-below-configured-threshold",
+      "expected": "no_match",
+      "actual": "no_match",
+      "correct_page": true,
+      "top1_score": 0.862299509039637,
+      "margin": 0.33435005898889625,
+      "duration_ms": 223.453,
+      "passed": true
+    },
+    {
+      "case": "unknown-text",
+      "expected": "no_match",
+      "actual": "no_match",
+      "correct_page": true,
+      "top1_score": 0.6267876073333126,
+      "margin": 0.47795301384420297,
+      "duration_ms": 276.779,
+      "passed": true
+    },
+    {
+      "case": "unknown-noise",
+      "expected": "no_match",
+      "actual": "no_match",
+      "correct_page": true,
+      "top1_score": 0.6049277315914489,
+      "margin": 0.06457500000000005,
+      "duration_ms": 157.767,
+      "passed": true
+    },
+    {
+      "case": "duplicate-page-ambiguity",
+      "expected": "ambiguous",
+      "actual": "ambiguous",
+      "correct_page": true,
+      "top1_score": 1.0,
+      "margin": 0.0,
+      "duration_ms": 365.164,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "known_recall": 1.0,
+    "negative_false_accepts": 0,
+    "median_duration_ms": 318.989
+  }
+}

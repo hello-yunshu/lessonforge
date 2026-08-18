@@ -1,0 +1,71 @@
+{
+  "phase": 5,
+  "passed": true,
+  "checks": [
+    {
+      "name": "phase5-benchmark",
+      "passed": true
+    },
+    {
+      "name": "no-production-actions",
+      "passed": true
+    },
+    {
+      "name": "version-at-least-0.5.0",
+      "passed": true
+    },
+    {
+      "name": "rill-v3-preview-contract",
+      "passed": true
+    },
+    {
+      "name": "shadow-default-disabled",
+      "passed": true
+    },
+    {
+      "name": "schema-copy-identical",
+      "passed": true
+    },
+    {
+      "name": "feature-schema-copy-identical",
+      "passed": true
+    },
+    {
+      "name": "feature-order-frozen",
+      "passed": true
+    },
+    {
+      "name": "feature-actions-frozen",
+      "passed": true
+    },
+    {
+      "name": "rill-license-recorded",
+      "passed": true
+    },
+    {
+      "name": "schema-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "fixed-action-arm-map",
+      "passed": true
+    },
+    {
+      "name": "required-capabilities-complete",
+      "passed": true
+    },
+    {
+      "name": "rill-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "rill-errors-in-taxonomy",
+      "passed": true
+    },
+    {
+      "name": "release-rill-state-clean",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

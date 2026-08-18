@@ -1,0 +1,45 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "resume_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Resume Id",
+      "type": "string"
+    },
+    "suspension_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Suspension Id",
+      "type": "string"
+    },
+    "operator_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Operator Id Hash",
+      "type": "string"
+    },
+    "reason_code": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "resumed_at": {
+      "format": "date-time",
+      "title": "Resumed At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "resume_id",
+    "suspension_id",
+    "operator_id_hash",
+    "reason_code"
+  ],
+  "title": "AssistParserResumeRecord",
+  "type": "object"
+}

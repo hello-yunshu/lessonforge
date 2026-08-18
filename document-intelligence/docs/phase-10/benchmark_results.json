@@ -1,0 +1,48 @@
+{
+  "phase": 10,
+  "synthetic": true,
+  "production_claim": false,
+  "passed": true,
+  "checks": [
+    {
+      "name": "empty-store-not-qualified",
+      "passed": true
+    },
+    {
+      "name": "synthetic-data-cannot-qualify",
+      "passed": true
+    },
+    {
+      "name": "real-protected-datasets-qualified",
+      "passed": true
+    },
+    {
+      "name": "fixed-parser-artifacts-qualified",
+      "passed": true
+    },
+    {
+      "name": "scale-and-recovery-qualified",
+      "passed": true
+    },
+    {
+      "name": "supply-chain-qualified",
+      "passed": true
+    },
+    {
+      "name": "pymupdf-license-resolved",
+      "passed": true
+    },
+    {
+      "name": "real-pilot-qualified",
+      "passed": true
+    },
+    {
+      "name": "complete-chain-can-qualify",
+      "passed": true
+    },
+    {
+      "name": "qualification-never-auto-releases",
+      "passed": true
+    }
+  ]
+}
