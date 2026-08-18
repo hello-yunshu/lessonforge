@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "ContractDifference": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Contract Id",
+          "type": "string"
+        },
+        "expected_digest": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Digest"
+        },
+        "actual_digest": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Digest"
+        },
+        "reason": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_id",
+        "reason"
+      ],
+      "title": "ContractDifference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "manifest_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    },
+    "project_version": {
+      "title": "Project Version",
+      "type": "string"
+    },
+    "compatible": {
+      "title": "Compatible",
+      "type": "boolean"
+    },
+    "exact_match": {
+      "title": "Exact Match",
+      "type": "boolean"
+    },
+    "differences": {
+      "items": {
+        "$ref": "#/$defs/ContractDifference"
+      },
+      "title": "Differences",
+      "type": "array"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "production_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Production Qualified",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "manifest_digest",
+    "project_version",
+    "compatible",
+    "exact_match"
+  ],
+  "title": "FreezeVerification",
+  "type": "object"
+}

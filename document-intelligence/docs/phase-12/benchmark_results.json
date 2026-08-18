@@ -1,0 +1,53 @@
+{
+  "phase": 12,
+  "version": "1.0.3-rc.1",
+  "passed": true,
+  "checks": [
+    {
+      "name": "production-config-fails-closed",
+      "passed": true
+    },
+    {
+      "name": "core-api-auth-required",
+      "passed": true
+    },
+    {
+      "name": "production-docs-disabled",
+      "passed": true
+    },
+    {
+      "name": "tenant-resource-isolation",
+      "passed": true
+    },
+    {
+      "name": "capability-claims-are-bounded",
+      "passed": true
+    },
+    {
+      "name": "access-audit-created",
+      "passed": true
+    },
+    {
+      "name": "license-and-notice-present",
+      "passed": true
+    },
+    {
+      "name": "container-defaults-fail-closed",
+      "passed": true
+    },
+    {
+      "name": "single-current-ci-entrypoint",
+      "passed": true
+    },
+    {
+      "name": "native-pdf-base-uses-pypdf",
+      "passed": true
+    },
+    {
+      "name": "runtime-asserts-removed",
+      "passed": true
+    }
+  ],
+  "production_qualified": false,
+  "release_boundary": "single-node-self-hosted-release-candidate"
+}

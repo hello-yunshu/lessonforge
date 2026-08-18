@@ -1,0 +1,81 @@
+version: 1
+family_id: technical-manual
+supported_mime_types:
+- application/pdf
+- image/png
+- image/jpeg
+required_base_types: {}
+aliases:
+- user-manual
+- installation-manual
+priority: 35
+min_score: 0.43
+min_margin: 0.1
+min_positive_cues: 2
+positive_cues:
+- id: manual-title-cue
+  terms:
+  - 说明书
+  - 用户手册
+  - 安装指南
+  - User Manual
+  - Installation Guide
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: manual-warning-cue
+  terms:
+  - 警告
+  - 注意
+  - WARNING
+  - CAUTION
+  weight: 1.4
+  match_mode: starts_with
+  base_types:
+  - heading
+  - text
+  - callout
+- id: manual-step-cue
+  terms:
+  - 步骤
+  - Step 1
+  - 安装
+  weight: 1.2
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+  - list
+- id: manual-spec-cue
+  terms:
+  - 规格
+  - 技术参数
+  - Specifications
+  weight: 1.2
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+  - table
+negative_cues:
+- id: manual-contract-negative
+  terms:
+  - 甲方
+  - 乙方
+  - 本合同
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: manual-paper-negative
+  terms:
+  - Abstract
+  - References
+  weight: 1.5
+  match_mode: contains
+  base_types:
+  - heading
+  - text

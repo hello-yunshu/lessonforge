@@ -1,0 +1,46 @@
+{
+  "phase": 12,
+  "passed": true,
+  "checks": [
+    {
+      "name": "release-candidate-version",
+      "passed": true
+    },
+    {
+      "name": "phase12-benchmark",
+      "passed": true
+    },
+    {
+      "name": "one-x-contracts-preserved",
+      "passed": true
+    },
+    {
+      "name": "development-backward-compatible",
+      "passed": true
+    },
+    {
+      "name": "production-qualification-not-bundled",
+      "passed": true
+    },
+    {
+      "name": "security-runtime-clean",
+      "passed": true
+    },
+    {
+      "name": "release-documents-present",
+      "passed": true
+    },
+    {
+      "name": "current-package-target",
+      "passed": true
+    },
+    {
+      "name": "dockerignore-present",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-remains-disabled",
+      "passed": true
+    }
+  ]
+}

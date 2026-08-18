@@ -1,0 +1,203 @@
+version: 1
+core_schema_sha256: 9e8be89228dd68a4f65aec8832bc89b75ff29217c9f7a5842d4f93666bacb09a
+cases:
+  - case_id: education-content-zh
+    filename: education.pdf
+    mime_type: application/pdf
+    expected_pack_id: education-content
+    expected_family_id: education-content
+    expected_annotation_types: [worked_example, practice, reflection_prompt]
+    forbidden_annotation_types: [party, abstract, warning]
+    maximum_error_findings: 0
+    elements:
+      - element_id: edu-title
+        base_type: heading
+        subtype: title
+        text: 第三单元 学习目标
+        bbox: {x1: 0.08, y1: 0.05, x2: 0.90, y2: 0.12}
+      - element_id: edu-example
+        base_type: heading
+        subtype: activity
+        text: 例题1 观察图形
+        bbox: {x1: 0.08, y1: 0.18, x2: 0.90, y2: 0.25}
+      - element_id: edu-reflect
+        base_type: callout
+        subtype: prompt
+        text: 想一想，你发现了什么？
+        bbox: {x1: 0.08, y1: 0.30, x2: 0.90, y2: 0.40}
+      - element_id: edu-practice
+        base_type: text
+        subtype: exercise
+        text: 练一练 第1题
+        bbox: {x1: 0.08, y1: 0.48, x2: 0.90, y2: 0.56}
+  - case_id: examination-paper-zh
+    filename: exam.pdf
+    mime_type: application/pdf
+    expected_pack_id: examination-paper
+    expected_family_id: examination-paper
+    expected_annotation_types: [question, option, score_marker, candidate_identity]
+    forbidden_annotation_types: [party, abstract, warning]
+    maximum_error_findings: 0
+    elements:
+      - element_id: exam-title
+        base_type: heading
+        subtype: title
+        text: 六年级数学期末考试试卷
+        bbox: {x1: 0.08, y1: 0.04, x2: 0.92, y2: 0.11}
+      - element_id: exam-name
+        base_type: text
+        subtype: identity
+        text: 姓名：________  准考证号：________
+        bbox: {x1: 0.08, y1: 0.14, x2: 0.92, y2: 0.20}
+      - element_id: exam-score
+        base_type: text
+        subtype: score
+        text: 总分100分，选择题每题5分）
+        bbox: {x1: 0.08, y1: 0.23, x2: 0.92, y2: 0.29}
+      - element_id: exam-question
+        base_type: text
+        subtype: question
+        text: 第1题 下列说法正确的是
+        bbox: {x1: 0.08, y1: 0.34, x2: 0.92, y2: 0.41}
+      - element_id: exam-option-a
+        base_type: text
+        subtype: option
+        text: A. 选项一
+        bbox: {x1: 0.12, y1: 0.45, x2: 0.90, y2: 0.51}
+      - element_id: exam-option-b
+        base_type: text
+        subtype: option
+        text: B. 选项二
+        bbox: {x1: 0.12, y1: 0.54, x2: 0.90, y2: 0.60}
+  - case_id: academic-paper-en
+    filename: paper.pdf
+    mime_type: application/pdf
+    expected_pack_id: academic-paper
+    expected_family_id: academic-paper
+    expected_annotation_types: [abstract, section_heading, reference_entry, figure_caption]
+    forbidden_annotation_types: [party, question, warning]
+    maximum_error_findings: 0
+    elements:
+      - element_id: paper-title
+        base_type: heading
+        subtype: title
+        text: A General Framework for Complex Document Understanding
+        bbox: {x1: 0.08, y1: 0.04, x2: 0.92, y2: 0.12}
+      - element_id: paper-abstract
+        base_type: heading
+        subtype: abstract
+        text: Abstract
+        bbox: {x1: 0.08, y1: 0.17, x2: 0.35, y2: 0.22}
+      - element_id: paper-abstract-text
+        base_type: text
+        subtype: paragraph
+        text: This study presents a source-grounded method for document analysis.
+        bbox: {x1: 0.08, y1: 0.24, x2: 0.92, y2: 0.34}
+      - element_id: paper-keywords
+        base_type: text
+        subtype: keywords
+        text: "Keywords: document intelligence, structured parsing"
+        bbox: {x1: 0.08, y1: 0.37, x2: 0.92, y2: 0.43}
+      - element_id: paper-section
+        base_type: heading
+        subtype: section
+        text: 1 Introduction
+        bbox: {x1: 0.08, y1: 0.48, x2: 0.92, y2: 0.54}
+      - element_id: paper-caption
+        base_type: text
+        subtype: caption
+        text: Figure 1 System architecture
+        bbox: {x1: 0.20, y1: 0.62, x2: 0.80, y2: 0.68}
+      - element_id: paper-references-title
+        base_type: heading
+        subtype: section
+        text: References
+        bbox: {x1: 0.08, y1: 0.74, x2: 0.92, y2: 0.80}
+      - element_id: paper-reference
+        base_type: text
+        subtype: reference
+        text: '[1] A. Author. Document Models. 2025.'
+        bbox: {x1: 0.08, y1: 0.83, x2: 0.92, y2: 0.90}
+  - case_id: legal-contract-zh
+    filename: contract.pdf
+    mime_type: application/pdf
+    expected_pack_id: legal-contract
+    expected_family_id: legal-contract
+    expected_annotation_types: [party, clause, monetary_term, date_term, signature_block]
+    forbidden_annotation_types: [question, abstract, warning]
+    maximum_error_findings: 0
+    elements:
+      - element_id: contract-title
+        base_type: heading
+        subtype: title
+        text: 服务合作协议合同
+        bbox: {x1: 0.08, y1: 0.04, x2: 0.92, y2: 0.12}
+      - element_id: contract-party-a
+        base_type: text
+        subtype: party
+        text: 甲方：示例科技有限公司
+        bbox: {x1: 0.08, y1: 0.16, x2: 0.92, y2: 0.22}
+      - element_id: contract-party-b
+        base_type: text
+        subtype: party
+        text: 乙方：示例服务有限公司
+        bbox: {x1: 0.08, y1: 0.25, x2: 0.92, y2: 0.31}
+      - element_id: contract-clause
+        base_type: heading
+        subtype: clause
+        text: 第一条 服务内容
+        bbox: {x1: 0.08, y1: 0.37, x2: 0.92, y2: 0.43}
+      - element_id: contract-money
+        base_type: text
+        subtype: term
+        text: 服务费用为人民币10000元，payment due within 30 days.
+        bbox: {x1: 0.08, y1: 0.47, x2: 0.92, y2: 0.56}
+      - element_id: contract-date
+        base_type: text
+        subtype: date
+        text: 生效日期：2026年8月3日
+        bbox: {x1: 0.08, y1: 0.60, x2: 0.92, y2: 0.67}
+      - element_id: contract-signature
+        base_type: text
+        subtype: signature
+        text: 甲方签字盖章：________  乙方签字盖章：________
+        bbox: {x1: 0.08, y1: 0.75, x2: 0.92, y2: 0.84}
+  - case_id: technical-manual-en
+    filename: manual.pdf
+    mime_type: application/pdf
+    expected_pack_id: technical-manual
+    expected_family_id: technical-manual
+    expected_annotation_types: [procedure_step, warning, component, specification, troubleshooting_item]
+    forbidden_annotation_types: [party, question, abstract]
+    maximum_error_findings: 0
+    elements:
+      - element_id: manual-title
+        base_type: heading
+        subtype: title
+        text: Device Installation User Manual
+        bbox: {x1: 0.08, y1: 0.04, x2: 0.92, y2: 0.12}
+      - element_id: manual-warning
+        base_type: callout
+        subtype: warning
+        text: "WARNING: Disconnect power before installation."
+        bbox: {x1: 0.08, y1: 0.17, x2: 0.92, y2: 0.25}
+      - element_id: manual-step
+        base_type: text
+        subtype: procedure
+        text: Step 1 Install the mounting bracket.
+        bbox: {x1: 0.08, y1: 0.31, x2: 0.92, y2: 0.38}
+      - element_id: manual-component
+        base_type: text
+        subtype: component
+        text: "Component: mounting bracket and power cable."
+        bbox: {x1: 0.08, y1: 0.42, x2: 0.92, y2: 0.49}
+      - element_id: manual-spec
+        base_type: table
+        subtype: specification
+        text: "Specifications: Voltage 220V; Dimensions 30x20cm."
+        bbox: {x1: 0.08, y1: 0.54, x2: 0.92, y2: 0.64}
+      - element_id: manual-troubleshooting
+        base_type: heading
+        subtype: troubleshooting
+        text: "Troubleshooting: Problem and solution"
+        bbox: {x1: 0.08, y1: 0.70, x2: 0.92, y2: 0.78}

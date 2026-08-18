@@ -1,0 +1,103 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "format_version": {
+      "default": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "id": {
+      "pattern": "^[a-z][a-z0-9-]{0,62}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "version": {
+      "maxLength": 63,
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    },
+    "core_schema": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Core Schema",
+      "type": "string"
+    },
+    "engine": {
+      "default": ">=0.4,<1.0",
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Engine",
+      "type": "string"
+    },
+    "supported_languages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supported Languages",
+      "type": "array"
+    },
+    "capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "permissions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Permissions",
+      "type": "array"
+    },
+    "entrypoints": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Entrypoints",
+      "type": "object"
+    },
+    "file_digests": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "File Digests",
+      "type": "object"
+    },
+    "signing_key_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9._-]{1,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signing Key Id"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "maxLength": 512,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "core_schema"
+  ],
+  "title": "DomainPackManifest",
+  "type": "object"
+}

@@ -1,0 +1,56 @@
+{
+  "phase": 4,
+  "passed": true,
+  "summary": {
+    "cases": 8,
+    "passed_cases": 8,
+    "fallback_assertion_count": 0,
+    "annotation_evidence_coverage": 1.0
+  },
+  "cases": [
+    {
+      "name": "deterministic-domain-result",
+      "passed": true
+    },
+    {
+      "name": "education-verification-pack-object-coverage",
+      "passed": true,
+      "actual": [
+        "learner_character",
+        "practice",
+        "reflection_prompt",
+        "speech",
+        "worked_example"
+      ]
+    },
+    {
+      "name": "education-verification-pack-relations",
+      "passed": true,
+      "actual": [
+        "practice_for",
+        "speaks"
+      ]
+    },
+    {
+      "name": "domain-result-integrity-roundtrip",
+      "passed": true
+    },
+    {
+      "name": "generic-artifacts-remain-immutable",
+      "passed": true
+    },
+    {
+      "name": "domain-failure-safe-fallback",
+      "passed": true
+    },
+    {
+      "name": "review-export-idempotent",
+      "passed": true
+    },
+    {
+      "name": "review-submission-roundtrip",
+      "passed": true
+    }
+  ],
+  "scope": "Deterministic synthetic Domain Pack Runtime regression only; not a production-domain accuracy claim."
+}

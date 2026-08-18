@@ -1,0 +1,15 @@
+version: 1
+required_types:
+- code: CONTRACT_NO_PARTY
+  domain_types:
+  - party
+  min_count: 2
+  severity: error
+  message: Fewer than two contracting parties were identified.
+- code: CONTRACT_NO_CLAUSE
+  domain_types:
+  - clause
+  min_count: 1
+  severity: warning
+  message: No contractual clause was identified.
+relation_endpoints: []

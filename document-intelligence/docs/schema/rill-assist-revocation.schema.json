@@ -1,0 +1,45 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "revocation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Revocation Id",
+      "type": "string"
+    },
+    "activation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Activation Id",
+      "type": "string"
+    },
+    "operator_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Operator Id Hash",
+      "type": "string"
+    },
+    "reason_code": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "revoked_at": {
+      "format": "date-time",
+      "title": "Revoked At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "revocation_id",
+    "activation_id",
+    "operator_id_hash",
+    "reason_code"
+  ],
+  "title": "AssistRevocationRecord",
+  "type": "object"
+}

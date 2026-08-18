@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "QualificationStatus": {
+      "enum": [
+        "blocked",
+        "qualified"
+      ],
+      "title": "QualificationStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dataset_evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 2,
+      "title": "Dataset Evidence Ids",
+      "type": "array"
+    },
+    "parser_evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Parser Evidence Ids",
+      "type": "array"
+    },
+    "scale_evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Scale Evidence Id",
+      "type": "string"
+    },
+    "supply_chain_evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Supply Chain Evidence Id",
+      "type": "string"
+    },
+    "license_evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "License Evidence Ids",
+      "type": "array"
+    },
+    "pilot_evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Pilot Evidence Id",
+      "type": "string"
+    },
+    "requested_by_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Requested By Id Hash",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/QualificationStatus"
+    },
+    "qualified": {
+      "title": "Qualified",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "automatic_release_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Release Authorized",
+      "type": "boolean"
+    },
+    "human_release_required": {
+      "const": true,
+      "default": true,
+      "title": "Human Release Required",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset_evidence_ids",
+    "parser_evidence_ids",
+    "scale_evidence_id",
+    "supply_chain_evidence_id",
+    "license_evidence_ids",
+    "pilot_evidence_id",
+    "requested_by_id_hash",
+    "report_id",
+    "policy_sha256",
+    "status",
+    "qualified"
+  ],
+  "title": "ProductionQualificationReport",
+  "type": "object"
+}

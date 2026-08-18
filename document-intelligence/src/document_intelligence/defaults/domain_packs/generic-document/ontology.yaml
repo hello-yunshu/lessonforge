@@ -1,0 +1,15 @@
+version: 1
+object_types:
+  section:
+    base_types: [heading]
+    description: Generic section heading.
+  paragraph:
+    base_types: [text, list, footnote]
+    description: Generic prose block.
+  illustration:
+    base_types: [image, figure]
+    description: Generic visual illustration.
+  tabular_content:
+    base_types: [table]
+    description: Generic table.
+relation_types: {}

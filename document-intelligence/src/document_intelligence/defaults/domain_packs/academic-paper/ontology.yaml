@@ -1,0 +1,37 @@
+version: 1
+object_types:
+  paper_title:
+    base_types:
+    - heading
+    description: Academic paper title.
+  abstract:
+    base_types:
+    - heading
+    - text
+    description: Abstract heading or content.
+  section_heading:
+    base_types:
+    - heading
+    description: Academic section heading.
+  citation:
+    base_types:
+    - text
+    description: In-text citation.
+  reference_entry:
+    base_types:
+    - text
+    - list
+    description: Bibliographic reference entry.
+  figure_caption:
+    base_types:
+    - text
+    - callout
+    description: Figure or table caption.
+relation_types:
+  caption_describes:
+    base_type: associated_with
+    source_types:
+    - figure_caption
+    target_types:
+    - section_heading
+    - abstract

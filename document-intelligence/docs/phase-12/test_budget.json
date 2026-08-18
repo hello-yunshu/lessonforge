@@ -1,0 +1,70 @@
+{
+  "phase": 12,
+  "passed": true,
+  "test_files": 57,
+  "tests_passed": 241,
+  "completed_batches": 4,
+  "batch_timeout_seconds": 120,
+  "total_budget_seconds": 600,
+  "wall_seconds": 60.24,
+  "records": [
+    {
+      "batch": 1,
+      "targets": [
+        "tests/campaign",
+        "tests/contract",
+        "tests/domain_pack_sdk",
+        "tests/domain_regression",
+        "tests/domain_runtime",
+        "tests/family",
+        "tests/freeze",
+        "tests/golden"
+      ],
+      "passed": true,
+      "timed_out": false,
+      "wall_seconds": 15.62,
+      "tests_passed": 61,
+      "tail": "_detector_service.py::test_family_detection_reference_blocks_pack_uninstall\n0.19s call     tests/domain_runtime/test_engine_service.py::test_domain_failure_without_fallback_is_wrapped_and_sanitized\n0.19s call     tests/campaign/test_campaign.py::test_step_cannot_complete_without_evidence_or_duplicate_link\n0.18s call     tests/domain_runtime/test_builtins.py::test_builtin_catalog_and_install_are_complete\n0.18s call     tests/domain_runtime/test_engine_service.py::test_domain_failure_falls_back_without_assertions\n0.17s call     tests/domain_regression/test_cross_domain.py::test_cross_domain_suite_preserves_core_schema_and_isolates_domains\n0.17s call     tests/domain_runtime/test_engine_service.py::test_referenced_pack_cannot_be_uninstalled\n0.17s call     tests/domain_runtime/test_engine_service.py::test_domain_apply_is_isolated_and_evidence_backed\n0.16s call     tests/domain_runtime/test_result_store.py::test_result_store_commit_is_idempotent_and_lists_ids\n0.15s call     tests/domain_runtime/test_engine_service.py::test_historical_domain_result_remains_readable_after_engine_upgrade\n0.14s call     tests/campaign/test_campaign.py::test_concurrent_claims_fail_closed\n61 passed in 12.13s\n"
+    },
+    {
+      "batch": 2,
+      "targets": [
+        "tests/matching",
+        "tests/mlops",
+        "tests/production",
+        "tests/review",
+        "tests/rill"
+      ],
+      "passed": true,
+      "timed_out": false,
+      "wall_seconds": 19.66,
+      "tests_passed": 87,
+      "tail": "tching/test_standard_matching.py::test_unknown_image_is_not_forced_to_standard\n0.42s call     tests/matching/test_standard_matching.py::test_tampered_feature_file_fails_closed\n0.37s call     tests/rill/test_assist.py::test_high_resolution_and_specialist_parser_routes\n0.36s call     tests/rill/test_assist.py::test_retry_failure_isolated_and_parser_suspension_guards\n0.36s call     tests/mlops/test_lifecycle.py::test_candidate_shadow_champion_and_one_click_rollback\n0.35s call     tests/matching/test_standard_matching.py::test_safe_reuse_also_requires_total_score_threshold\n0.32s call     tests/matching/test_standard_matching.py::test_tampered_standard_page_image_fails_when_verified\n0.31s call     tests/matching/test_standard_matching.py::test_standard_manifest_rejects_pipeline_mismatch\n0.30s call     tests/review/test_labelu_bridge.py::test_labelu_export_is_idempotent\n0.29s call     tests/review/test_labelu_bridge.py::test_labelu_export_and_review_submission\n0.27s call     tests/rill/test_replay_and_drift.py::test_drift_alert_identity_binds_threshold_and_detects_tampering\n0.26s call     tests/review/test_labelu_bridge.py::test_review_rejects_stale_or_unknown_labels\n87 passed in 16.34s\n"
+    },
+    {
+      "batch": 3,
+      "targets": [
+        "tests/security",
+        "tests/structure",
+        "tests/unit"
+      ],
+      "passed": true,
+      "timed_out": false,
+      "wall_seconds": 6.18,
+      "tests_passed": 33,
+      "tail": ".................................                                        [100%]\n============================= slowest 20 durations =============================\n0.53s call     tests/security/test_release_candidate_security.py::test_rate_limit_is_enforced_per_tenant\n0.26s call     tests/security/test_release_candidate_security.py::test_run_entitlement_is_tenant_scoped\n0.25s call     tests/security/test_release_candidate_security.py::test_production_api_requires_auth_and_hides_docs\n0.03s setup    tests/security/test_release_candidate_security.py::test_production_settings_fail_closed\n0.03s call     tests/structure/test_service_source_binding.py::test_structure_service_requires_intact_source_run\n0.01s call     tests/structure/test_store_and_models.py::test_structure_store_detects_result_tampering\n\n(14 durations < 0.005s hidden.  Use -vv to show these durations.)\n33 passed, 1 warning in 2.85s\n"
+    },
+    {
+      "batch": 4,
+      "targets": [
+        "tests/integration"
+      ],
+      "passed": true,
+      "timed_out": false,
+      "wall_seconds": 18.78,
+      "tests_passed": 60,
+      "tail": "s/integration/test_phase5_rill_api.py::test_rill_shadow_api_lifecycle\n0.36s call     tests/integration/test_phase9_freeze_api.py::test_freeze_endpoint_reports_exact_contract_match\n0.35s call     tests/integration/test_phase7_mlops_api.py::test_mlops_api_defaults_to_deny_and_release_is_separate\n0.28s call     tests/integration/test_api.py::test_parse_and_fetch_run\n0.24s call     tests/integration/test_phase2_api.py::test_standard_registration_is_disabled_by_default\n0.23s call     tests/integration/test_phase3_structure_api.py::test_structure_recovery_and_fetch_through_api\n0.22s call     tests/integration/test_phase11_campaign_api.py::test_campaign_bundle_import_requires_production_write_permission\n0.22s call     tests/integration/test_phase9_cli.py::test_freeze_verify_cli\n0.22s call     tests/integration/test_phase3_cli.py::test_cli_structure_recover_and_get\n0.22s call     tests/integration/test_api.py::test_health_and_parser_listing\n0.21s call     tests/integration/test_phase10_production_api.py::test_production_api_records_blocked_evidence_with_token\n0.21s call     tests/integration/test_phase7_mlops_api.py::test_dataset_snapshot_api_is_hash_only_and_immutable\n60 passed in 15.29s\n"
+    }
+  ],
+  "note": "Each batch was executed independently under an external 120-second command budget."
+}

@@ -1,0 +1,290 @@
+{
+  "$defs": {
+    "ParseErrorRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "pattern": "^P[0-2]$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "parser_id": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Parser Id",
+          "type": "string"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "severity",
+        "parser_id"
+      ],
+      "title": "ParseErrorRecord",
+      "type": "object"
+    },
+    "ParseWarning": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "default": "P2",
+          "pattern": "^P[0-2]$",
+          "title": "Severity",
+          "type": "string"
+        },
+        "page_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Id"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ParseWarning",
+      "type": "object"
+    },
+    "ResourceUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "minimum": 0.0,
+          "title": "Duration Ms",
+          "type": "number"
+        },
+        "max_rss_kb": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Rss Kb"
+        },
+        "input_bytes": {
+          "minimum": 0,
+          "title": "Input Bytes",
+          "type": "integer"
+        },
+        "output_elements": {
+          "minimum": 0,
+          "title": "Output Elements",
+          "type": "integer"
+        },
+        "estimated_cost_usd": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Estimated Cost Usd",
+          "type": "number"
+        }
+      },
+      "required": [
+        "duration_ms",
+        "input_bytes",
+        "output_elements"
+      ],
+      "title": "ResourceUsage",
+      "type": "object"
+    },
+    "RunStatus": {
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "failed"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "parse_run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Parse Run Id",
+      "type": "string"
+    },
+    "input_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Input Sha256",
+      "type": "string"
+    },
+    "parser_id": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Parser Id",
+      "type": "string"
+    },
+    "parser_version": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "parser_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Parser Digest",
+      "type": "string"
+    },
+    "config_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Digest",
+      "type": "string"
+    },
+    "request_context_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Request Context Digest",
+      "type": "string"
+    },
+    "domain_pack": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Domain Pack"
+    },
+    "rule_pack": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rule Pack"
+    },
+    "rill_decision_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rill Decision Id"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "finished_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Finished At"
+    },
+    "semantic_output_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Semantic Output Digest"
+    },
+    "resource_usage": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResourceUsage"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "warnings": {
+      "items": {
+        "$ref": "#/$defs/ParseWarning"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "errors": {
+      "items": {
+        "$ref": "#/$defs/ParseErrorRecord"
+      },
+      "title": "Errors",
+      "type": "array"
+    }
+  },
+  "required": [
+    "parse_run_id",
+    "input_sha256",
+    "parser_id",
+    "parser_version",
+    "parser_digest",
+    "config_digest",
+    "request_context_digest",
+    "status",
+    "started_at"
+  ],
+  "title": "ParseRun",
+  "type": "object"
+}

@@ -1,0 +1,14 @@
+version: 1
+labels:
+  paper_title:
+    en: Paper Title
+  abstract:
+    en: Abstract
+  section_heading:
+    en: Section Heading
+  citation:
+    en: Citation
+  reference_entry:
+    en: Reference Entry
+  figure_caption:
+    en: Figure Caption

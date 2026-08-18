@@ -1,0 +1,107 @@
+{
+  "phase": 1,
+  "generated_by": "scripts/run_phase1_benchmark.py",
+  "native_pdf": [
+    {
+      "fixture": "native_text.pdf",
+      "family": "native-text-report",
+      "input_bytes": 3992,
+      "pages": 1,
+      "elements": 15,
+      "text_elements": 15,
+      "image_elements": 0,
+      "warnings": [],
+      "median_duration_ms": 6.17,
+      "p95_duration_ms": 7.223,
+      "semantic_digest_reproducible": true
+    },
+    {
+      "fixture": "scanned_image.pdf",
+      "family": "image-only-scan",
+      "input_bytes": 18708,
+      "pages": 1,
+      "elements": 1,
+      "text_elements": 0,
+      "image_elements": 1,
+      "warnings": [
+        "EMPTY_NATIVE_TEXT"
+      ],
+      "median_duration_ms": 85.717,
+      "p95_duration_ms": 90.105,
+      "semantic_digest_reproducible": true
+    },
+    {
+      "fixture": "mixed_layout.pdf",
+      "family": "mixed-text-image",
+      "input_bytes": 6567,
+      "pages": 2,
+      "elements": 6,
+      "text_elements": 5,
+      "image_elements": 1,
+      "warnings": [],
+      "median_duration_ms": 8.004,
+      "p95_duration_ms": 8.599,
+      "semantic_digest_reproducible": true
+    }
+  ],
+  "parser_health": [
+    {
+      "parser_id": "mineru-benchmark",
+      "available": false,
+      "enabled": false,
+      "version": "3.3",
+      "artifact_digest": null,
+      "reason": "disabled by configuration",
+      "capabilities": [
+        "application/pdf",
+        "image/*",
+        "normalized-gateway"
+      ]
+    },
+    {
+      "parser_id": "native-pdf",
+      "available": true,
+      "enabled": true,
+      "version": "5.9.0",
+      "artifact_digest": "b171f3401bb9f0d06dd483cd32bb752c0992e99c305a123b8117ffa7a9fe17fa",
+      "reason": null,
+      "capabilities": [
+        "application/pdf",
+        "native-text",
+        "images",
+        "coordinates",
+        "reading-order"
+      ]
+    },
+    {
+      "parser_id": "opendoc",
+      "available": false,
+      "enabled": false,
+      "version": "0.1.5",
+      "artifact_digest": null,
+      "reason": "disabled by configuration",
+      "capabilities": [
+        "application/pdf",
+        "image/*",
+        "normalized-gateway"
+      ]
+    },
+    {
+      "parser_id": "paddle",
+      "available": false,
+      "enabled": false,
+      "version": "3.7.0",
+      "artifact_digest": null,
+      "reason": "disabled by configuration",
+      "capabilities": [
+        "application/pdf",
+        "image/*",
+        "normalized-gateway"
+      ]
+    }
+  ],
+  "limitations": [
+    "PaddleOCR/OpenDoc/MinerU model runtimes are not installed in this offline execution environment.",
+    "Their gateway contracts are covered by mocked contract tests; accuracy benchmarking requires pinned external artifacts."
+  ]
+}

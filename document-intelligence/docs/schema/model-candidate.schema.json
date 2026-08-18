@@ -1,0 +1,96 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "model_family": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Model Family",
+      "type": "string"
+    },
+    "model_version": {
+      "maxLength": 48,
+      "minLength": 1,
+      "title": "Model Version",
+      "type": "string"
+    },
+    "model_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Artifact Sha256",
+      "type": "string"
+    },
+    "source_commit_sha": {
+      "pattern": "^[0-9a-f]{7,64}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "mlflow_record_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Mlflow Record Id",
+      "type": "string"
+    },
+    "train_snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Train Snapshot Id",
+      "type": "string"
+    },
+    "validation_snapshot_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Validation Snapshot Id"
+    },
+    "baseline_candidate_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Candidate Id"
+    },
+    "candidate_only": {
+      "const": true,
+      "default": true,
+      "title": "Candidate Only",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "candidate_id",
+    "model_family",
+    "model_version",
+    "model_artifact_sha256",
+    "source_commit_sha",
+    "mlflow_record_id",
+    "train_snapshot_id"
+  ],
+  "title": "ModelCandidate",
+  "type": "object"
+}

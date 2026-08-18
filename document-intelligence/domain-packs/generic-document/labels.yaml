@@ -1,0 +1,6 @@
+version: 1
+labels:
+  section: {zh-CN: 章节, en: Section}
+  paragraph: {zh-CN: 段落, en: Paragraph}
+  illustration: {zh-CN: 插图, en: Illustration}
+  tabular_content: {zh-CN: 表格内容, en: Tabular content}

@@ -1,0 +1,348 @@
+{
+  "$defs": {
+    "BoundingBox": {
+      "additionalProperties": false,
+      "properties": {
+        "x1": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "X1",
+          "type": "number"
+        },
+        "y1": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Y1",
+          "type": "number"
+        },
+        "x2": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "X2",
+          "type": "number"
+        },
+        "y2": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Y2",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x1",
+        "y1",
+        "x2",
+        "y2"
+      ],
+      "title": "BoundingBox",
+      "type": "object"
+    },
+    "MatchCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "standard_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Standard Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "page_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Page Id",
+          "type": "string"
+        },
+        "page_index": {
+          "minimum": 0,
+          "title": "Page Index",
+          "type": "integer"
+        },
+        "scores": {
+          "$ref": "#/$defs/MatchComponentScores"
+        },
+        "evidence": {
+          "$ref": "#/$defs/MatchEvidence"
+        },
+        "standard_document_ref": {
+          "title": "Standard Document Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "standard_id",
+        "document_id",
+        "page_id",
+        "page_index",
+        "scores",
+        "evidence",
+        "standard_document_ref"
+      ],
+      "title": "MatchCandidate",
+      "type": "object"
+    },
+    "MatchComponentScores": {
+      "additionalProperties": false,
+      "properties": {
+        "combined": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Combined",
+          "type": "number"
+        },
+        "local_feature": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Local Feature",
+          "type": "number"
+        },
+        "perceptual_hash": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Perceptual Hash",
+          "type": "number"
+        },
+        "aspect_ratio": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Aspect Ratio",
+          "type": "number"
+        },
+        "text": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Text",
+          "type": "number"
+        }
+      },
+      "required": [
+        "combined",
+        "local_feature",
+        "perceptual_hash",
+        "aspect_ratio",
+        "text"
+      ],
+      "title": "MatchComponentScores",
+      "type": "object"
+    },
+    "MatchDecision": {
+      "enum": [
+        "safe_standard_reuse",
+        "ambiguous",
+        "no_match"
+      ],
+      "title": "MatchDecision",
+      "type": "string"
+    },
+    "MatchEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "query_image_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Query Image Sha256",
+          "type": "string"
+        },
+        "matched_region": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoundingBox"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "homography": {
+          "anyOf": [
+            {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Homography"
+        },
+        "local_matches": {
+          "minimum": 0,
+          "title": "Local Matches",
+          "type": "integer"
+        },
+        "local_inliers": {
+          "minimum": 0,
+          "title": "Local Inliers",
+          "type": "integer"
+        },
+        "inlier_ratio": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Inlier Ratio",
+          "type": "number"
+        },
+        "query_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Query Coverage",
+          "type": "number"
+        },
+        "candidate_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Candidate Coverage",
+          "type": "number"
+        },
+        "projected_area_ratio": {
+          "minimum": 0.0,
+          "title": "Projected Area Ratio",
+          "type": "number"
+        },
+        "transform_plausible": {
+          "default": false,
+          "title": "Transform Plausible",
+          "type": "boolean"
+        },
+        "full_page_hash_gate": {
+          "default": false,
+          "title": "Full Page Hash Gate",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "query_image_sha256",
+        "local_matches",
+        "local_inliers",
+        "inlier_ratio",
+        "query_coverage",
+        "candidate_coverage",
+        "projected_area_ratio"
+      ],
+      "title": "MatchEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "$ref": "#/$defs/MatchDecision"
+    },
+    "matcher_version": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Matcher Version",
+      "type": "string"
+    },
+    "matcher_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Matcher Digest",
+      "type": "string"
+    },
+    "fingerprint_pipeline_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Fingerprint Pipeline Digest",
+      "type": "string"
+    },
+    "index_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Index Digest",
+      "type": "string"
+    },
+    "query_page_index": {
+      "minimum": 0,
+      "title": "Query Page Index",
+      "type": "integer"
+    },
+    "threshold": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Threshold",
+      "type": "number"
+    },
+    "local_threshold": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Local Threshold",
+      "type": "number"
+    },
+    "min_margin": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Min Margin",
+      "type": "number"
+    },
+    "min_local_inliers": {
+      "minimum": 4,
+      "title": "Min Local Inliers",
+      "type": "integer"
+    },
+    "top1_score": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Top1 Score",
+      "type": "number"
+    },
+    "top2_score": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Top2 Score",
+      "type": "number"
+    },
+    "margin": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Margin",
+      "type": "number"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/MatchCandidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "safe_standard_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Safe Standard Ref"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision",
+    "matcher_version",
+    "matcher_digest",
+    "fingerprint_pipeline_digest",
+    "index_digest",
+    "query_page_index",
+    "threshold",
+    "local_threshold",
+    "min_margin",
+    "min_local_inliers",
+    "top1_score",
+    "top2_score",
+    "margin",
+    "candidates",
+    "reason"
+  ],
+  "title": "MatchResult",
+  "type": "object"
+}

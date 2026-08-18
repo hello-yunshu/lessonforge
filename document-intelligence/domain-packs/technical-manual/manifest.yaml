@@ -1,0 +1,34 @@
+format_version: 1
+id: technical-manual
+version: 0.1.0
+core_schema: '>=1.1,<2.0'
+engine: '>=0.4,<2.0'
+supported_languages:
+- zh-CN
+- en
+capabilities:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+permissions:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+entrypoints:
+  rules: rules/main.yaml
+  validators: validators/main.yaml
+  review: review/labelu.yaml
+  family: family.yaml
+file_digests:
+  family.yaml: da52cab9c4543121c128aa61b77d07b6094835cddde22f801bda6521b50e8a7b
+  labels.yaml: ca1f7dc38d29030c90143353e0efed29a02fed646c23966c152dbdf64fe6cfcd
+  ontology.yaml: 5efc300c93d330ae41cea747036e58e04c826f17b19a45abd0db3336b2b3c308
+  review/labelu.yaml: 9bd6ddfb51217ed6b3a1ab3b67e460388539fb6ae03caaed62da5211ac4f4703
+  rules/main.yaml: b3a16ec9f1a5ef01a926350098529353491173b0941f8014f651db4068c2fce6
+  validators/main.yaml: 8df15566d02b96acaf675b4c153af37e94bf5f70f389b61a4fd6fcefeba838c1
+signing_key_id: null
+signature: null

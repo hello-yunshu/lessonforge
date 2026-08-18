@@ -1,0 +1,26 @@
+{
+  "project_version": "1.0.1",
+  "production_qualified": false,
+  "status": "blocked",
+  "evidence_scope": "offline engineering release environment",
+  "blocking_reasons": [
+    "REAL_GOLD_AND_CHALLENGE_DATASETS_MISSING",
+    "FIXED_EXTERNAL_PARSER_ARTIFACT_EVIDENCE_MISSING",
+    "168_HOUR_SOAK_EVIDENCE_MISSING",
+    "FORMAL_RUFF_AND_MYPY_CI_EVIDENCE_MISSING",
+    "PYMUPDF_LICENSE_RESOLUTION_MISSING",
+    "REAL_PILOT_EVIDENCE_MISSING"
+  ],
+  "automatic_release_authorized": false,
+  "bounded_auto": false,
+  "engineering_validation": {
+    "automated_tests_passed": 216,
+    "combined_coverage_percent": 80.4,
+    "phase10_deterministic_gate_cases": "10/10",
+    "source_manifest_entries": 464,
+    "release_zip_files": 465,
+    "ruff_executed_locally": false,
+    "mypy_executed_locally": false,
+    "cyclonedx_executed_locally": false
+  }
+}

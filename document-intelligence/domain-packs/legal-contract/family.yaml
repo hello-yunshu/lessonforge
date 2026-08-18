@@ -1,0 +1,75 @@
+version: 1
+family_id: legal-contract
+supported_mime_types:
+- application/pdf
+- image/png
+- image/jpeg
+required_base_types: {}
+aliases:
+- agreement
+- legal-agreement
+priority: 15
+min_score: 0.45
+min_margin: 0.1
+min_positive_cues: 2
+positive_cues:
+- id: contract-title-cue
+  terms:
+  - 合同
+  - 协议
+  - Agreement
+  - Contract
+  weight: 1.8
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: contract-party-a-cue
+  terms:
+  - 甲方
+  - Party A
+  weight: 1.5
+  match_mode: starts_with
+  base_types:
+  - heading
+  - text
+  required: true
+- id: contract-party-b-cue
+  terms:
+  - 乙方
+  - Party B
+  weight: 1.5
+  match_mode: starts_with
+  base_types:
+  - heading
+  - text
+  required: true
+- id: contract-sign-cue
+  terms:
+  - 签字
+  - 盖章
+  - Signature
+  weight: 1.0
+  match_mode: contains
+  base_types:
+  - text
+  - input_area
+negative_cues:
+- id: contract-paper-negative
+  terms:
+  - Abstract
+  - References
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: contract-exam-negative
+  terms:
+  - 准考证号
+  - 选择题
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text

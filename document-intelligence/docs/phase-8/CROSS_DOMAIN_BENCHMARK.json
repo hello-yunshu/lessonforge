@@ -1,0 +1,112 @@
+{
+  "schema_version": "0.8",
+  "suite_digest": "df09b7018bdf78e6b75890a4ccd8ae01b7068442fb1d8af54ca190325369a3e4",
+  "engine_digest": "000984af58afc3197dc674d156558cd2514696dfc57e8800e3e15dfca3a39f7d",
+  "detector_digest": "b6755b43357f7a46be5940c52504c640ca4a062874cc602470852fba6a7c35ca",
+  "passed": true,
+  "total_cases": 5,
+  "passed_cases": 5,
+  "family_accuracy": 1.0,
+  "core_schema_unchanged": true,
+  "bounded_auto": false,
+  "cases": [
+    {
+      "case_id": "education-content-zh",
+      "passed": true,
+      "expected_pack_id": "education-content",
+      "detected_pack_id": "education-content",
+      "detected_family_id": "education-content",
+      "annotation_types": [
+        "practice",
+        "reflection_prompt",
+        "speech",
+        "worked_example"
+      ],
+      "error_findings": 0,
+      "family_score": 1.0,
+      "source_unchanged": true,
+      "evidence_complete": true,
+      "isolated_results": true,
+      "failure_codes": []
+    },
+    {
+      "case_id": "examination-paper-zh",
+      "passed": true,
+      "expected_pack_id": "examination-paper",
+      "detected_pack_id": "examination-paper",
+      "detected_family_id": "examination-paper",
+      "annotation_types": [
+        "candidate_identity",
+        "option",
+        "question",
+        "score_marker"
+      ],
+      "error_findings": 0,
+      "family_score": 1.0,
+      "source_unchanged": true,
+      "evidence_complete": true,
+      "isolated_results": true,
+      "failure_codes": []
+    },
+    {
+      "case_id": "academic-paper-en",
+      "passed": true,
+      "expected_pack_id": "academic-paper",
+      "detected_pack_id": "academic-paper",
+      "detected_family_id": "academic-paper",
+      "annotation_types": [
+        "abstract",
+        "citation",
+        "figure_caption",
+        "reference_entry",
+        "section_heading"
+      ],
+      "error_findings": 0,
+      "family_score": 0.8275862068965517,
+      "source_unchanged": true,
+      "evidence_complete": true,
+      "isolated_results": true,
+      "failure_codes": []
+    },
+    {
+      "case_id": "legal-contract-zh",
+      "passed": true,
+      "expected_pack_id": "legal-contract",
+      "detected_pack_id": "legal-contract",
+      "detected_family_id": "legal-contract",
+      "annotation_types": [
+        "clause",
+        "date_term",
+        "monetary_term",
+        "party",
+        "signature_block"
+      ],
+      "error_findings": 0,
+      "family_score": 1.0,
+      "source_unchanged": true,
+      "evidence_complete": true,
+      "isolated_results": true,
+      "failure_codes": []
+    },
+    {
+      "case_id": "technical-manual-en",
+      "passed": true,
+      "expected_pack_id": "technical-manual",
+      "detected_pack_id": "technical-manual",
+      "detected_family_id": "technical-manual",
+      "annotation_types": [
+        "component",
+        "procedure_step",
+        "specification",
+        "troubleshooting_item",
+        "warning"
+      ],
+      "error_findings": 0,
+      "family_score": 1.0,
+      "source_unchanged": true,
+      "evidence_complete": true,
+      "isolated_results": true,
+      "failure_codes": []
+    }
+  ]
+}

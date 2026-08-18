@@ -1,0 +1,26 @@
+version: 1
+object_types:
+  worked_example:
+    base_types: [heading, text, callout]
+    description: A worked or guided example.
+  practice:
+    base_types: [heading, text, callout, input_area]
+    description: A practice or exercise prompt.
+  reflection_prompt:
+    base_types: [heading, text, callout]
+    description: A reflection or inquiry prompt.
+  learner_character:
+    base_types: [character]
+    description: A learner-like character marker.
+  speech:
+    base_types: [callout]
+    description: A speech or thought callout.
+relation_types:
+  speaks:
+    base_type: associated_with
+    source_types: [learner_character]
+    target_types: [speech]
+  practice_for:
+    base_type: follows
+    source_types: [worked_example]
+    target_types: [practice]

@@ -1,0 +1,56 @@
+version: 1
+object_rules:
+- id: paper-abstract
+  domain_type: abstract
+  base_types:
+  - heading
+  - text
+  text_starts_with_any:
+  - 摘要
+  - Abstract
+  require_text: true
+  confidence: 0.92
+- id: paper-section
+  domain_type: section_heading
+  base_types:
+  - heading
+  confidence: 0.82
+- id: paper-reference
+  domain_type: reference_entry
+  base_types:
+  - text
+  - list
+  text_starts_with_any:
+  - '[1]'
+  - '[2]'
+  - '[3]'
+  - '[4]'
+  - '[5]'
+  require_text: true
+  confidence: 0.84
+- id: paper-citation
+  domain_type: citation
+  base_types:
+  - text
+  text_contains_any:
+  - ' et al.'
+  - （202
+  - (202
+  - '[1]'
+  - '[2]'
+  require_text: true
+  confidence: 0.72
+- id: paper-caption
+  domain_type: figure_caption
+  base_types:
+  - text
+  - callout
+  text_starts_with_any:
+  - 图
+  - 表
+  - Figure
+  - Fig.
+  - Table
+  require_text: true
+  confidence: 0.88
+relation_rules: []

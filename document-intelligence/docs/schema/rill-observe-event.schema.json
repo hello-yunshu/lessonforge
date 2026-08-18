@@ -1,0 +1,358 @@
+{
+  "$defs": {
+    "DomainSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "succeeded",
+            "fallback_generic"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "annotations": {
+          "minimum": 0,
+          "title": "Annotations",
+          "type": "integer"
+        },
+        "relations": {
+          "minimum": 0,
+          "title": "Relations",
+          "type": "integer"
+        },
+        "validation_findings": {
+          "minimum": 0,
+          "title": "Validation Findings",
+          "type": "integer"
+        },
+        "error_findings": {
+          "minimum": 0,
+          "title": "Error Findings",
+          "type": "integer"
+        },
+        "evidence_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Evidence Coverage",
+          "type": "number"
+        },
+        "fallback_used": {
+          "title": "Fallback Used",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "annotations",
+        "relations",
+        "validation_findings",
+        "error_findings",
+        "evidence_coverage",
+        "fallback_used"
+      ],
+      "title": "DomainSignals",
+      "type": "object"
+    },
+    "MatchSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "enum": [
+            "safe_standard_reuse",
+            "ambiguous",
+            "no_match"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "top1_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Top1 Score",
+          "type": "number"
+        },
+        "margin": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Margin",
+          "type": "number"
+        },
+        "candidate_count": {
+          "minimum": 0,
+          "title": "Candidate Count",
+          "type": "integer"
+        },
+        "safe_standard_reuse": {
+          "title": "Safe Standard Reuse",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "decision",
+        "top1_score",
+        "margin",
+        "candidate_count",
+        "safe_standard_reuse"
+      ],
+      "title": "MatchSignals",
+      "type": "object"
+    },
+    "ParseSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "page_count": {
+          "minimum": 0,
+          "title": "Page Count",
+          "type": "integer"
+        },
+        "element_count": {
+          "minimum": 0,
+          "title": "Element Count",
+          "type": "integer"
+        },
+        "average_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Average Confidence",
+          "type": "number"
+        },
+        "minimum_confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Minimum Confidence",
+          "type": "number"
+        },
+        "p0_warnings": {
+          "minimum": 0,
+          "title": "P0 Warnings",
+          "type": "integer"
+        },
+        "p1_warnings": {
+          "minimum": 0,
+          "title": "P1 Warnings",
+          "type": "integer"
+        },
+        "p2_warnings": {
+          "minimum": 0,
+          "title": "P2 Warnings",
+          "type": "integer"
+        },
+        "empty_native_text": {
+          "default": false,
+          "title": "Empty Native Text",
+          "type": "boolean"
+        },
+        "duration_ms": {
+          "minimum": 0.0,
+          "title": "Duration Ms",
+          "type": "number"
+        },
+        "estimated_cost_usd": {
+          "minimum": 0.0,
+          "title": "Estimated Cost Usd",
+          "type": "number"
+        }
+      },
+      "required": [
+        "page_count",
+        "element_count",
+        "average_confidence",
+        "minimum_confidence",
+        "p0_warnings",
+        "p1_warnings",
+        "p2_warnings",
+        "duration_ms",
+        "estimated_cost_usd"
+      ],
+      "title": "ParseSignals",
+      "type": "object"
+    },
+    "ShadowSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "parse": {
+          "$ref": "#/$defs/ParseSignals"
+        },
+        "matching": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MatchSignals"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "structure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StructureSignals"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "domain": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DomainSignals"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "parse"
+      ],
+      "title": "ShadowSignals",
+      "type": "object"
+    },
+    "StructureSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "reading_order_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Reading Order Coverage",
+          "type": "number"
+        },
+        "relation_evidence_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Relation Evidence Coverage",
+          "type": "number"
+        },
+        "consistency_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Consistency Score",
+          "type": "number"
+        },
+        "diagnostics_info": {
+          "minimum": 0,
+          "title": "Diagnostics Info",
+          "type": "integer"
+        },
+        "diagnostics_warning": {
+          "minimum": 0,
+          "title": "Diagnostics Warning",
+          "type": "integer"
+        },
+        "diagnostics_error": {
+          "minimum": 0,
+          "title": "Diagnostics Error",
+          "type": "integer"
+        },
+        "cross_page_relations": {
+          "minimum": 0,
+          "title": "Cross Page Relations",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "reading_order_coverage",
+        "relation_evidence_coverage",
+        "consistency_score",
+        "diagnostics_info",
+        "diagnostics_warning",
+        "diagnostics_error",
+        "cross_page_relations"
+      ],
+      "title": "StructureSignals",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "event_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "parse_run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Parse Run Id",
+      "type": "string"
+    },
+    "parser_id": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Parser Id",
+      "type": "string"
+    },
+    "document_family": {
+      "anyOf": [
+        {
+          "maxLength": 127,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Document Family"
+    },
+    "structure_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Structure Id"
+    },
+    "domain_result_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Domain Result Id"
+    },
+    "signals": {
+      "$ref": "#/$defs/ShadowSignals"
+    },
+    "shadow_only": {
+      "const": true,
+      "default": true,
+      "title": "Shadow Only",
+      "type": "boolean"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "parse_run_id",
+    "parser_id",
+    "signals"
+  ],
+  "title": "RillObserveEvent",
+  "type": "object"
+}

@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "rollback_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Rollback Id",
+      "type": "string"
+    },
+    "from_candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "From Candidate Id",
+      "type": "string"
+    },
+    "to_candidate_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "To Candidate Id",
+      "type": "string"
+    },
+    "operator_id_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Operator Id Hash",
+      "type": "string"
+    },
+    "reason_code": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "alias_update_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Alias Update Id",
+      "type": "string"
+    },
+    "rolled_back_at": {
+      "format": "date-time",
+      "title": "Rolled Back At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rollback_id",
+    "from_candidate_id",
+    "to_candidate_id",
+    "operator_id_hash",
+    "reason_code",
+    "alias_update_id"
+  ],
+  "title": "RollbackRecord",
+  "type": "object"
+}

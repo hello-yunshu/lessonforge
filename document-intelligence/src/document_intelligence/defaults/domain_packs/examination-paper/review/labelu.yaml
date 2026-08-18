@@ -1,0 +1,11 @@
+version: 1
+adapter: labelu-json-v1
+object_labels:
+- question
+- option
+- score_marker
+- answer_area
+- candidate_identity
+relation_labels:
+- question_has_option
+- question_has_answer_area

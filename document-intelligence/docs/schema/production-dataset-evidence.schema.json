@@ -1,0 +1,172 @@
+{
+  "$defs": {
+    "EvidenceOrigin": {
+      "enum": [
+        "real",
+        "production-like",
+        "synthetic"
+      ],
+      "title": "EvidenceOrigin",
+      "type": "string"
+    },
+    "QualificationDatasetRole": {
+      "enum": [
+        "gold",
+        "challenge"
+      ],
+      "title": "QualificationDatasetRole",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dataset_name": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Dataset Name",
+      "type": "string"
+    },
+    "role": {
+      "$ref": "#/$defs/QualificationDatasetRole"
+    },
+    "origin": {
+      "$ref": "#/$defs/EvidenceOrigin"
+    },
+    "domain_families": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Domain Families",
+      "type": "array"
+    },
+    "document_count": {
+      "minimum": 1,
+      "title": "Document Count",
+      "type": "integer"
+    },
+    "page_count": {
+      "minimum": 1,
+      "title": "Page Count",
+      "type": "integer"
+    },
+    "modalities": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Modalities",
+      "type": "array"
+    },
+    "edge_cases": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Edge Cases",
+      "type": "array"
+    },
+    "manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "schema_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Schema Sha256",
+      "type": "string"
+    },
+    "content_snapshot_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Content Snapshot Sha256",
+      "type": "string"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "expert_approved": {
+      "default": false,
+      "title": "Expert Approved",
+      "type": "boolean"
+    },
+    "approver_id_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Approver Id Hash"
+    },
+    "privacy_reviewed": {
+      "default": false,
+      "title": "Privacy Reviewed",
+      "type": "boolean"
+    },
+    "license_reviewed": {
+      "default": false,
+      "title": "License Reviewed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset_name",
+    "role",
+    "origin",
+    "domain_families",
+    "document_count",
+    "page_count",
+    "modalities",
+    "edge_cases",
+    "manifest_sha256",
+    "schema_sha256",
+    "content_snapshot_sha256",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "DatasetQualificationEvidence",
+  "type": "object"
+}

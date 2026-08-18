@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "file": "native_text.pdf",
+      "family": "native-text-report",
+      "expected_pages": 1,
+      "expected_min_text_elements": 4
+    },
+    {
+      "file": "scanned_image.pdf",
+      "family": "image-only-scan",
+      "expected_pages": 1,
+      "expected_warning": "EMPTY_NATIVE_TEXT"
+    },
+    {
+      "file": "mixed_layout.pdf",
+      "family": "mixed-text-image",
+      "expected_pages": 2,
+      "expected_min_images": 1
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "phase": 4,
+  "passed": true,
+  "checks": [
+    {
+      "name": "phase4-benchmark-gate",
+      "passed": true
+    },
+    {
+      "name": "fallback-has-no-domain-assertions",
+      "passed": true
+    },
+    {
+      "name": "domain-annotation-evidence-complete",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-academic-paper",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-academic-paper",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-education-content",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-education-content",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-examination-paper",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-examination-paper",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-generic-document",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-generic-document",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-legal-contract",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-legal-contract",
+      "passed": true
+    },
+    {
+      "name": "default-pack-copy-technical-manual",
+      "passed": true
+    },
+    {
+      "name": "declarative-entrypoints-technical-manual",
+      "passed": true
+    },
+    {
+      "name": "verification-packs-present",
+      "passed": true
+    },
+    {
+      "name": "pack-install-load-activate",
+      "passed": true
+    },
+    {
+      "name": "phase4-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "rill-domain-signals-shadow-only",
+      "passed": true
+    },
+    {
+      "name": "release-domain-packs-clean",
+      "passed": true,
+      "files": []
+    },
+    {
+      "name": "release-domain-results-clean",
+      "passed": true,
+      "files": []
+    },
+    {
+      "name": "release-domain-reviews-clean",
+      "passed": true,
+      "files": []
+    },
+    {
+      "name": "release-domain-pack-state-empty",
+      "passed": true
+    },
+    {
+      "name": "phase4-errors-in-taxonomy",
+      "passed": true
+    }
+  ]
+}

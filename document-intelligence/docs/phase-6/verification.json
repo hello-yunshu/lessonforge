@@ -1,0 +1,63 @@
+{
+  "phase": 6,
+  "passed": true,
+  "checks": [
+    {
+      "name": "phase6-benchmark",
+      "passed": true
+    },
+    {
+      "name": "version-at-least-0.6.0",
+      "passed": true
+    },
+    {
+      "name": "assist-schema-0.6",
+      "passed": true
+    },
+    {
+      "name": "assist-default-disabled",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "assist-policy-copy-identical",
+      "passed": true
+    },
+    {
+      "name": "tier1-action-policy-frozen",
+      "passed": true
+    },
+    {
+      "name": "artifact-digests-required-by-policy",
+      "passed": true
+    },
+    {
+      "name": "runtime-inspect-artifact-attestation-required",
+      "passed": true
+    },
+    {
+      "name": "native-fallback-not-suspendable",
+      "passed": true
+    },
+    {
+      "name": "assist-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "no-production-assist-claim",
+      "passed": true
+    },
+    {
+      "name": "assist-errors-in-taxonomy",
+      "passed": true
+    },
+    {
+      "name": "release-assist-state-clean",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

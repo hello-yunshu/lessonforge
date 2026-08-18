@@ -1,0 +1,237 @@
+{
+  "phase": 12,
+  "version": "1.0.3-rc.1",
+  "audit_date": "2026-08-04",
+  "release_class": "restricted-single-node-self-hosted-release-candidate",
+  "production_stable": false,
+  "production_qualified": false,
+  "bounded_auto": false,
+  "tests": {
+    "passed": 241,
+    "files": 57,
+    "batch_wall_seconds": 60.24
+  },
+  "coverage": {
+    "combined_percent": 80.26102201155769,
+    "statement_percent": 84.79648511978777,
+    "branch_percent": 63.87058118633912
+  },
+  "audit_items": [
+    {
+      "id": "P0-01",
+      "title": "核心API统一认证、租户隔离和限流",
+      "status": "closed-for-rc",
+      "evidence": [
+        "production profile fail-closed",
+        "tenant entitlements",
+        "rate/concurrency limits",
+        "immutable access audit"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "title": "项目许可证与发行元数据",
+      "status": "closed",
+      "evidence": [
+        "Apache-2.0 LICENSE",
+        "NOTICE",
+        "wheel license metadata"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "title": "PyMuPDF发行许可耦合",
+      "status": "closed-for-base-rc",
+      "evidence": [
+        "native parser uses pypdf",
+        "PyMuPDF optional extra",
+        "production renderer disabled by default",
+        "license attestation required when enabled"
+      ]
+    },
+    {
+      "id": "P0-04",
+      "title": "真实多领域生产资格",
+      "status": "open-stable-blocker",
+      "evidence": [
+        "no qualified=true records bundled",
+        "real gold/challenge/soak/pilot evidence still required"
+      ]
+    },
+    {
+      "id": "P0-05",
+      "title": "可复现依赖、容器与构建",
+      "status": "partially-closed-for-rc",
+      "evidence": [
+        "exact direct dependencies",
+        "deterministic source ZIP",
+        "two normalized wheel builds equal",
+        "container base digest required"
+      ],
+      "remaining": [
+        "distributor-selected image digest and independent image build evidence",
+        "signed provenance"
+      ]
+    },
+    {
+      "id": "P0-06",
+      "title": "当前CI和发布入口",
+      "status": "partially-closed-for-rc",
+      "evidence": [
+        "single Phase 1-12 CI",
+        "current Makefile package target",
+        "pinned GitHub action commits"
+      ],
+      "remaining": [
+        "hosted CI run evidence",
+        "asset signature/provenance verification",
+        "container scan evidence"
+      ]
+    },
+    {
+      "id": "P0-07",
+      "title": "能力声明与解析器资格收窄",
+      "status": "closed-for-rc",
+      "evidence": [
+        "bounded capability endpoint",
+        "external parsers disabled until qualified",
+        "boundedAuto hard false"
+      ]
+    },
+    {
+      "id": "P1-01",
+      "title": "可观测性与就绪探针",
+      "status": "closed-for-rc",
+      "evidence": [
+        "JSON logs",
+        "livez/readiness",
+        "Prometheus text metrics"
+      ],
+      "remaining": [
+        "external alert routing is deployment responsibility"
+      ]
+    },
+    {
+      "id": "P1-02",
+      "title": "数据治理、保留、删除和静态加密",
+      "status": "open-restricted-boundary",
+      "evidence": [
+        "read access audit",
+        "tenant entitlements",
+        "backup verification"
+      ],
+      "remaining": [
+        "application-level lifecycle/deletion workflow",
+        "KMS integration",
+        "encrypted storage attestation"
+      ]
+    },
+    {
+      "id": "P1-03",
+      "title": "单节点存储边界",
+      "status": "closed",
+      "evidence": [
+        "production startup requires single_node_mode",
+        "multi-node explicitly unsupported"
+      ]
+    },
+    {
+      "id": "P1-04",
+      "title": "关键错误分支覆盖",
+      "status": "open-quality-blocker",
+      "evidence": [
+        "combined coverage 80.26%",
+        "statement coverage 84.80%",
+        "branch coverage 63.87%"
+      ],
+      "remaining": [
+        "overall branch target 75%",
+        "critical modules branch target 80%"
+      ]
+    },
+    {
+      "id": "P1-05",
+      "title": "测试超时和总时长治理",
+      "status": "closed-for-rc",
+      "evidence": [
+        "four CI batches with 120s limits",
+        "45s per-test timeout",
+        "241 tests in 60.24s measured batches"
+      ]
+    },
+    {
+      "id": "P1-06",
+      "title": "生产assert",
+      "status": "closed",
+      "evidence": [
+        "runtime assertions replaced",
+        "python -O gate passes"
+      ]
+    },
+    {
+      "id": "P1-07",
+      "title": "容器硬化",
+      "status": "closed-for-rc",
+      "evidence": [
+        "dockerignore",
+        "nonroot",
+        "read-only",
+        "cap_drop ALL",
+        "loopback port",
+        "resource limits",
+        "healthcheck"
+      ],
+      "remaining": [
+        "actual container vulnerability scan evidence"
+      ]
+    },
+    {
+      "id": "P1-08",
+      "title": "维护与发行治理文件",
+      "status": "closed",
+      "evidence": [
+        "SECURITY",
+        "SUPPORT",
+        "CHANGELOG",
+        "current project status"
+      ]
+    },
+    {
+      "id": "P1-09",
+      "title": "正式Ruff/Mypy/SBOM/漏洞扫描证据",
+      "status": "partially-closed-for-rc",
+      "evidence": [
+        "exact tools in CI",
+        "SPDX SBOM generated",
+        "secret scan passed"
+      ],
+      "remaining": [
+        "hosted Ruff/Mypy/pip-audit/container scan outputs unavailable locally"
+      ]
+    },
+    {
+      "id": "P2-01",
+      "title": "历史脚本和唯一默认入口",
+      "status": "closed-for-default-path",
+      "evidence": [
+        "Makefile package points to Phase12 builder",
+        "CI uses verify_all Phase1-12"
+      ],
+      "remaining": [
+        "historical scripts retained read-only for audit"
+      ]
+    }
+  ],
+  "decision": {
+    "restricted_rc": "pass-with-explicit-limitations",
+    "public_saas": "fail",
+    "production_stable": "fail",
+    "next_required_evidence": [
+      "hosted CI and security scan outputs",
+      "signed provenance",
+      "branch coverage hardening",
+      "real multi-domain qualification",
+      "168-hour soak and pilot"
+    ]
+  }
+}

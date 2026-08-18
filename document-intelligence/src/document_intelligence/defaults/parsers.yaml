@@ -1,0 +1,42 @@
+version: 1
+parsers:
+  native-pdf:
+    enabled: true
+    kind: native
+    package: pypdf
+    expected_version: "5.9.x"
+    priority: 10
+
+  paddle:
+    enabled: false
+    kind: http-normalized-gateway
+    endpoint_env: DI_PADDLE_ENDPOINT
+    health_path: /healthz
+    parse_path: /v1/parse
+    expected_version: "3.7.0"
+    required_artifact_sha256: null
+    priority: 20
+    notes: "启用前必须固定服务镜像/模型摘要。"
+
+  opendoc:
+    enabled: false
+    kind: http-normalized-gateway
+    endpoint_env: DI_OPENDOC_ENDPOINT
+    health_path: /healthz
+    parse_path: /v1/parse
+    expected_version: "0.1.5"
+    required_artifact_sha256: null
+    priority: 30
+    notes: "OpenDoc-0.1B 通过统一网关接入。"
+
+  mineru-benchmark:
+    enabled: false
+    kind: http-normalized-gateway
+    endpoint_env: DI_MINERU_ENDPOINT
+    health_path: /healthz
+    parse_path: /v1/parse
+    expected_version: "3.3"
+    required_artifact_sha256: null
+    priority: 90
+    benchmark_only: true
+    notes: "仅作对照，许可证须单独审核。"

@@ -1,0 +1,64 @@
+{
+  "phase": 9,
+  "passed": true,
+  "manifest_digest": "7b57ea9511ca142b24554f0146a76a9d58827d702dca0fa9686d7528981b7117",
+  "checks": [
+    {
+      "name": "phase9-benchmark",
+      "passed": true
+    },
+    {
+      "name": "version-in-frozen-1.x-range",
+      "passed": true
+    },
+    {
+      "name": "domain-runtime-1.0.0",
+      "passed": true
+    },
+    {
+      "name": "freeze-exact-match",
+      "passed": true
+    },
+    {
+      "name": "ten-contract-kinds",
+      "passed": true
+    },
+    {
+      "name": "engineering-not-production",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "freeze-copies-identical",
+      "passed": true
+    },
+    {
+      "name": "phase9-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "audit-identities-valid",
+      "passed": true
+    },
+    {
+      "name": "permission-defaults-closed",
+      "passed": true
+    },
+    {
+      "name": "rest-api-frozen-operations-present",
+      "passed": true
+    },
+    {
+      "name": "six-domain-packs-compatible",
+      "passed": true
+    },
+    {
+      "name": "release-runtime-state-clean",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

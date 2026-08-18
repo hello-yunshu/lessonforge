@@ -1,0 +1,108 @@
+{
+  "$defs": {
+    "ActiveLearningSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "evaluation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Evaluation Id",
+          "type": "string"
+        },
+        "parse_run_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Parse Run Id",
+          "type": "string"
+        },
+        "document_family": {
+          "default": "unknown",
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Document Family",
+          "type": "string"
+        },
+        "score": {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Score",
+          "type": "number"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Reason Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evaluation_id",
+        "parse_run_id",
+        "score",
+        "reason_codes"
+      ],
+      "title": "ActiveLearningSelection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.7",
+      "default": "0.7",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "batch_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "policy_version": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "source_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Digest",
+      "type": "string"
+    },
+    "max_items": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Items",
+      "type": "integer"
+    },
+    "max_per_family": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Per Family",
+      "type": "integer"
+    },
+    "selections": {
+      "items": {
+        "$ref": "#/$defs/ActiveLearningSelection"
+      },
+      "title": "Selections",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "batch_id",
+    "policy_version",
+    "source_digest",
+    "max_items",
+    "max_per_family",
+    "selections"
+  ],
+  "title": "ActiveLearningBatch",
+  "type": "object"
+}

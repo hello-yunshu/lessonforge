@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "phase": 9,
+  "project_version": "1.0.3rc1",
+  "manifest_digest": "7b57ea9511ca142b24554f0146a76a9d58827d702dca0fa9686d7528981b7117",
+  "contract_count": 10,
+  "audit_record_count": 25,
+  "api_operation_count": 51,
+  "cases": [
+    {
+      "name": "contract-exact-match",
+      "passed": true,
+      "details": {
+        "differences": 0
+      }
+    },
+    {
+      "name": "stable-version",
+      "passed": true,
+      "details": {
+        "project_version": "1.0.3rc1",
+        "domain_runtime_version": "1.0.0"
+      }
+    },
+    {
+      "name": "permission-default-closed",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "audit-identity-fields",
+      "passed": true,
+      "details": {
+        "record_count": 25
+      }
+    },
+    {
+      "name": "bounded-auto-disabled",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "production-qualification-separated",
+      "passed": true,
+      "details": {
+        "blocker_count": 5
+      }
+    },
+    {
+      "name": "rest-api-frozen-operations-present",
+      "passed": true,
+      "details": {
+        "operation_count": 78
+      }
+    },
+    {
+      "name": "domain-pack-compatibility",
+      "passed": true,
+      "details": {
+        "pack_count": 6
+      }
+    },
+    {
+      "name": "release-runtime-state-clean",
+      "passed": true,
+      "details": {
+        "files": []
+      }
+    },
+    {
+      "name": "freeze-doc-copy-identical",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "passed": true,
+  "bounded_auto": false,
+  "production_qualified": false
+}

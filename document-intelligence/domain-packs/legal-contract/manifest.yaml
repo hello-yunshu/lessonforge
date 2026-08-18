@@ -1,0 +1,34 @@
+format_version: 1
+id: legal-contract
+version: 0.1.0
+core_schema: '>=1.1,<2.0'
+engine: '>=0.4,<2.0'
+supported_languages:
+- zh-CN
+- en
+capabilities:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+permissions:
+- object-classification
+- relation-recovery
+- validation
+- review-export
+- family-detection-metadata
+entrypoints:
+  rules: rules/main.yaml
+  validators: validators/main.yaml
+  review: review/labelu.yaml
+  family: family.yaml
+file_digests:
+  family.yaml: 58117820bb09607a5c160a105c4f31b280e81141eba78aa71d0be3590b0e0265
+  labels.yaml: bf6ac645b461586893a1491bd529919c7bf330205d0c9e43d2bcdce084be85f5
+  ontology.yaml: 41900196ae27e0c629e51c30d9dc3aa0b80981248350fbbeebe7d20b93c4b44d
+  review/labelu.yaml: 425d2bb565694d3679eb6092b75e9d7dccf89c406a931fd4d0241cfd81a52586
+  rules/main.yaml: 4b19755680a54485fc7dbd265d11fd3ce37fec7a6eeee41179f5f8d211bdf9a3
+  validators/main.yaml: bab9c4765e8ae1ead09aebb2db46b9fba8bc2ce3bca9a3dab751bb5b5cd7c7c8
+signing_key_id: null
+signature: null

@@ -1,0 +1,237 @@
+{
+  "$defs": {
+    "Tier1AssistAction": {
+      "enum": [
+        "RETRY",
+        "REPROCESS_HIGH_RES",
+        "USE_SECONDARY_PARSER",
+        "USE_SPECIALIST_PARSER",
+        "HUMAN_REVIEW",
+        "QUARANTINE"
+      ],
+      "title": "Tier1AssistAction",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "feature_schema_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Schema Hash",
+      "type": "string"
+    },
+    "runtime_name": {
+      "maxLength": 96,
+      "minLength": 1,
+      "title": "Runtime Name",
+      "type": "string"
+    },
+    "runtime_version": {
+      "maxLength": 48,
+      "minLength": 1,
+      "title": "Runtime Version",
+      "type": "string"
+    },
+    "runtime_artifact_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Artifact Sha256"
+    },
+    "model_artifact_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Artifact Sha256"
+    },
+    "handler_artifact_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Handler Artifact Sha256"
+    },
+    "model_generation": {
+      "minimum": 0,
+      "title": "Model Generation",
+      "type": "integer"
+    },
+    "state_generation": {
+      "minimum": 0,
+      "title": "State Generation",
+      "type": "integer"
+    },
+    "replay_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Replay Digest",
+      "type": "string"
+    },
+    "total_feedback_count": {
+      "minimum": 0,
+      "title": "Total Feedback Count",
+      "type": "integer"
+    },
+    "eligible_feedback_count": {
+      "minimum": 0,
+      "title": "Eligible Feedback Count",
+      "type": "integer"
+    },
+    "expert_feedback_count": {
+      "minimum": 0,
+      "title": "Expert Feedback Count",
+      "type": "integer"
+    },
+    "production_like_feedback_count": {
+      "minimum": 0,
+      "title": "Production Like Feedback Count",
+      "type": "integer"
+    },
+    "rill_accuracy": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rill Accuracy"
+    },
+    "static_accuracy": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Static Accuracy"
+    },
+    "rill_accept_on_p0_p1": {
+      "minimum": 0,
+      "title": "Rill Accept On P0 P1",
+      "type": "integer"
+    },
+    "active_drift_alerts": {
+      "minimum": 0,
+      "title": "Active Drift Alerts",
+      "type": "integer"
+    },
+    "action_feedback_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/Tier1AssistAction"
+      },
+      "title": "Action Feedback Counts",
+      "type": "object"
+    },
+    "requested_actions": {
+      "items": {
+        "$ref": "#/$defs/Tier1AssistAction"
+      },
+      "minItems": 1,
+      "title": "Requested Actions",
+      "type": "array"
+    },
+    "qualified_actions": {
+      "items": {
+        "$ref": "#/$defs/Tier1AssistAction"
+      },
+      "title": "Qualified Actions",
+      "type": "array"
+    },
+    "qualified": {
+      "default": false,
+      "title": "Qualified",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "attestation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Attestation Ids",
+      "type": "array"
+    },
+    "test_only": {
+      "default": false,
+      "title": "Test Only",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "report_id",
+    "feature_schema_hash",
+    "runtime_name",
+    "runtime_version",
+    "model_generation",
+    "state_generation",
+    "replay_digest",
+    "total_feedback_count",
+    "eligible_feedback_count",
+    "expert_feedback_count",
+    "production_like_feedback_count",
+    "rill_accept_on_p0_p1",
+    "active_drift_alerts",
+    "requested_actions",
+    "expires_at"
+  ],
+  "title": "AssistQualificationReport",
+  "type": "object"
+}

@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "LicenseResolution": {
+      "enum": [
+        "commercial-license",
+        "open-source-compliant",
+        "replaced",
+        "unresolved"
+      ],
+      "title": "LicenseResolution",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "component": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Component",
+      "type": "string"
+    },
+    "resolution": {
+      "$ref": "#/$defs/LicenseResolution"
+    },
+    "distribution_mode": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "Distribution Mode",
+      "type": "string"
+    },
+    "license_name": {
+      "maxLength": 127,
+      "minLength": 1,
+      "title": "License Name",
+      "type": "string"
+    },
+    "legal_reviewed": {
+      "title": "Legal Reviewed",
+      "type": "boolean"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "component",
+    "resolution",
+    "distribution_mode",
+    "license_name",
+    "legal_reviewed",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "LicenseQualificationEvidence",
+  "type": "object"
+}

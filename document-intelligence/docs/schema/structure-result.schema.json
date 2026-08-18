@@ -1,0 +1,625 @@
+{
+  "$defs": {
+    "BoundingBox": {
+      "additionalProperties": false,
+      "properties": {
+        "x1": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "X1",
+          "type": "number"
+        },
+        "y1": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Y1",
+          "type": "number"
+        },
+        "x2": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "X2",
+          "type": "number"
+        },
+        "y2": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Y2",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x1",
+        "y1",
+        "x2",
+        "y2"
+      ],
+      "title": "BoundingBox",
+      "type": "object"
+    },
+    "ContentGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "group_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Group Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/GroupKind"
+        },
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "page_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Page Ids",
+          "type": "array"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "review_status": {
+          "$ref": "#/$defs/ReviewStatus",
+          "default": "unreviewed"
+        }
+      },
+      "required": [
+        "group_id",
+        "kind",
+        "element_ids",
+        "page_ids",
+        "confidence",
+        "evidence_ids"
+      ],
+      "title": "ContentGroup",
+      "type": "object"
+    },
+    "DiagnosticSeverity": {
+      "enum": [
+        "info",
+        "warning",
+        "error"
+      ],
+      "title": "DiagnosticSeverity",
+      "type": "string"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "producer": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "model_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Digest",
+          "type": "string"
+        },
+        "parse_run_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Parse Run Id",
+          "type": "string"
+        },
+        "source_page_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Page Id"
+        },
+        "bbox": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoundingBox"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_output_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw Output Ref"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "kind",
+        "producer",
+        "producer_version",
+        "model_digest",
+        "parse_run_id"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceKind": {
+      "enum": [
+        "native_extraction",
+        "model_prediction",
+        "rule_inference",
+        "human_review",
+        "external_reference"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "GroupKind": {
+      "enum": [
+        "text_cluster",
+        "visual_with_caption",
+        "table_with_caption",
+        "repeated_margin"
+      ],
+      "title": "GroupKind",
+      "type": "string"
+    },
+    "OutlineNode": {
+      "additionalProperties": false,
+      "properties": {
+        "node_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "heading_element_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Heading Element Id",
+          "type": "string"
+        },
+        "level": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "parent_node_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Node Id"
+        },
+        "page_index": {
+          "minimum": 0,
+          "title": "Page Index",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "content_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Content Element Ids",
+          "type": "array"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "review_status": {
+          "$ref": "#/$defs/ReviewStatus",
+          "default": "unreviewed"
+        }
+      },
+      "required": [
+        "node_id",
+        "heading_element_id",
+        "level",
+        "page_index",
+        "title",
+        "confidence",
+        "evidence_ids"
+      ],
+      "title": "OutlineNode",
+      "type": "object"
+    },
+    "Relation": {
+      "additionalProperties": false,
+      "properties": {
+        "relation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Relation Id",
+          "type": "string"
+        },
+        "source_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "target_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Target Id",
+          "type": "string"
+        },
+        "type": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Type",
+          "type": "string"
+        },
+        "domain_type": {
+          "anyOf": [
+            {
+              "maxLength": 127,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain Type"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "review_status": {
+          "$ref": "#/$defs/ReviewStatus",
+          "default": "unreviewed"
+        }
+      },
+      "required": [
+        "relation_id",
+        "source_id",
+        "target_id",
+        "type",
+        "confidence",
+        "evidence_ids"
+      ],
+      "title": "Relation",
+      "type": "object"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "unreviewed",
+        "reviewed",
+        "rejected"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    },
+    "StructureDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "maxLength": 127,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/DiagnosticSeverity"
+        },
+        "message": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "page_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Id"
+        },
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Element Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "title": "StructureDiagnostic",
+      "type": "object"
+    },
+    "StructureMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "total_elements": {
+          "minimum": 0,
+          "title": "Total Elements",
+          "type": "integer"
+        },
+        "ordered_elements": {
+          "minimum": 0,
+          "title": "Ordered Elements",
+          "type": "integer"
+        },
+        "content_elements": {
+          "minimum": 0,
+          "title": "Content Elements",
+          "type": "integer"
+        },
+        "excluded_margin_elements": {
+          "minimum": 0,
+          "title": "Excluded Margin Elements",
+          "type": "integer"
+        },
+        "heading_elements": {
+          "minimum": 0,
+          "title": "Heading Elements",
+          "type": "integer"
+        },
+        "outline_nodes": {
+          "minimum": 0,
+          "title": "Outline Nodes",
+          "type": "integer"
+        },
+        "groups": {
+          "minimum": 0,
+          "title": "Groups",
+          "type": "integer"
+        },
+        "relations": {
+          "minimum": 0,
+          "title": "Relations",
+          "type": "integer"
+        },
+        "cross_page_relations": {
+          "minimum": 0,
+          "title": "Cross Page Relations",
+          "type": "integer"
+        },
+        "reading_order_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Reading Order Coverage",
+          "type": "number"
+        },
+        "relation_evidence_coverage": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Relation Evidence Coverage",
+          "type": "number"
+        },
+        "consistency_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Consistency Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_elements",
+        "ordered_elements",
+        "content_elements",
+        "excluded_margin_elements",
+        "heading_elements",
+        "outline_nodes",
+        "groups",
+        "relations",
+        "cross_page_relations",
+        "reading_order_coverage",
+        "relation_evidence_coverage",
+        "consistency_score"
+      ],
+      "title": "StructureMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "structure_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Structure Id",
+      "type": "string"
+    },
+    "structure_schema_version": {
+      "default": "1.0",
+      "title": "Structure Schema Version",
+      "type": "string"
+    },
+    "engine_version": {
+      "maxLength": 63,
+      "minLength": 1,
+      "title": "Engine Version",
+      "type": "string"
+    },
+    "engine_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Engine Digest",
+      "type": "string"
+    },
+    "config_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Digest",
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "parse_run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Parse Run Id",
+      "type": "string"
+    },
+    "source_semantic_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Semantic Digest",
+      "type": "string"
+    },
+    "reading_order": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reading Order",
+      "type": "array"
+    },
+    "content_reading_order": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Content Reading Order",
+      "type": "array"
+    },
+    "excluded_margin_element_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Excluded Margin Element Ids",
+      "type": "array"
+    },
+    "outline": {
+      "items": {
+        "$ref": "#/$defs/OutlineNode"
+      },
+      "title": "Outline",
+      "type": "array"
+    },
+    "groups": {
+      "items": {
+        "$ref": "#/$defs/ContentGroup"
+      },
+      "title": "Groups",
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/Relation"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "#/$defs/StructureDiagnostic"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "metrics": {
+      "$ref": "#/$defs/StructureMetrics"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "structure_id",
+    "engine_version",
+    "engine_digest",
+    "config_digest",
+    "document_id",
+    "parse_run_id",
+    "source_semantic_digest",
+    "reading_order",
+    "content_reading_order",
+    "metrics"
+  ],
+  "title": "StructureResult",
+  "type": "object"
+}

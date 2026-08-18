@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "ContractKind": {
+      "enum": [
+        "core_schema",
+        "parser_sdk",
+        "domain_pack_sdk",
+        "rill_protocol",
+        "rest_api",
+        "version_semantics",
+        "permission_boundary",
+        "release_gates",
+        "rollback_behavior",
+        "audit_log_format"
+      ],
+      "title": "ContractKind",
+      "type": "string"
+    },
+    "FrozenContract": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Contract Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ContractKind"
+        },
+        "contract_version": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "contract_id",
+        "kind",
+        "contract_version",
+        "digest",
+        "payload"
+      ],
+      "title": "FrozenContract",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "format_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "freeze_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Freeze Id",
+      "type": "string"
+    },
+    "project": {
+      "const": "document-intelligence",
+      "default": "document-intelligence",
+      "title": "Project",
+      "type": "string"
+    },
+    "project_version": {
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "title": "Project Version",
+      "type": "string"
+    },
+    "stable_major": {
+      "const": 1,
+      "default": 1,
+      "title": "Stable Major",
+      "type": "integer"
+    },
+    "status": {
+      "const": "engineering_frozen",
+      "default": "engineering_frozen",
+      "title": "Status",
+      "type": "string"
+    },
+    "production_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Production Qualified",
+      "type": "boolean"
+    },
+    "contracts": {
+      "items": {
+        "$ref": "#/$defs/FrozenContract"
+      },
+      "maxItems": 64,
+      "minItems": 10,
+      "title": "Contracts",
+      "type": "array"
+    },
+    "production_blockers": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Production Blockers",
+      "type": "array"
+    },
+    "manifest_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Manifest Digest",
+      "type": "string"
+    }
+  },
+  "required": [
+    "freeze_id",
+    "project_version",
+    "contracts",
+    "production_blockers",
+    "manifest_digest"
+  ],
+  "title": "FreezeManifest",
+  "type": "object"
+}

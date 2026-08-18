@@ -1,0 +1,83 @@
+version: 1
+object_rules:
+- id: exam-question
+  domain_type: question
+  base_types:
+  - heading
+  - text
+  - callout
+  text_starts_with_any:
+  - 第
+  - Question
+  - Q.
+  - 'Q '
+  require_text: true
+  confidence: 0.88
+- id: exam-option
+  domain_type: option
+  base_types:
+  - text
+  - list
+  text_starts_with_any:
+  - A.
+  - B.
+  - C.
+  - D.
+  - A、
+  - B、
+  - C、
+  - D、
+  require_text: true
+  confidence: 0.86
+- id: exam-score
+  domain_type: score_marker
+  base_types:
+  - text
+  - callout
+  text_contains_any:
+  - 分)
+  - 分）
+  - points
+  - marks
+  require_text: true
+  confidence: 0.84
+- id: exam-answer-area
+  domain_type: answer_area
+  base_types:
+  - input_area
+  confidence: 0.92
+- id: exam-candidate-id
+  domain_type: candidate_identity
+  base_types:
+  - text
+  - input_area
+  text_contains_any:
+  - 姓名
+  - 准考证号
+  - Name
+  - Candidate ID
+  confidence: 0.9
+relation_rules:
+- id: exam-question-option
+  domain_type: question_has_option
+  source_domain_types:
+  - question
+  target_domain_types:
+  - option
+  base_relation_types:
+  - contains
+  - precedes
+  - associated_with
+  max_reading_distance: 6
+  confidence: 0.8
+- id: exam-question-answer
+  domain_type: question_has_answer_area
+  source_domain_types:
+  - question
+  target_domain_types:
+  - answer_area
+  base_relation_types:
+  - associated_with
+  - precedes
+  max_reading_distance: 4
+  confidence: 0.8

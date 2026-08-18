@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #1f1b16;
+  background-color: #faf7f0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --paper: #faf7f0;
+  --ink: #1f1b16;
+  --ink-line: #d9cfb8;
+  --vermilion: #b33a3a;
+  --teal: #3a5a5a;
+}
+
+* {
+  border-color: #e8e0d0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #faf7f0;
+  /* 宣纸纹理：极细网格 + 微噪点 */
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(31, 27, 22, 0.025) 1px, transparent 0),
+    linear-gradient(180deg, rgba(243, 238, 226, 0.4) 0%, rgba(250, 247, 240, 0) 280px);
+  background-size: 22px 22px, 100% 100%;
+  background-attachment: fixed;
+}
+
+/* 滚动条 — 墨线风格 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9cfb8;
+  border: 2px solid #faf7f0;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b33a3a;
+}
+
+/* 章节编号（中文数字）竖排点缀 */
+.vertical-mark {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.25em;
+}
+
+/* 印章效果 */
+.seal {
+  position: relative;
+  background: #b33a3a;
+  color: #faf7f0;
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 2px rgba(250, 247, 240, 0.4), 0 1px 2px rgba(139, 44, 44, 0.3);
+  /* 印泥不规则边缘 */
+  filter: drop-shadow(0 0 1px rgba(139, 44, 44, 0.4));
+}
+.seal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 20%, rgba(250, 247, 240, 0.18) 0%, transparent 8%),
+    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.12) 0%, transparent 6%),
+    radial-gradient(circle at 20% 80%, rgba(250, 247, 240, 0.1) 0%, transparent 5%);
+  pointer-events: none;
+}
+
+/* 墨线分隔 */
+.ink-divider {
+  background: linear-gradient(90deg, transparent, #1f1b16 8%, #1f1b16 92%, transparent);
+  height: 1px;
+}
+
+/* 网格背景（坐标面板用） */
+.grid-paper {
+  background-image:
+    linear-gradient(rgba(58, 90, 90, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 90, 90, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.grid-paper-fine {
+  background-image:
+    linear-gradient(rgba(58, 90, 90, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 90, 90, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(58, 90, 90, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 90, 90, 0.16) 1px, transparent 1px);
+  background-size: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+}
+
+/* 链接与按钮基础 */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* 章节标题前导编号 */
+.chapter-num {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  color: #b33a3a;
+}
+
+/* 入场动画 */
+@keyframes ink-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes seal-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) rotate(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+@keyframes draw-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.animate-ink-rise {
+  animation: ink-rise 0.5s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+.animate-seal {
+  animation: seal-stamp 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* 选中色 */
+::selection {
+  background: #b33a3a;
+  color: #faf7f0;
+}

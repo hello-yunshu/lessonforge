@@ -1,0 +1,72 @@
+version: 1
+family_id: academic-paper
+supported_mime_types:
+- application/pdf
+- image/png
+- image/jpeg
+required_base_types: {}
+aliases:
+- research-paper
+- scholarly-article
+priority: 25
+min_score: 0.44
+min_margin: 0.1
+min_positive_cues: 2
+positive_cues:
+- id: paper-abstract-cue
+  terms:
+  - Abstract
+  - 摘要
+  weight: 1.8
+  match_mode: starts_with
+  base_types:
+  - heading
+  - text
+  required: true
+- id: paper-keywords-cue
+  terms:
+  - Keywords
+  - 关键词
+  weight: 1.2
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: paper-reference-cue
+  terms:
+  - References
+  - 参考文献
+  weight: 1.8
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: paper-doi-cue
+  terms:
+  - 'doi:'
+  - DOI
+  weight: 1.0
+  match_mode: contains
+  base_types:
+  - text
+negative_cues:
+- id: paper-exam-negative
+  terms:
+  - 准考证号
+  - 总分
+  - 选择题
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text
+- id: paper-contract-negative
+  terms:
+  - 甲方
+  - 乙方
+  - 本合同
+  weight: 2.0
+  match_mode: contains
+  base_types:
+  - heading
+  - text

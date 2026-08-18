@@ -1,0 +1,12 @@
+version: 1
+labels:
+  question:
+    en: Question
+  option:
+    en: Option
+  score_marker:
+    en: Score Marker
+  answer_area:
+    en: Answer Area
+  candidate_identity:
+    en: Candidate Identity

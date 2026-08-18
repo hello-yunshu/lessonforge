@@ -1,0 +1,15 @@
+version: 1
+labels:
+  example: {zh-CN: 例题, en: Example}
+  try: {zh-CN: 试一试, en: Try it}
+  think-do: {zh-CN: 想想做做, en: Think & do}
+  exercise: {zh-CN: 练习, en: Exercise}
+  operation: {zh-CN: 动手做, en: Operation}
+  thinking-question: {zh-CN: 思考题, en: Thinking question}
+  worked_example: {zh-CN: 示例, en: Worked example}
+  practice: {zh-CN: 练习, en: Practice}
+  reflection_prompt: {zh-CN: 思考提示, en: Reflection prompt}
+  learner_character: {zh-CN: 学习者角色, en: Learner character}
+  speech: {zh-CN: 对话气泡, en: Speech callout}
+  speaks: {zh-CN: 发言, en: Speaks}
+  practice_for: {zh-CN: 对应练习, en: Practice for}

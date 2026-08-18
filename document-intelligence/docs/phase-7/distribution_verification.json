@@ -1,0 +1,38 @@
+{
+  "phase": 7,
+  "passed": true,
+  "checks": [
+    {
+      "name": "wheel-built",
+      "passed": true
+    },
+    {
+      "name": "package-default-parser-config-included",
+      "passed": true
+    },
+    {
+      "name": "rill-assist-policy-included",
+      "passed": true
+    },
+    {
+      "name": "rill-shadow-schemas-included",
+      "passed": true
+    },
+    {
+      "name": "typed-marker-included",
+      "passed": true
+    },
+    {
+      "name": "default-domain-packs-included",
+      "passed": true
+    },
+    {
+      "name": "wheel-import-from-arbitrary-cwd",
+      "passed": true
+    },
+    {
+      "name": "installed-cli-module-smoke",
+      "passed": true
+    }
+  ]
+}

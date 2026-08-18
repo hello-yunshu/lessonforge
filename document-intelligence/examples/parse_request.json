@@ -1,0 +1,7 @@
+{
+  "filename": "example.pdf",
+  "mime_type": "application/pdf",
+  "parser_id": "native-pdf",
+  "domain_pack": null,
+  "options": {}
+}

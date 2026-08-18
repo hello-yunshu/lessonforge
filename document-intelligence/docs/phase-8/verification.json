@@ -1,0 +1,64 @@
+{
+  "phase": 8,
+  "passed": true,
+  "checks": [
+    {
+      "name": "phase8-benchmark",
+      "passed": true
+    },
+    {
+      "name": "version-at-least-0.8.0",
+      "passed": true
+    },
+    {
+      "name": "domain-runtime-at-least-0.8.0",
+      "passed": true
+    },
+    {
+      "name": "core-schema-unchanged",
+      "passed": true,
+      "actual": "9e8be89228dd68a4f65aec8832bc89b75ff29217c9f7a5842d4f93666bacb09a"
+    },
+    {
+      "name": "builtin-domain-pack-set",
+      "passed": true,
+      "packs": [
+        "academic-paper",
+        "education-content",
+        "examination-paper",
+        "generic-document",
+        "legal-contract",
+        "technical-manual"
+      ]
+    },
+    {
+      "name": "five-family-profiles",
+      "passed": true
+    },
+    {
+      "name": "phase8-schemas-exported",
+      "passed": true
+    },
+    {
+      "name": "family-detection-advisory",
+      "passed": true
+    },
+    {
+      "name": "domain-results-isolated",
+      "passed": true
+    },
+    {
+      "name": "evidence-gates-preserved",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "release-runtime-state-clean",
+      "passed": true,
+      "files": []
+    }
+  ]
+}

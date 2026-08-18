@@ -1,0 +1,95 @@
+{
+  "core_python": [
+    {
+      "name": "fastapi",
+      "installed": true,
+      "version": "0.128.2",
+      "tree_sha256": "7a3d1d7d44bd33597669284b130057111dd3d7e29edbd20b841d05830960b80c"
+    },
+    {
+      "name": "httpx",
+      "installed": true,
+      "version": "0.28.1",
+      "tree_sha256": "2ab39e7e592599331023529a5d1348fc1fb3e15382e956efe337e861239cb26f"
+    },
+    {
+      "name": "Pillow",
+      "installed": true,
+      "version": "12.2.0",
+      "tree_sha256": "3bd6f3ff142c0c0b2fd83efb5861a9a0f2d838c0a914fe87c0d7e6eb2543dbd8"
+    },
+    {
+      "name": "pydantic",
+      "installed": true,
+      "version": "2.13.4",
+      "tree_sha256": "2499a54a636eec4ececb4270d09dcd109c5915e40cdb07d34bcdbfe342dbbe0d"
+    },
+    {
+      "name": "pydantic-settings",
+      "installed": true,
+      "version": "2.14.1",
+      "tree_sha256": "6db5e7d6083182504c1239199c13b0e78a810d9982f29988313900b2c0b4a7c9"
+    },
+    {
+      "name": "PyMuPDF",
+      "installed": true,
+      "version": "1.26.7",
+      "tree_sha256": "6ceaa7971ea1254eb4cc2cf02fad6f03de3bd3fdde25cb4621e28cc790ae40c3"
+    },
+    {
+      "name": "python-multipart",
+      "installed": true,
+      "version": "0.0.29",
+      "tree_sha256": "711ff1f5e02687f8fb577db1e4ca96e5b2f4d56dcc0069ea224f122ca7bb7e56"
+    },
+    {
+      "name": "PyYAML",
+      "installed": true,
+      "version": "6.0.3",
+      "tree_sha256": "1ee7c0bfc54933c35c0b5b2c5f63ccbf2e0a78dd0956fbbd0b7ae417c3f27d10"
+    },
+    {
+      "name": "uvicorn",
+      "installed": true,
+      "version": "0.48.0",
+      "tree_sha256": "3c1f5b4577e3568b8587d93ff107f292722d3ae19a38f3ec7325f23d3afee4ef"
+    },
+    {
+      "name": "pytest",
+      "installed": true,
+      "version": "9.0.2",
+      "tree_sha256": "42d0a31aee7a2d13a6d038f9e725aa13c820ec4d83d8c92cd1bd775d0290fdd2"
+    },
+    {
+      "name": "coverage",
+      "installed": true,
+      "version": "7.13.3",
+      "tree_sha256": "e9e0f45b04f6db8990605dba50fe111637a20c92ec72a9a4ffb40d3636fca6a0"
+    }
+  ],
+  "optional_parsers": [
+    {
+      "name": "paddleocr",
+      "installed": false
+    },
+    {
+      "name": "paddlepaddle",
+      "installed": false
+    },
+    {
+      "name": "openocr-python",
+      "installed": false
+    },
+    {
+      "name": "mineru",
+      "installed": false
+    }
+  ],
+  "system_binaries": {
+    "tesseract": {
+      "path": "/usr/bin/tesseract",
+      "sha256": "74b76a5b994adcc18be362bf64ed5118082b2401d5d9a35242e92fc4c62e2b4b"
+    }
+  },
+  "note": "tree_sha256 identifies the installed distribution tree in this build environment; production parser services also require image/model artifact SHA-256."
+}

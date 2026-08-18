@@ -1,0 +1,323 @@
+{
+  "$defs": {
+    "BaseType": {
+      "enum": [
+        "text",
+        "heading",
+        "image",
+        "figure",
+        "formula",
+        "table",
+        "icon",
+        "character",
+        "callout",
+        "list",
+        "footnote",
+        "page_number",
+        "input_area",
+        "separator",
+        "unknown"
+      ],
+      "title": "BaseType",
+      "type": "string"
+    },
+    "FamilyCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "family_id": {
+          "pattern": "^[a-z][a-z0-9-]{0,62}$",
+          "title": "Family Id",
+          "type": "string"
+        },
+        "pack_id": {
+          "pattern": "^[a-z][a-z0-9-]{0,62}$",
+          "title": "Pack Id",
+          "type": "string"
+        },
+        "pack_version": {
+          "maxLength": 63,
+          "minLength": 1,
+          "title": "Pack Version",
+          "type": "string"
+        },
+        "pack_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Pack Digest",
+          "type": "string"
+        },
+        "profile_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Profile Digest",
+          "type": "string"
+        },
+        "priority": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Priority",
+          "type": "integer"
+        },
+        "eligible": {
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Score",
+          "type": "number"
+        },
+        "positive_score": {
+          "minimum": 0.0,
+          "title": "Positive Score",
+          "type": "number"
+        },
+        "negative_score": {
+          "minimum": 0.0,
+          "title": "Negative Score",
+          "type": "number"
+        },
+        "positive_matches": {
+          "items": {
+            "$ref": "#/$defs/FamilyCueMatch"
+          },
+          "title": "Positive Matches",
+          "type": "array"
+        },
+        "negative_matches": {
+          "items": {
+            "$ref": "#/$defs/FamilyCueMatch"
+          },
+          "title": "Negative Matches",
+          "type": "array"
+        },
+        "missing_required_cues": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Required Cues",
+          "type": "array"
+        },
+        "missing_base_types": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/BaseType"
+          },
+          "title": "Missing Base Types",
+          "type": "object"
+        },
+        "exclusion_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclusion Reasons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "family_id",
+        "pack_id",
+        "pack_version",
+        "pack_digest",
+        "profile_digest",
+        "priority",
+        "eligible",
+        "score",
+        "positive_score",
+        "negative_score"
+      ],
+      "title": "FamilyCandidate",
+      "type": "object"
+    },
+    "FamilyCueMatch": {
+      "additionalProperties": false,
+      "properties": {
+        "cue_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Cue Id",
+          "type": "string"
+        },
+        "weight": {
+          "exclusiveMinimum": 0.0,
+          "maximum": 100.0,
+          "title": "Weight",
+          "type": "number"
+        },
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2048,
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "cue_id",
+        "weight",
+        "element_ids",
+        "evidence_ids"
+      ],
+      "title": "FamilyCueMatch",
+      "type": "object"
+    },
+    "FamilyDecision": {
+      "enum": [
+        "candidate",
+        "ambiguous",
+        "no_match"
+      ],
+      "title": "FamilyDecision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.8",
+      "default": "0.8",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "detection_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Detection Id",
+      "type": "string"
+    },
+    "detector_version": {
+      "maxLength": 63,
+      "minLength": 1,
+      "title": "Detector Version",
+      "type": "string"
+    },
+    "detector_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Detector Digest",
+      "type": "string"
+    },
+    "document_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "parse_run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Parse Run Id",
+      "type": "string"
+    },
+    "source_document_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Document Digest",
+      "type": "string"
+    },
+    "structure_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Structure Id",
+      "type": "string"
+    },
+    "source_structure_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Structure Digest",
+      "type": "string"
+    },
+    "decision": {
+      "$ref": "#/$defs/FamilyDecision"
+    },
+    "selected_family_id": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z][a-z0-9-]{0,62}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Family Id"
+    },
+    "selected_pack_id": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z][a-z0-9-]{0,62}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Pack Id"
+    },
+    "selected_pack_version": {
+      "anyOf": [
+        {
+          "maxLength": 63,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Pack Version"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/FamilyCandidate"
+      },
+      "maxItems": 128,
+      "title": "Candidates",
+      "type": "array"
+    },
+    "min_margin_observed": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Min Margin Observed"
+    },
+    "no_domain_action_executed": {
+      "default": true,
+      "title": "No Domain Action Executed",
+      "type": "boolean"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "detection_id",
+    "detector_version",
+    "detector_digest",
+    "document_id",
+    "parse_run_id",
+    "source_document_digest",
+    "structure_id",
+    "source_structure_digest",
+    "decision"
+  ],
+  "title": "FamilyDetectionResult",
+  "type": "object"
+}

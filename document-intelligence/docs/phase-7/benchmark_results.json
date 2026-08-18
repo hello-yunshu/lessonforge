@@ -1,0 +1,49 @@
+{
+  "phase": 7,
+  "passed": true,
+  "summary": {
+    "cases": 9,
+    "passed_cases": 9,
+    "bounded_auto_enabled": false,
+    "production_model_promoted": false
+  },
+  "cases": [
+    {
+      "name": "dvc-snapshots-are-role-separated-and-immutable",
+      "passed": true
+    },
+    {
+      "name": "champion-cannot-skip-shadow-validation",
+      "passed": true
+    },
+    {
+      "name": "candidate-shadow-champion-gates-pass-in-order",
+      "passed": true
+    },
+    {
+      "name": "gold-and-challenge-regression-blocks-candidate",
+      "passed": true
+    },
+    {
+      "name": "previous-champion-is-retained-for-rollback",
+      "passed": true
+    },
+    {
+      "name": "one-click-rollback-swaps-champion-and-rollback",
+      "passed": true
+    },
+    {
+      "name": "candidate-lineage-binds-mlflow-dvc-evaluation-and-shadow",
+      "passed": true
+    },
+    {
+      "name": "bounded-auto-remains-hard-disabled",
+      "passed": true
+    },
+    {
+      "name": "no-training-or-model-code-is-executed-by-mlops-core",
+      "passed": true
+    }
+  ],
+  "scope": "Deterministic lineage, gate ordering, alias promotion and rollback regression. The benchmark uses synthetic digests and does not claim a production model release."
+}

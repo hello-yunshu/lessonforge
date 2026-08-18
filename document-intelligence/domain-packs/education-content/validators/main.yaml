@@ -1,0 +1,14 @@
+version: 1
+required_types:
+  - code: EDUCATION_NO_CORE_ACTIVITY
+    domain_types: [worked_example, practice, reflection_prompt]
+    min_count: 1
+    severity: warning
+    message: No education-content activity was identified; retain the generic structure and request review if this pack was expected to apply.
+relation_endpoints:
+  - code: EDUCATION_SPEAKS_ENDPOINT_INVALID
+    relation_type: speaks
+    source_types: [learner_character]
+    target_types: [speech]
+    severity: error
+    message: A speaks relation must connect a learner character to a speech callout.

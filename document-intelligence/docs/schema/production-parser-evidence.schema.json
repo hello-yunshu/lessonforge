@@ -1,0 +1,178 @@
+{
+  "$defs": {
+    "LicenseResolution": {
+      "enum": [
+        "commercial-license",
+        "open-source-compliant",
+        "replaced",
+        "unresolved"
+      ],
+      "title": "LicenseResolution",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "parser_id": {
+      "pattern": "^[a-z][a-z0-9-]{0,62}$",
+      "title": "Parser Id",
+      "type": "string"
+    },
+    "parser_version": {
+      "maxLength": 63,
+      "minLength": 1,
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "external": {
+      "const": true,
+      "default": true,
+      "title": "External",
+      "type": "boolean"
+    },
+    "runtime_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Artifact Sha256",
+      "type": "string"
+    },
+    "model_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Artifact Sha256",
+      "type": "string"
+    },
+    "container_image_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Container Image Sha256",
+      "type": "string"
+    },
+    "config_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Config Sha256",
+      "type": "string"
+    },
+    "gold_dataset_evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Gold Dataset Evidence Id",
+      "type": "string"
+    },
+    "challenge_dataset_evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Challenge Dataset Evidence Id",
+      "type": "string"
+    },
+    "accuracy": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Accuracy",
+      "type": "number"
+    },
+    "family_accuracy": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "maxProperties": 128,
+      "minProperties": 1,
+      "title": "Family Accuracy",
+      "type": "object"
+    },
+    "p0_errors": {
+      "minimum": 0,
+      "title": "P0 Errors",
+      "type": "integer"
+    },
+    "p1_errors": {
+      "minimum": 0,
+      "title": "P1 Errors",
+      "type": "integer"
+    },
+    "severe_error_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Severe Error Rate",
+      "type": "number"
+    },
+    "timeout_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Timeout Rate",
+      "type": "number"
+    },
+    "failure_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Failure Rate",
+      "type": "number"
+    },
+    "deterministic_replay_rate": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Deterministic Replay Rate",
+      "type": "number"
+    },
+    "license_resolution": {
+      "$ref": "#/$defs/LicenseResolution"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "blocking_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Reasons",
+      "type": "array"
+    },
+    "immutable": {
+      "const": true,
+      "default": true,
+      "title": "Immutable",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parser_id",
+    "parser_version",
+    "runtime_artifact_sha256",
+    "model_artifact_sha256",
+    "container_image_sha256",
+    "config_sha256",
+    "gold_dataset_evidence_id",
+    "challenge_dataset_evidence_id",
+    "accuracy",
+    "family_accuracy",
+    "p0_errors",
+    "p1_errors",
+    "severe_error_rate",
+    "timeout_rate",
+    "failure_rate",
+    "deterministic_replay_rate",
+    "license_resolution",
+    "evidence_sha256",
+    "evidence_id",
+    "passed"
+  ],
+  "title": "ParserQualificationEvidence",
+  "type": "object"
+}

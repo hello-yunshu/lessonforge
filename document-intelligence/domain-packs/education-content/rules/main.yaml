@@ -1,0 +1,43 @@
+version: 1
+object_rules:
+  - id: education-worked-example
+    domain_type: worked_example
+    base_types: [heading, text, callout]
+    text_starts_with_any: [例, 示例, Example]
+    require_text: true
+    confidence: 0.90
+  - id: education-practice
+    domain_type: practice
+    base_types: [heading, text, callout, input_area]
+    text_starts_with_any: [练, 试一试, 做一做, Exercise, Practice]
+    require_text: true
+    confidence: 0.90
+  - id: education-reflection
+    domain_type: reflection_prompt
+    base_types: [heading, text, callout]
+    text_contains_any: [想一想, 思考, 你发现了什么, Think, Reflect]
+    require_text: true
+    confidence: 0.86
+  - id: education-character
+    domain_type: learner_character
+    base_types: [character]
+    confidence: 0.88
+  - id: education-speech
+    domain_type: speech
+    base_types: [callout]
+    confidence: 0.88
+relation_rules:
+  - id: education-speaks
+    domain_type: speaks
+    source_domain_types: [learner_character]
+    target_domain_types: [speech]
+    base_relation_types: [associated_with, points_to]
+    max_reading_distance: 2
+    confidence: 0.82
+  - id: education-practice-for
+    domain_type: practice_for
+    source_domain_types: [worked_example]
+    target_domain_types: [practice]
+    base_relation_types: [precedes, follows, associated_with]
+    max_reading_distance: 12
+    confidence: 0.78

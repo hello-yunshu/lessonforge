@@ -1,0 +1,12 @@
+version: 1
+labels:
+  procedure_step:
+    en: Procedure Step
+  warning:
+    en: Warning
+  component:
+    en: Component
+  specification:
+    en: Specification
+  troubleshooting_item:
+    en: Troubleshooting Item

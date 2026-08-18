@@ -1,0 +1,77 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "snapshot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "feature_schema_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Schema Hash",
+      "type": "string"
+    },
+    "runtime_name": {
+      "maxLength": 96,
+      "minLength": 1,
+      "title": "Runtime Name",
+      "type": "string"
+    },
+    "runtime_version": {
+      "maxLength": 48,
+      "minLength": 1,
+      "title": "Runtime Version",
+      "type": "string"
+    },
+    "model_generation": {
+      "minimum": 0,
+      "title": "Model Generation",
+      "type": "integer"
+    },
+    "state_generation": {
+      "minimum": 0,
+      "title": "State Generation",
+      "type": "integer"
+    },
+    "state_schema_version": {
+      "minimum": 1,
+      "title": "State Schema Version",
+      "type": "integer"
+    },
+    "state_checksum": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "State Checksum",
+      "type": "string"
+    },
+    "state_ref": {
+      "maxLength": 1000,
+      "minLength": 1,
+      "title": "State Ref",
+      "type": "string"
+    },
+    "drift_state_checksum": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Drift State Checksum",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "feature_schema_hash",
+    "runtime_name",
+    "runtime_version",
+    "model_generation",
+    "state_generation",
+    "state_schema_version",
+    "state_checksum",
+    "state_ref",
+    "drift_state_checksum"
+  ],
+  "title": "ShadowSnapshotRecord",
+  "type": "object"
+}

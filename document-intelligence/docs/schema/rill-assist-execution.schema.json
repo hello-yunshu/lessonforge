@@ -1,0 +1,161 @@
+{
+  "$defs": {
+    "AssistExecutionStatus": {
+      "enum": [
+        "succeeded",
+        "failed",
+        "blocked"
+      ],
+      "title": "AssistExecutionStatus",
+      "type": "string"
+    },
+    "Tier1AssistAction": {
+      "enum": [
+        "RETRY",
+        "REPROCESS_HIGH_RES",
+        "USE_SECONDARY_PARSER",
+        "USE_SPECIALIST_PARSER",
+        "HUMAN_REVIEW",
+        "QUARANTINE"
+      ],
+      "title": "Tier1AssistAction",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "execution_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Execution Id",
+      "type": "string"
+    },
+    "activation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Activation Id",
+      "type": "string"
+    },
+    "qualification_report_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Qualification Report Id",
+      "type": "string"
+    },
+    "evaluation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Evaluation Id",
+      "type": "string"
+    },
+    "action": {
+      "$ref": "#/$defs/Tier1AssistAction"
+    },
+    "status": {
+      "$ref": "#/$defs/AssistExecutionStatus"
+    },
+    "source_run_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "title": "Source Run Id",
+      "type": "string"
+    },
+    "output_run_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Run Id"
+    },
+    "queue_item_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Queue Item Id"
+    },
+    "parser_id": {
+      "anyOf": [
+        {
+          "maxLength": 127,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parser Id"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "error_code": {
+      "anyOf": [
+        {
+          "maxLength": 127,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Code"
+    },
+    "reversible": {
+      "const": true,
+      "default": true,
+      "title": "Reversible",
+      "type": "boolean"
+    },
+    "replaced_existing_result": {
+      "const": false,
+      "default": false,
+      "title": "Replaced Existing Result",
+      "type": "boolean"
+    },
+    "bounded_auto": {
+      "const": false,
+      "default": false,
+      "title": "Bounded Auto",
+      "type": "boolean"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "execution_id",
+    "activation_id",
+    "qualification_report_id",
+    "evaluation_id",
+    "action",
+    "status",
+    "source_run_id",
+    "reason_codes"
+  ],
+  "title": "AssistExecutionRecord",
+  "type": "object"
+}
