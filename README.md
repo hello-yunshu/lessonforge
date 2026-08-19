@@ -11,7 +11,7 @@
 | 目录 | 说明 | 技术栈 |
 | --- | --- | --- |
 | [`web/`](./web/) | 教材标准库 / 页面定位 / 例题练习识别 / 上传原图定位 / 人机协同纠错的前端原型 | React 18 · TypeScript · Vite · TailwindCSS · Zustand |
-| [`document-intelligence/`](./document-intelligence/) | 通用复杂文档智能解析、多领域适配与受控 Rill Assist/MLOps 平台 | Python 3.11 · FastAPI · PyMuPDF |
+| [`document-intelligence/`](./document-intelligence/) | 通用复杂文档智能解析、多领域适配与受控 RillML Assist/MLOps 平台 | Python 3.11 · FastAPI · PyMuPDF |
 
 两个组件独立开发、独立构建，可分开部署。
 
