@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "document-intelligence"
 version = "1.0.3rc1"
-description = "通用复杂文档智能解析、多领域适配与受控 Rill Assist/MLOps 平台"
+description = "通用复杂文档智能解析、多领域适配与受控 RillML Assist/MLOps 平台"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "document-intelligence contributors"}]
