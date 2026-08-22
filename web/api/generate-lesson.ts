@@ -280,18 +280,6 @@ function writeToTsFile(
     `lessonAnalysis-extra-deep-${group}.ts`,
   );
 
-  const typeImports = `import type {
-  LessonMainline,
-  LessonMainlineNode,
-  LessonMainlineTransition,
-  LessonMainlineEvidence,
-  LessonMainlineAlternative,
-  AnalysisReviewIssue,
-} from "./types";
-
-import { ANALYSIS_VERSION } from "./lessonAnalysis";
-`;
-
   let fileContent: string;
 
   if (existsSync(filePath)) {
@@ -304,7 +292,7 @@ import { ANALYSIS_VERSION } from "./lessonAnalysis";
     if (hasLesson) {
       // 替换：简单策略——重建整个文件
       // 提取其他课时的数据（过滤掉当前课时）
-      fileContent = rebuildFile(group, exportNames, data, lessonId, existing);
+      fileContent = rebuildFile(group, exportNames, data);
     } else {
       // 追加：在数组末尾插入新条目
       fileContent = appendToFile(existing, exportNames, data);
@@ -415,7 +403,7 @@ function appendToFile(
 }
 
 function rebuildFile(
-  _group: string,
+  group: string,
   exportNames: typeof groupExportNames[string],
   newData: {
     mainlines: unknown[];
@@ -425,11 +413,9 @@ function rebuildFile(
     alternatives: unknown[];
     reviewIssues: unknown[];
   },
-  _lessonId: string,
-  _existing: string,
 ): string {
   // 简化策略：用新数据完全替换（后续可优化为合并）
-  return createNewFile(_group, exportNames, newData);
+  return createNewFile(group, exportNames, newData);
 }
 
 // ===== 主入口 =====

@@ -78,7 +78,7 @@ optional_components:
   production_review: required
 - name: RillML / rill-runtime
   role: optional-shadow-and-assist-runtime
-  pinned_versions: stable 1.1.0; preview runtime IPC v3 0.15.0
+  pinned_versions: stable 1.2.0; production IPC v2; preview IPC v3 retained only for future qualification
   license: MIT
   source: https://github.com/hello-yunshu/rill-ml
   production_review: mandatory

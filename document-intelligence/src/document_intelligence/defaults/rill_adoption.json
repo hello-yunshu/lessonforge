@@ -1,0 +1,32 @@
+{
+  "upstreamRepository": "hello-yunshu/rill-ml",
+  "supported": "1.2.0",
+  "tested": "1.2.0",
+  "tag": "v1.2.0",
+  "commit": "dc96fdb3bf55eacdd1c093f1be08d1c9daed4400",
+  "releaseIndexSchema": 3,
+  "stableRuntimeApi": 2,
+  "productionProtocol": "stable-v2",
+  "upstreamLatest": "1.3.0",
+  "upstreamLatestInformationalOnly": true,
+  "releaseIndexSha256": "fb876573dab2f563a63ffa02e3b7faf62f7348b166f0cb752f59de6bba937e06",
+  "trust": {
+    "releaseIndex": {
+      "rillml-examples-2026-001": "29fd1fc2f22bd7e405aec167ff0a0d8de791f011c415075d4c5f9f64fd93fc2e"
+    },
+    "model": {
+      "rillml-examples-2026-001": "29fd1fc2f22bd7e405aec167ff0a0d8de791f011c415075d4c5f9f64fd93fc2e"
+    },
+    "handler": {
+      "rillml-examples-2026-001": "29fd1fc2f22bd7e405aec167ff0a0d8de791f011c415075d4c5f9f64fd93fc2e"
+    }
+  },
+  "qualification": {
+    "tagIdentity": "verified-live",
+    "releaseIndexSignature": "verified-live",
+    "runtimeArtifact": "pending-platform-run",
+    "ipcHandshakeHealthInvoke": "pending-platform-run",
+    "fallback": "covered-by-local-tests",
+    "previewV3": "present-disabled-for-production"
+  }
+}

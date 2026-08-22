@@ -5,5 +5,11 @@ export const verifyItems: VerifyItem[] = [];
 export const verifySummaries: VerifySummary[] = [];
 
 export const computeVerifySummaries = (): VerifySummary[] => [];
-export const verifyItemsByType = (type: VerifyCheckType): VerifyItem[] => [];
-export const verifyItemsByLesson = (lessonId: string): VerifyItem[] => [];
+export const verifyItemsByType = (type: VerifyCheckType): VerifyItem[] => {
+  void type;
+  return [];
+};
+export const verifyItemsByLesson = (lessonId: string): VerifyItem[] => {
+  void lessonId;
+  return [];
+};

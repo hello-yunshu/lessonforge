@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PageHeader from "@/components/ui/PageHeader";
 import Card from "@/components/ui/Card";
 import Badge, { ConfBadge } from "@/components/ui/Badge";
-import { reviewTasks, contentBlocks, pages, objects } from "@/data";
+import { reviewTasks, contentBlocks, pages } from "@/data";
 import { cn, blockTypeCN } from "@/lib/utils";
 import {
   ListChecks,

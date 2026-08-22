@@ -57,8 +57,12 @@ class Settings(BaseModel):
     enable_family_detection_writes: bool = False
     family_detection_access_token_sha256: str | None = None
     family_detection_max_profiles: int = Field(default=64, ge=1, le=256)
-    rill_shadow_backend: Literal["disabled", "subprocess", "reference"] = "disabled"
+    rill_shadow_backend: Literal[
+        "disabled", "stable-v2", "subprocess", "preview-v3", "reference"
+    ] = "disabled"
     rill_runtime_command: tuple[str, ...] | None = None
+    rill_evaluate_capability: str = "org.lessonforge.shadow.evaluate"
+    rill_feedback_capability: str | None = "org.lessonforge.shadow.update"
     rill_runtime_artifact_sha256: str | None = None
     rill_model_artifact_sha256: str | None = None
     rill_handler_artifact_sha256: str | None = None
@@ -208,6 +212,13 @@ class Settings(BaseModel):
             rill_shadow_backend=os.getenv("DI_RILL_SHADOW_BACKEND", "disabled"),
             rill_runtime_command=cls._parse_command(
                 os.getenv("DI_RILL_RUNTIME_COMMAND_JSON")
+            ),
+            rill_evaluate_capability=os.getenv(
+                "DI_RILL_EVALUATE_CAPABILITY", "org.lessonforge.shadow.evaluate"
+            ),
+            rill_feedback_capability=(
+                os.getenv("DI_RILL_FEEDBACK_CAPABILITY", "org.lessonforge.shadow.update")
+                or None
             ),
             rill_runtime_artifact_sha256=(
                 os.getenv("DI_RILL_RUNTIME_ARTIFACT_SHA256") or None
@@ -421,6 +432,8 @@ class Settings(BaseModel):
             raise ValueError("production requires DI_API_TENANT_TOKENS_SHA256_JSON")
         if self.rill_reference_backend_allowed:
             raise ValueError("reference Rill backend is forbidden in production")
+        if self.rill_shadow_backend == "preview-v3":
+            raise ValueError("Preview IPC v3 is forbidden as the LessonForge production backend")
         if self.pdf_render_backend == "pymupdf" and not self.pymupdf_license_resolved:
             raise ValueError(
                 "PyMuPDF rendering requires an explicit resolved license attestation"
@@ -463,6 +476,13 @@ class Settings(BaseModel):
     def parser_config_exists(cls, value: Path) -> Path:
         if not value.is_file():
             raise ValueError(f"parser config does not exist: {value}")
+        return value
+
+    @field_validator("rill_evaluate_capability", "rill_feedback_capability")
+    @classmethod
+    def validate_rill_capability(cls, value: str | None) -> str | None:
+        if value is not None and (not value or len(value) > 96):
+            raise ValueError("Rill capability must be a bounded non-empty string")
         return value
 
 

@@ -143,7 +143,11 @@ class RillShadowClient(Protocol):
 
 
 class SubprocessRillClient:
-    """Strict newline-delimited IPC v3 client for the real ``rill-runtime``.
+    """Preview-only newline-delimited IPC v3 client.
+
+    This client is retained for future RillML Preview qualification tests. It
+    is not imported by the LessonForge 1.2 production bootstrap and must not
+    be used to claim Stable RillML 1.2 support.
 
     The command is executed directly with ``shell=False``.  A timed-out or
     malformed exchange closes the process so that a late response can never be
@@ -186,12 +190,21 @@ class SubprocessRillClient:
         if self._expected_runtime_sha256 is None:
             return
         executable = self._command[0]
-        resolved = Path(executable) if Path(executable).is_file() else None
+        candidate = Path(executable)
+        try:
+            # Preview compatibility accepts interpreter symlinks and hashes
+            # their resolved target; production Stable v2 remains strict.
+            resolved = candidate.resolve(strict=True) if candidate.is_file() else None
+        except OSError:
+            resolved = None
         if resolved is None:
             found = shutil.which(executable)
             if found is not None:
-                resolved = Path(found)
-        if resolved is None or not resolved.is_file() or resolved.is_symlink():
+                try:
+                    resolved = Path(found).resolve(strict=True)
+                except OSError:
+                    resolved = None
+        if resolved is None or not resolved.is_file():
             raise RillUnavailableError("configured Rill runtime binary cannot be verified")
         digest = hashlib.sha256()
         with resolved.open("rb") as handle:
@@ -530,6 +543,11 @@ class SubprocessRillClient:
             except subprocess.TimeoutExpired:
                 process.kill()
                 process.wait(timeout=1.0)
+
+
+# Explicit name for callers and tests that need to make the Preview boundary
+# visible without breaking the existing compatibility import.
+PreviewSubprocessRillClient = SubprocessRillClient
 
 
 class ReferenceRillShadowClient:

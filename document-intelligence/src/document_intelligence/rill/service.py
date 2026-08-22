@@ -11,7 +11,7 @@ from document_intelligence.exceptions import (
     RillUnavailableError,
 )
 from document_intelligence.matching import MatchResult
-from document_intelligence.rill.client import RillShadowClient
+from document_intelligence.rill.client import RillShadowClient, RuntimeSnapshot
 from document_intelligence.rill.drift import ShadowDriftMonitor
 from document_intelligence.rill.features import ShadowFeatureBuilder
 from document_intelligence.rill.models import (
@@ -82,7 +82,8 @@ class RillShadowService:
             runtime_error_message = "Rill Shadow backend is disabled or not configured"
         else:
             try:
-                self.client.observe(event)
+                if not getattr(self.client, "host_owned_state", False):
+                    self.client.observe(event)
                 deterministic_seed = int(
                     hashlib.sha256(event.event_id.encode()).hexdigest()[:16], 16
                 )
@@ -236,7 +237,35 @@ class RillShadowService:
     def snapshot(self) -> ShadowSnapshotRecord:
         if self.client is None:
             raise RillUnavailableError("Rill runtime is not configured")
-        snapshot = self.client.snapshot()
+        if getattr(self.client, "host_owned_state", False):
+            # Stable IPC v2 executes a signed handler but has no stateful
+            # observe/snapshot/reset operation. The business ledger and drift
+            # state therefore remain a Host-owned, immutable snapshot.
+            state = json.dumps(
+                {
+                    "schemaVersion": 1,
+                    "hostOwned": True,
+                    "evaluationDigests": [
+                        item.semantic_digest() for item in self.store.list_evaluations()
+                    ],
+                    "feedbackDigests": [
+                        item.semantic_digest() for item in self.store.list_feedback()
+                    ],
+                    "drift": self.drift.read().model_dump(mode="json"),
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+            snapshot = RuntimeSnapshot(
+                state_schema_version=1,
+                state_checksum=hashlib.sha256(state.encode("utf-8")).hexdigest(),
+                state=state,
+                model_generation=self.client.model_generation,
+                state_generation=self.client.state_generation,
+            )
+        else:
+            snapshot = self.client.snapshot()
         drift_state = self.drift.read().model_dump(mode="json")
         drift_checksum = canonical_json_digest(drift_state)
         snapshot_id = stable_rill_id(
@@ -289,7 +318,7 @@ class RillShadowService:
             pre_reset_snapshot_id=pre_reset.snapshot_id,
             expected_state_generation=expected,
             reset_state_generation=reset_generation,
-            runtime_reset=True,
+            runtime_reset=not getattr(self.client, "host_owned_state", False),
             local_drift_reset=True,
         )
         return self.store.commit_reset(record)
