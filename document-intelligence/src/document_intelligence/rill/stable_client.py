@@ -73,12 +73,18 @@ class StableV2RillClient(RillShadowClient):
         *,
         feature_schema_hash: str,
         evaluate_capability: str = CAPABILITY_EVALUATE,
-        feedback_capability: str | None = CAPABILITY_UPDATE,
+        feedback_capability: str | None = None,
         request_timeout_seconds: float = 5.0,
         startup_timeout_seconds: float = 5.0,
         max_message_bytes: int = 1024 * 1024,
         environment: Mapping[str, str] | None = None,
         expected_runtime_sha256: str | None = None,
+        expected_runtime_version: str = "1.2.0",
+        expected_model_pack_id: str | None = None,
+        expected_model_pack_version: str | None = None,
+        expected_handler_id: str | None = None,
+        expected_handler_version: str | None = None,
+        expected_effective_capabilities: Sequence[str] | None = None,
     ) -> None:
         if not command or any(not item or "\x00" in item for item in command):
             raise ValueError("Rill runtime command must be a non-empty argument vector")
@@ -97,6 +103,16 @@ class StableV2RillClient(RillShadowClient):
         self._max_message_bytes = max_message_bytes
         self._environment = dict(environment) if environment is not None else None
         self._expected_runtime_sha256 = expected_runtime_sha256
+        self._expected_runtime_version = expected_runtime_version
+        self._expected_model_pack_id = expected_model_pack_id
+        self._expected_model_pack_version = expected_model_pack_version
+        self._expected_handler_id = expected_handler_id
+        self._expected_handler_version = expected_handler_version
+        self._expected_effective_capabilities = (
+            tuple(expected_effective_capabilities)
+            if expected_effective_capabilities is not None
+            else None
+        )
         self._process: subprocess.Popen[bytes] | None = None
         self._responses: queue.Queue[bytes | BaseException | None] = queue.Queue(maxsize=4)
         self._reader_thread: threading.Thread | None = None
@@ -134,6 +150,10 @@ class StableV2RillClient(RillShadowClient):
     @property
     def model_pack_id(self) -> str:
         return self._model_pack_id
+
+    @property
+    def feedback_capability(self) -> str | None:
+        return self._feedback_capability
 
     def _verify_runtime_binary(self) -> None:
         if self._expected_runtime_sha256 is None:
@@ -202,6 +222,38 @@ class StableV2RillClient(RillShadowClient):
         if missing:
             self.close()
             raise RillProtocolError("Rill runtime is missing required Stable v2 capabilities")
+        if response.runtime_version != self._expected_runtime_version:
+            self.close()
+            raise RillProtocolError("Rill runtime version differs from the qualified adoption lock")
+        if (
+            self._expected_model_pack_id is not None
+            and response.model_pack_id != self._expected_model_pack_id
+        ):
+            self.close()
+            raise RillProtocolError("Rill model identity differs from the managed bundle")
+        if (
+            self._expected_model_pack_version is not None
+            and response.model_pack_version != self._expected_model_pack_version
+        ):
+            self.close()
+            raise RillProtocolError("Rill model version differs from the managed bundle")
+        if (
+            self._expected_handler_id is not None
+            and response.handler_id != self._expected_handler_id
+        ):
+            self.close()
+            raise RillProtocolError("Rill handler identity differs from the managed bundle")
+        if (
+            self._expected_handler_version is not None
+            and response.handler_version != self._expected_handler_version
+        ):
+            self.close()
+            raise RillProtocolError("Rill handler version differs from the managed bundle")
+        if self._expected_effective_capabilities is not None and tuple(effective) != tuple(
+            self._expected_effective_capabilities
+        ):
+            self.close()
+            raise RillProtocolError("Rill effective capabilities differ from the managed bundle")
         self._model_pack_id = response.model_pack_id
         self._model_pack_version = response.model_pack_version
         self._handler_version = response.handler_version
@@ -418,6 +470,8 @@ class StableV2RillClient(RillShadowClient):
             "effectiveCapabilities": list(self._effective_capabilities),
             "evaluateCapability": self._evaluate_capability,
             "feedbackCapability": self._feedback_capability,
+            "runtimeVersion": self.identity.version,
+            "runtimeReset": False,
         }
 
     def snapshot(self) -> RuntimeSnapshot:

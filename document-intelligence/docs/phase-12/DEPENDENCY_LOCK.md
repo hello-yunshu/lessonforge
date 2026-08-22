@@ -7,19 +7,19 @@
 
 | 名称 | 已安装 | 版本 | 许可证 | 安装树SHA-256 |
 |---|---|---|---|---|
-| fastapi | True | 0.128.2 | MIT | 7a3d1d7d44bd33597669284b130057111dd3d7e29edbd20b841d05830960b80c |
-| httpx | True | 0.28.1 | BSD-3-Clause | 2ab39e7e592599331023529a5d1348fc1fb3e15382e956efe337e861239cb26f |
-| Pillow | True | 12.2.0 | MIT-CMU | 3bd6f3ff142c0c0b2fd83efb5861a9a0f2d838c0a914fe87c0d7e6eb2543dbd8 |
-| pydantic | True | 2.13.4 | MIT | 2499a54a636eec4ececb4270d09dcd109c5915e40cdb07d34bcdbfe342dbbe0d |
-| pydantic-settings | True | 2.14.1 | MIT | 6db5e7d6083182504c1239199c13b0e78a810d9982f29988313900b2c0b4a7c9 |
-| pypdf | True | 5.9.0 | BSD-3-Clause | 99047eb292bb92803e1feeae740a371cbf001590da0626a55631f07155cdf8bc |
-| numpy | True | 2.3.5 | Copyright (c) 2005-2025, NumPy Developers. | fc76c1f87a92a707a897c562cd75623a3c5381754b6ac2c944d6626d4ea1d903 |
-| opencv-python-headless | True | 4.13.0.92 | Apache 2.0 | 718aff963694b590729e186dcde52b0254b4b14954ddb8f2ba82d7a45834b9ae |
-| packaging | True | 25.0 | - | 56c4464a9d8313259aa6ffba91713fb7114c074c253e304064aff5de7e1823c4 |
-| cryptography | True | 46.0.4 | Apache-2.0 OR BSD-3-Clause | 79fd506811755361e35747a461414f6dce8c64e5a5b94f0b640902624e718f5c |
-| python-multipart | True | 0.0.29 | Apache-2.0 | 711ff1f5e02687f8fb577db1e4ca96e5b2f4d56dcc0069ea224f122ca7bb7e56 |
-| PyYAML | True | 6.0.3 | MIT | 1ee7c0bfc54933c35c0b5b2c5f63ccbf2e0a78dd0956fbbd0b7ae417c3f27d10 |
-| uvicorn | True | 0.48.0 | BSD-3-Clause | 3c1f5b4577e3568b8587d93ff107f292722d3ae19a38f3ec7325f23d3afee4ef |
+| fastapi | True | 0.141.1 | MIT | 8d7a12059bbdba76b56708c46aa2baac88070bc1e92581dfcb5b8061edb48f8c |
+| httpx | True | 0.28.1 | BSD-3-Clause | cc97810abed172201f226eb2203b6a61b6427a73e5cd9a1da17d5a98e2068244 |
+| Pillow | True | 12.3.0 | MIT-CMU | 47f78ad45f3f47ae5d1f690ae8e11197804d83967715c7d424cbd224c1093263 |
+| pydantic | True | 2.13.4 | MIT | 18bfb6365033f14d3ff59c90400862582c16e2603df8cd18f2600ab9c0cd5fbb |
+| pydantic-settings | True | 2.14.2 | MIT | 80b56c4c2d053d60661c5d29650ad58f3dbe8f7597d50bf120497b9488a554df |
+| pypdf | True | 6.16.1 | BSD-3-Clause | d161912a3262c71fb8bd19cbf1756c007c367aa3ffed41049d8d9b1f823bbde0 |
+| numpy | True | 2.3.5 | Copyright (c) 2005-2025, NumPy Developers. | 475dab6577904b27a258b794f44ce2be4117b5528ed9d244688a6cfd5d98d5df |
+| opencv-python-headless | True | 4.13.0.92 | Apache 2.0 | 5ee710ab2311c0d95bdbe68e4e0d27d05493e06bec4f2e739096d4c84414f876 |
+| packaging | True | 25.0 | - | 73984dee0806cc6d675af3103c88b0b6baf73113b20bcb039187594eb2776a0f |
+| cryptography | True | 50.0.0 | Apache-2.0 OR BSD-3-Clause | 5328ba527ad2dddad9c7b29e2705161b64ab9d11fc01a8001c1f5253761bd1fc |
+| python-multipart | True | 0.0.31 | Apache-2.0 | 05925e5a17137a4e7da82b32ab1477567d13673667ef3b4bccffaba92640c097 |
+| PyYAML | True | 6.0.3 | MIT | 9da406cb92a9797b330fb58cb2ce29c541ed42f48838c5ce9d410f4c87eb279e |
+| uvicorn | True | 0.48.0 | BSD-3-Clause | 9a38196597aa5dd0b0f619c313b489883634c7d955081ab4676d3d448c230768 |
 
 ## 正式质量工具状态
 
@@ -30,7 +30,7 @@ pip-audit、测试超时门禁和SBOM生成。
 |---|---|---|
 | pytest | True | 9.0.2 |
 | coverage | True | 7.13.3 |
-| ruff | False | - |
-| mypy | False | - |
-| cyclonedx-bom | False | - |
-| pip-audit | False | - |
+| ruff | True | 0.14.14 |
+| mypy | True | 1.19.1 |
+| cyclonedx-bom | True | 7.2.1 |
+| pip-audit | True | 2.9.0 |

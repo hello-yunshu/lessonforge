@@ -164,6 +164,13 @@ class RillShadowService:
         runtime_error_code: str | None = None
         if evaluation.rill_suggestion is None or self.client is None:
             runtime_error_code = "RILL_DECISION_UNAVAILABLE"
+        elif getattr(self.client, "host_owned_state", False) and not getattr(
+            self.client, "feedback_capability", None
+        ):
+            # Stable IPC v2 has no stateful feedback operation. The immutable
+            # ledger below is the accepted feedback record; do not claim that
+            # the external Runtime accepted or persisted it.
+            runtime_error_code = "RILL_HOST_OWNED_FEEDBACK"
         else:
             try:
                 self.client.feedback(
@@ -228,6 +235,8 @@ class RillShadowService:
         return {
             "shadowOnly": True,
             "noProductionActions": True,
+            "hostOwnedFeedback": True,
+            "runtimeReset": False,
             "featureSchemaHash": self.feature_builder.feature_schema_hash,
             "runtime": runtime,
             "drift": self.drift.read().model_dump(mode="json"),

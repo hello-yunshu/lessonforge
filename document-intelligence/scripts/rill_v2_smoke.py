@@ -1,17 +1,14 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 
 from document_intelligence.rill.adoption import (
-    MAX_RELEASE_INDEX_BYTES,
     load_adoption_lock,
-    parse_and_verify_release_index,
     select_runtime,
     verify_artifact_file,
-    verify_release_index_identity,
+    verify_locked_release_index,
 )
 from document_intelligence.rill.stable_client import StableV2RillClient
 
@@ -27,12 +24,7 @@ def main() -> None:
     args = parser.parse_args()
     lock = load_adoption_lock()
     raw_index = args.index.read_bytes()
-    if len(raw_index) > MAX_RELEASE_INDEX_BYTES:
-        raise SystemExit("stable-index.json exceeds the bounded index size")
-    index = parse_and_verify_release_index(raw_index, lock=lock)
-    verify_release_index_identity(index, lock=lock)
-    if hashlib.sha256(raw_index).hexdigest() != lock.release_index_sha256:
-        raise SystemExit("stable-index.json digest differs from the immutable adoption lock")
+    index = verify_locked_release_index(raw_index, lock=lock)
     runtime_artifact = select_runtime(index, target=("linux", "x86_64", "gnu"), lock=lock)
     model_artifact = next(
         artifact

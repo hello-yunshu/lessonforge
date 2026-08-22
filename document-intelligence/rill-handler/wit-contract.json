@@ -1,0 +1,6 @@
+{
+  "rillRepository": "hello-yunshu/rill-ml",
+  "rillTag": "v1.2.0",
+  "canonicalPath": "crates/rill-handler-api/wit/rill-handler.wit",
+  "normalizedSha256": "b1a2cf48ab04cadb9e6838da30087f35dc9d333102bb472f8f88c46c934f0edf"
+}

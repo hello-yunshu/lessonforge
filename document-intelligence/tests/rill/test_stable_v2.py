@@ -63,13 +63,14 @@ def test_stable_v2_handshake_health_invoke_and_host_feedback() -> None:
         suggestion = client.decide(event(), static_suggestion=static(), deterministic_seed=7)
         assert suggestion.action == ShadowAction.HUMAN_REVIEW
         assert suggestion.selected_arm == 7
-        client.feedback(
-            decision_id=suggestion.decision_id,
-            selected_arm=suggestion.selected_arm,
-            reward=1,
-            outcome_time_ms=2,
-            generation=suggestion.state_generation,
-        )
+        with pytest.raises(RillProtocolError):
+            client.feedback(
+                decision_id=suggestion.decision_id,
+                selected_arm=suggestion.selected_arm,
+                reward=1,
+                outcome_time_ms=2,
+                generation=suggestion.state_generation,
+            )
         assert client.inspect()["hostOwnedState"] is True
     finally:
         client.close()

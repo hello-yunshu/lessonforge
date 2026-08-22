@@ -1,16 +1,13 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import urllib.request
 from pathlib import Path
 
 from document_intelligence.rill.adoption import (
-    MAX_RELEASE_INDEX_BYTES,
     load_adoption_lock,
-    parse_and_verify_release_index,
-    verify_release_index_identity,
+    verify_locked_release_index,
 )
 
 
@@ -24,12 +21,9 @@ def main() -> None:
     else:
         url = f"https://github.com/{lock.upstream_repository}/releases/download/{lock.tag}/stable-index.json"
         with urllib.request.urlopen(url, timeout=30) as response:
-            raw = response.read(MAX_RELEASE_INDEX_BYTES + 1)
-    index = parse_and_verify_release_index(raw, lock=lock)
-    verify_release_index_identity(index, lock=lock)
-    digest = hashlib.sha256(raw).hexdigest()
-    if digest != lock.release_index_sha256:
-        raise SystemExit("stable-index.json digest differs from the immutable adoption lock")
+            raw = response.read(256 * 1024 + 1)
+    index = verify_locked_release_index(raw, lock=lock)
+    digest = lock.release_index_sha256
     print(
         json.dumps(
             {

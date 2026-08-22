@@ -12,8 +12,12 @@ concurrency:
   group: lessonforge-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: "3.11"
+
 jobs:
-  backend:
+  backend-quality:
+    name: Backend quality and static gates
     runs-on: ubuntu-latest
     timeout-minutes: 35
     defaults:
@@ -25,44 +29,133 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
           cache-dependency-path: document-intelligence/requirements/development.txt
-      - name: Install backend and test dependencies
-        run: python -m pip install -e ".[dev,render-pymupdf]"
-      - name: Generate deterministic fixtures
-        run: python scripts/generate_fixtures.py
-      - name: Rill consumer static gate
+      - name: Install exact development dependencies
         run: |
-          ruff format --check \
-            src/document_intelligence/rill/adoption.py \
-            src/document_intelligence/rill/distribution.py \
-            src/document_intelligence/rill/stable_protocol.py \
-            src/document_intelligence/rill/stable_client.py \
-            tests/rill/fake_runtime_v2.py \
-            tests/rill/test_adoption.py \
-            tests/rill/test_distribution.py \
-            tests/rill/test_stable_protocol.py \
-            tests/rill/test_stable_v2.py \
-            scripts/verify_rill_release.py \
-            scripts/rill_v2_smoke.py
-          ruff check \
-            src/document_intelligence/rill/adoption.py \
-            src/document_intelligence/rill/distribution.py \
-            src/document_intelligence/rill/stable_protocol.py \
-            src/document_intelligence/rill/stable_client.py \
-            tests/rill/fake_runtime_v2.py \
-            tests/rill/test_adoption.py \
-            tests/rill/test_distribution.py \
-            tests/rill/test_stable_protocol.py \
-            tests/rill/test_stable_v2.py \
-            scripts/verify_rill_release.py \
-            scripts/rill_v2_smoke.py
-      - name: Backend test suite
-        run: pytest --timeout=45 -q
-      - name: Generate SPDX SBOM
-        run: python scripts/generate_sbom.py
-      - name: Wheel and sdist build
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/development.txt
+          python -m pip install --no-deps -e .
+      - name: Generate fixtures
+        run: python scripts/generate_fixtures.py
+      - name: Full Ruff format and lint
+        run: |
+          ruff format --check src tests scripts
+          ruff check src tests scripts
+      - name: Strict Mypy
+        run: mypy src/document_intelligence
+      - name: Static and secret gates
+        run: |
+          python scripts/static_sanity.py
+          python scripts/secret_scan.py
+
+  backend-tests:
+    name: Backend tests, coverage and compile gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: backend-quality
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: document-intelligence/requirements/development.txt
+      - name: Install exact development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/development.txt
+          python -m pip install --no-deps -e .
+      - name: Generate fixtures
+        run: python scripts/generate_fixtures.py
+      - name: Batched tests with hard limits
+        run: |
+          timeout 120s pytest -q tests/campaign tests/contract tests/domain_pack_sdk tests/domain_regression tests/domain_runtime tests/family tests/freeze tests/golden
+          timeout 120s pytest -q tests/matching tests/mlops tests/production tests/review tests/rill
+          timeout 120s pytest -q tests/security tests/structure tests/unit
+          timeout 120s pytest -q tests/integration
+      - name: Coverage gate
+        run: |
+          pytest --timeout=45 --cov=document_intelligence --cov-branch \
+            --cov-report=term-missing --cov-report=xml -q
+      - name: Compile all Python sources
+        run: python -m compileall -q src tests scripts
+      - name: Phase verification gates
+        run: PYTHONPATH=src python scripts/verify_all.py
+
+  dependency-security:
+    name: Dependency report, SBOM and vulnerability audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: document-intelligence/requirements/development.txt
+      - name: Install exact development dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/development.txt
+          python -m pip install --no-deps -e .
+      - name: Dependency inventory and SPDX/CycloneDX SBOM
+        run: |
+          PYTHONPATH=src python scripts/generate_dependency_report.py
+          python scripts/generate_sbom.py
+      - name: pip-audit production dependency set
+        run: |
+          set +e
+          pip-audit --strict --desc \
+            --requirement requirements/production.txt \
+            --format json \
+            --output docs/phase-12/pip-audit.json
+          audit_status=$?
+          set -e
+          test "$audit_status" -eq 0
+      - name: Upload dependency evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lessonforge-dependency-evidence
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            document-intelligence/docs/phase-12/*.json
+            document-intelligence/docs/phase-12/*.md
+
+  package:
+    name: Wheel, sdist and reproducible release candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    needs: backend-tests
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/development.txt
+          python -m pip install --no-deps -e .
+      - name: Build wheel and sdist
         run: python -m build
       - name: Clean wheel install smoke
         run: |
@@ -70,16 +163,34 @@ jobs:
           python -m venv "$clean_env"
           "$clean_env/bin/python" -m pip install --no-deps dist/*.whl
           "$clean_env/bin/python" -c "from importlib.resources import files; import document_intelligence; assert document_intelligence.__version__ == '1.0.3rc1'; assert (files('document_intelligence') / 'defaults' / 'rill_adoption.json').is_file()"
+      - name: Reproducible release-candidate build
+        run: python scripts/build_release_candidate.py
+      - name: Upload package evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lessonforge-package-evidence
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            document-intelligence/dist/*
+            document-intelligence/SHA256SUMS
 
   web:
+    name: Web lint, type check and production build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     defaults:
       run:
         working-directory: web
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install locked web dependencies
         run: npm ci
       - name: Web lint
@@ -89,7 +200,132 @@ jobs:
       - name: Web production build
         run: npm run build
 
-  distribution:
+  rill-distribution:
+    name: Official RillML 1.2.0 distribution and Stable v2 smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install consumer dependencies
+        run: python -m pip install --no-cache-dir -e ".[dev]"
+      - name: Download exact official v1.2.0 assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/rill-v1.2.0"
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/stable-index.json
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/rill-runtime-1.2.0-linux-x86_64
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/example-default-1.2.0.rillpack
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/echo-handler-1.2.0.rillhandler
+          chmod 700 "$RUNNER_TEMP/rill-v1.2.0/rill-runtime"
+      - name: Verify pinned index, exact commit and artifacts
+        run: python scripts/verify_rill_release.py --index "$RUNNER_TEMP/rill-v1.2.0/stable-index.json"
+      - name: Run official Stable IPC v2 smoke
+        run: |
+          python scripts/rill_v2_smoke.py \
+            --index "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" \
+            "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" \
+            "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" \
+            "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler"
+
+  rill-business-e2e:
+    name: LessonForge business Handler and Shadow E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout LessonForge
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install Python consumer dependencies
+        run: python -m pip install --no-cache-dir -e ".[dev]"
+      - name: Download official runtime and signed index
+        run: |
+          mkdir -p "$RUNNER_TEMP/rill-business"
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-business/stable-index.json" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/stable-index.json
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-business/rill-runtime" https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/rill-runtime-1.2.0-linux-x86_64
+          chmod 700 "$RUNNER_TEMP/rill-business/rill-runtime"
+          python scripts/verify_rill_release.py --index "$RUNNER_TEMP/rill-business/stable-index.json"
+      - name: Fetch exact upstream packaging tooling source
+        run: git clone --depth 1 --branch v1.2.0 https://github.com/hello-yunshu/rill-ml.git "$RUNNER_TEMP/rill-ml-v1.2.0"
+      - name: Build canonical rill-pack tooling only
+        run: |
+          rustup toolchain install 1.94.0 --profile minimal
+          cargo +1.94.0 build --locked --release --manifest-path "$RUNNER_TEMP/rill-ml-v1.2.0/Cargo.toml" -p rill-runtime --bin rill-pack --no-default-features
+      - name: Build LessonForge-owned Handler API v1 component
+        run: |
+          python scripts/verify_handler_contract.py \
+            --canonical "$RUNNER_TEMP/rill-ml-v1.2.0/crates/rill-handler-api/wit/rill-handler.wit"
+          rustup component add rustfmt clippy --toolchain 1.94.0
+          rustup target add wasm32-unknown-unknown --toolchain 1.94.0
+          cargo +1.94.0 fmt --manifest-path rill-handler/Cargo.toml -- --check
+          cargo +1.94.0 check --locked --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
+          cargo +1.94.0 clippy --locked --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown --all-targets -- -D warnings
+          cargo +1.94.0 test --locked --manifest-path rill-handler/Cargo.toml
+          cargo install wasm-tools --locked --version "1.254.0"
+          handler_build_log="$RUNNER_TEMP/rill-business/handler-build.jsonl"
+          cargo +1.94.0 build --locked --release \
+            --manifest-path rill-handler/Cargo.toml \
+            --target wasm32-unknown-unknown \
+            --target-dir "$RUNNER_TEMP/rill-business/handler-target" \
+            --message-format=json-render-diagnostics > "$handler_build_log"
+          handler_module="$(python - "$handler_build_log" <<'PY'
+          import json
+          import sys
+
+          log_path = sys.argv[1]
+          for line in open(log_path, encoding="utf-8"):
+              try:
+                  event = json.loads(line)
+              except json.JSONDecodeError:
+                  continue
+              target = event.get("target", {})
+              executable = event.get("executable")
+              if (
+                  event.get("reason") == "compiler-artifact"
+                  and target.get("name") == "lessonforge-shadow-handler"
+                  and executable
+              ):
+                  print(executable)
+                  break
+          PY
+          )"
+          test -f "$handler_module"
+          wasm-tools component new "$handler_module" --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm"
+      - name: Build deterministic TEST model and handler packages
+        env:
+          RILL_SIGNING_KEY_HEX: "0000000000000000000000000000000000000000000000000000000000000001"
+        run: |
+          pack="$RUNNER_TEMP/rill-ml-v1.2.0/target/release/rill-pack"
+          "$pack" create --manifest rill-handler/model-manifest.json --model rill-handler/model.json --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillpack"
+          "$pack" create-handler --manifest rill-handler/manifest.json --module "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm" --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillhandler"
+          public_key=$(python -c 'from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey; print(Ed25519PrivateKey.from_private_bytes(bytes.fromhex("0000000000000000000000000000000000000000000000000000000000000001")).public_key().public_bytes_raw().hex())')
+          echo "RILL_TEST_PUBLIC_KEY=$public_key" >> "$GITHUB_ENV"
+          "$pack" verify --pack "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillpack" --key-id lessonforge-ci-test-2026 --public-key-hex "$public_key"
+          "$pack" inspect-handler --handler "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillhandler" --key-id lessonforge-ci-test-2026 --public-key-hex "$public_key"
+      - name: Run managed bundle and real Shadow business E2E
+        run: |
+          python scripts/rill_business_e2e.py \
+            --index "$RUNNER_TEMP/rill-business/stable-index.json" \
+            --runtime "$RUNNER_TEMP/rill-business/rill-runtime" \
+            --model "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillpack" \
+            --handler "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillhandler" \
+            --rill-pack "$RUNNER_TEMP/rill-ml-v1.2.0/target/release/rill-pack" \
+            --public-key "$RILL_TEST_PUBLIC_KEY"
+
+  rill-negative:
+    name: Rill negative verification gates
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -101,27 +337,30 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Install consumer dependencies
-        run: python -m pip install --no-cache-dir -e "."
-      - name: Verify signed immutable release index
-        run: python scripts/verify_rill_release.py
-      - name: Download exact official Linux assets
+        run: python -m pip install --no-cache-dir -e ".[dev]"
+      - name: Reject bad index digest and production unmanaged Stable v2
         run: |
-          mkdir -p "$RUNNER_TEMP/rill-v1.2.0"
-          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" \
-            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/stable-index.json
-          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" \
-            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/rill-runtime-1.2.0-linux-x86_64
-          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" \
-            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/example-default-1.2.0.rillpack
-          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler" \
-            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/echo-handler-1.2.0.rillhandler
-          chmod 700 "$RUNNER_TEMP/rill-v1.2.0/rill-runtime"
-      - name: Run official Stable IPC v2 smoke
-        run: |
-          python scripts/rill_v2_smoke.py \
-            --index "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" \
-            "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" \
-            "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" \
-            "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler"
+          python - <<'PY'
+          import json
+          from document_intelligence.config import Settings
+          from document_intelligence.rill.adoption import RillDistributionError, load_adoption_lock, verify_locked_release_index
+          from document_intelligence.services import build_rill_shadow_service
+
+          lock = load_adoption_lock()
+          try:
+              verify_locked_release_index(b'{"payload":{},"signature":"00"}', lock=lock)
+          except RillDistributionError as error:
+              assert error.reason_code == "RILL_INDEX_DIGEST_MISMATCH"
+          else:
+              raise SystemExit("bad release-index digest was accepted")
+          try:
+              settings = Settings(deployment_profile="production", workspace="/tmp/lessonforge", api_tenant_tokens_sha256={"ci": "0" * 64}, rill_shadow_backend="stable-v2", pdf_render_backend="disabled")
+              build_rill_shadow_service(settings)
+          except ValueError:
+              pass
+          else:
+              raise SystemExit("production Stable v2 without a managed bundle was accepted")
+          print(json.dumps({"status": "NEGATIVE_GATES_VERIFIED", "lockedDigest": lock.release_index_sha256}))
+          PY

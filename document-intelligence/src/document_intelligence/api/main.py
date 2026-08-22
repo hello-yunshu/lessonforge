@@ -104,7 +104,7 @@ from document_intelligence.rill import (
     ShadowFeedbackInput,
 )
 from document_intelligence.rill.adoption import lock_for_runtime
-from document_intelligence.rill.distribution import RillRuntimeManager
+from document_intelligence.rill.distribution import RillAdoptionManager
 from document_intelligence.schema import SAFE_ID_PATTERN, SCHEMA_VERSION
 from document_intelligence.services import (
     IngestionPolicy,
@@ -161,7 +161,7 @@ class RillShadowEvaluateRequest(BaseModel):
 def create_app(settings: Settings | None = None) -> FastAPI:
     runtime_settings = settings or Settings.from_env()
     adoption_lock = lock_for_runtime()
-    runtime_manager = RillRuntimeManager(runtime_settings.workspace)
+    runtime_manager = RillAdoptionManager(runtime_settings.workspace)
     orchestrator = build_orchestrator(runtime_settings)
     policy = IngestionPolicy(max_upload_bytes=runtime_settings.max_upload_bytes)
     standard_library = StandardLibrary(
@@ -605,23 +605,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/healthz")
     def healthz() -> dict[str, Any]:
-        active_runtime = runtime_manager.active()
-        rill_status = {
-            "upstreamLatest": adoption_lock.upstream_latest,
-            "upstreamLatestInformationalOnly": adoption_lock.upstream_latest_informational_only,
-            "supported": adoption_lock.supported,
-            "tested": adoption_lock.tested,
-            "installed": (
-                active_runtime.get("version")
-                if active_runtime and active_runtime.get("version") == adoption_lock.supported
-                else None
-            ),
-            "protocol": adoption_lock.production_protocol,
-            "stableRuntimeApi": adoption_lock.stable_runtime_api,
-            "previewV3Compatibility": adoption_lock.qualification.get(
-                "previewV3", "present-disabled-for-production"
-            ),
-        }
+        rill_status = runtime_manager.status(adoption_lock)
+        rill_status["previewV3Compatibility"] = adoption_lock.qualification.get(
+            "previewV3", "present-disabled-for-production"
+        )
+        rill_status["stableRuntimeApi"] = adoption_lock.stable_runtime_api
         return {
             "status": "ok",
             "service": "document-intelligence",

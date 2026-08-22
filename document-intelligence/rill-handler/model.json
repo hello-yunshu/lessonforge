@@ -1,0 +1,9 @@
+{
+  "default_action": "HUMAN_REVIEW",
+  "policy_version": "lessonforge-rill-1.2.0",
+  "thresholds": {
+    "accept": 0.2,
+    "retry": 0.55,
+    "quarantine": 0.85
+  }
+}
