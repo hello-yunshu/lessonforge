@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 from document_intelligence.campaign import CampaignStore, QualificationCampaignService
@@ -37,6 +38,7 @@ from document_intelligence.rill.client import (
     RillShadowClient,
     SubprocessRillClient,
 )
+from document_intelligence.rill.distribution import RillAdoptionManager
 from document_intelligence.rill.stable_client import StableV2RillClient
 from document_intelligence.rill.drift import ShadowDriftMonitor
 from document_intelligence.rill.features import ShadowFeatureBuilder
@@ -192,19 +194,61 @@ def build_rill_shadow_service(
     )
     client: RillShadowClient | None = None
     backend_name: str = settings.rill_shadow_backend
-    if settings.rill_shadow_backend in {"stable-v2", "subprocess"} and settings.rill_runtime_command:
+    managed_bundle = RillAdoptionManager(settings.workspace).active_bundle()
+    runtime_command = settings.rill_runtime_command
+    expected_runtime_sha256 = settings.rill_runtime_artifact_sha256
+    expected_runtime_version = "1.2.0"
+    expected_model_id: str | None = None
+    expected_model_version: str | None = None
+    expected_handler_id: str | None = None
+    expected_handler_version: str | None = None
+    expected_capabilities: list[str] | None = None
+    if runtime_command is None and managed_bundle is not None:
+        if managed_bundle.get("qualification") != "VERIFIED":
+            if settings.production_mode and settings.rill_shadow_backend in {
+                "stable-v2",
+                "subprocess",
+            }:
+                raise ValueError(
+                    "production Stable v2 requires a verified managed Rill adoption bundle"
+                )
+        else:
+            runtime_command = tuple(str(item) for item in managed_bundle.get("command", ()))
+            expected_runtime_sha256 = str(managed_bundle["runtime"]["sha256"])
+            expected_runtime_version = str(managed_bundle["runtime"]["version"])
+            expected_model_id = str(managed_bundle["model"]["id"])
+            expected_model_version = str(managed_bundle["model"]["version"])
+            expected_handler_id = str(managed_bundle["handler"]["id"])
+            expected_handler_version = str(managed_bundle["handler"]["version"])
+            expected_capabilities = [str(item) for item in managed_bundle["capabilities"]]
+    if settings.rill_shadow_backend in {"stable-v2", "subprocess"} and settings.production_mode:
+        if runtime_command is None:
+            raise ValueError(
+                "production Stable v2 requires a verified managed bundle or explicit command"
+            )
+        if managed_bundle is None or settings.rill_runtime_command is not None:
+            _validate_explicit_stable_v2(settings, runtime_command)
+    if settings.rill_shadow_backend in {"stable-v2", "subprocess"} and runtime_command:
         try:
             client = StableV2RillClient(
-                settings.rill_runtime_command,
+                runtime_command,
                 feature_schema_hash=feature_builder.feature_schema_hash,
                 evaluate_capability=settings.rill_evaluate_capability,
                 feedback_capability=settings.rill_feedback_capability,
                 request_timeout_seconds=settings.rill_request_timeout_seconds,
                 startup_timeout_seconds=settings.rill_startup_timeout_seconds,
                 max_message_bytes=settings.rill_max_message_bytes,
-                expected_runtime_sha256=settings.rill_runtime_artifact_sha256,
+                expected_runtime_sha256=expected_runtime_sha256,
+                expected_runtime_version=expected_runtime_version,
+                expected_model_pack_id=expected_model_id,
+                expected_model_pack_version=expected_model_version,
+                expected_handler_id=expected_handler_id,
+                expected_handler_version=expected_handler_version,
+                expected_effective_capabilities=expected_capabilities,
             )
         except Exception:
+            if settings.production_mode:
+                raise
             client = None
             backend_name = "stable-v2-unavailable"
     elif settings.rill_shadow_backend == "preview-v3" and settings.rill_runtime_command:
@@ -239,6 +283,36 @@ def build_rill_shadow_service(
         client=client,
         backend_name=backend_name,
     )
+
+
+def _validate_explicit_stable_v2(settings: Settings, command: tuple[str, ...]) -> None:
+    if not settings.rill_allow_unmanaged_stable_v2:
+        raise ValueError(
+            "explicit unmanaged Stable v2 requires DI_RILL_ALLOW_UNMANAGED_STABLE_V2=true"
+        )
+    if not all(
+        (settings.rill_runtime_artifact_sha256, settings.rill_model_artifact_sha256,
+         settings.rill_handler_artifact_sha256)
+    ):
+        raise ValueError(
+            "explicit unmanaged Stable v2 requires runtime, model and handler SHA-256 digests"
+        )
+    try:
+        model_path = Path(command[command.index("--pack") + 1])
+        handler_path = Path(command[command.index("--handler") + 1])
+    except (ValueError, IndexError) as exc:
+        raise ValueError(
+            "explicit unmanaged Stable v2 command must include --pack and --handler"
+        ) from exc
+    for path, expected in (
+        (model_path, settings.rill_model_artifact_sha256),
+        (handler_path, settings.rill_handler_artifact_sha256),
+    ):
+        if path.is_symlink() or not path.is_file():
+            raise ValueError("explicit unmanaged Stable v2 package path is not a regular file")
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != expected:
+            raise ValueError("explicit unmanaged Stable v2 package digest mismatch")
 
 
 def build_rill_assist_service(

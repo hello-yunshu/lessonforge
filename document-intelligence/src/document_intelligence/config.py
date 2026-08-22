@@ -62,10 +62,14 @@ class Settings(BaseModel):
     ] = "disabled"
     rill_runtime_command: tuple[str, ...] | None = None
     rill_evaluate_capability: str = "org.lessonforge.shadow.evaluate"
-    rill_feedback_capability: str | None = "org.lessonforge.shadow.update"
+    # Stable v2 has no stateful feedback operation. Feedback is Host-owned by
+    # default; an explicit capability is reserved for a separately qualified
+    # consumer handler and is never inferred.
+    rill_feedback_capability: str | None = None
     rill_runtime_artifact_sha256: str | None = None
     rill_model_artifact_sha256: str | None = None
     rill_handler_artifact_sha256: str | None = None
+    rill_allow_unmanaged_stable_v2: bool = False
     rill_access_token_sha256: str | None = None
     enable_rill_shadow_writes: bool = False
     rill_reference_backend_allowed: bool = False
@@ -217,7 +221,7 @@ class Settings(BaseModel):
                 "DI_RILL_EVALUATE_CAPABILITY", "org.lessonforge.shadow.evaluate"
             ),
             rill_feedback_capability=(
-                os.getenv("DI_RILL_FEEDBACK_CAPABILITY", "org.lessonforge.shadow.update")
+                os.getenv("DI_RILL_FEEDBACK_CAPABILITY", "")
                 or None
             ),
             rill_runtime_artifact_sha256=(
@@ -229,6 +233,10 @@ class Settings(BaseModel):
             rill_handler_artifact_sha256=(
                 os.getenv("DI_RILL_HANDLER_ARTIFACT_SHA256") or None
             ),
+            rill_allow_unmanaged_stable_v2=os.getenv(
+                "DI_RILL_ALLOW_UNMANAGED_STABLE_V2", "false"
+            ).lower()
+            in {"1", "true", "yes", "on"},
             rill_access_token_sha256=(os.getenv("DI_RILL_ACCESS_TOKEN_SHA256") or None),
             enable_rill_shadow_writes=os.getenv(
                 "DI_ENABLE_RILL_SHADOW_WRITES", "false"
@@ -434,6 +442,10 @@ class Settings(BaseModel):
             raise ValueError("reference Rill backend is forbidden in production")
         if self.rill_shadow_backend == "preview-v3":
             raise ValueError("Preview IPC v3 is forbidden as the LessonForge production backend")
+        if self.rill_feedback_capability is not None:
+            raise ValueError(
+                "production Stable v2 feedback is Host-owned; configure no Runtime update capability"
+            )
         if self.pdf_render_backend == "pymupdf" and not self.pymupdf_license_resolved:
             raise ValueError(
                 "PyMuPDF rendering requires an explicit resolved license attestation"

@@ -1,0 +1,6 @@
+{
+  "default_action": "HUMAN_REVIEW",
+  "policy_version": "lessonforge-rill-1.2.0",
+  "confidence": 0.91,
+  "reason_codes": ["LESSONFORGE_BOUNDED_MODEL"]
+}

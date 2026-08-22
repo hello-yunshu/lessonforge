@@ -1,0 +1,24 @@
+package rill:handler@1.0.0;
+
+interface types {
+    record handler-metadata {
+        id: string,
+        version: string,
+        api-version: u32,
+        capabilities: list<string>,
+    }
+
+    variant handler-error {
+        invalid-model(string),
+        invalid-input(string),
+        unsupported-capability(string),
+        execution-failed(string),
+    }
+}
+
+world invoke-handler {
+    use types.{handler-metadata, handler-error};
+    export metadata: func() -> handler-metadata;
+    export configure: func(model-json: list<u8>) -> result<_, handler-error>;
+    export invoke: func(capability: string, input-json: list<u8>) -> result<list<u8>, handler-error>;
+}

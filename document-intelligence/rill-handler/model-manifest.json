@@ -1,0 +1,11 @@
+{
+  "formatVersion": 1,
+  "id": "org.lessonforge.shadow.model",
+  "version": "1.2.0",
+  "runtimeApiVersion": 2,
+  "minRuntimeVersion": "1.2.0",
+  "publisherKeyId": "lessonforge-ci-test-2026",
+  "capabilities": [
+    "org.lessonforge.shadow.evaluate"
+  ]
+}

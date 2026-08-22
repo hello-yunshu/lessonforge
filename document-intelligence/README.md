@@ -55,7 +55,7 @@ doc-intelligence rill-shadow-inspect
 
 正式 Runtime 必须通过 `DI_RILL_RUNTIME_COMMAND_JSON` 提供明确参数向量，并通过官方 RillML `v1.2.0` 的 Stable IPC v2 Handshake、Health、Invoke、模型/handler identity 和 capability 检查。LessonForge 不编译、不 fork、也不内嵌 Rill Runtime；Runtime 由签名 release index 的 immutable `v1.2.0` 资产独立分发。Reference 后端和旧 IPC v3 client 都不会冒充生产 Runtime。
 
-RillML adoption lock 位于 `src/document_intelligence/defaults/rill_adoption.json`，是唯一 machine-readable 版本边界：supported/tested 均为 `1.2.0`，`v1.2.0` tag commit、release-index schema 3、Stable Runtime API 2 和分开的 release/model/handler trust domain 均固定在此。上游 `1.3.0` 只作为 informational latest，不进入生产配置。
+RillML adoption lock 位于 `src/document_intelligence/defaults/rill_adoption.json`，是唯一 machine-readable 版本边界：supported/tested/latest Stable 均为 `1.2.0`，`v1.2.0` tag commit、release-index schema 3、Stable Runtime API 2 和分开的 release/model/handler trust domain 均固定在此。RillML `1.3.0` 开发线不被写成 latest Stable，也不进入生产配置。
 
 应用领域包并导出审核任务：
 

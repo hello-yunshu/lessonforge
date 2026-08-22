@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import urllib.request
 from pathlib import Path
 
 from document_intelligence.config import Settings
@@ -52,6 +53,12 @@ from document_intelligence.rill import (
     AssistParserResumeRequest,
     ShadowFeedbackInput,
 )
+from document_intelligence.rill.adoption import (
+    MAX_RELEASE_INDEX_BYTES,
+    load_adoption_lock,
+    verify_locked_release_index,
+)
+from document_intelligence.rill.distribution import RillAdoptionManager
 from document_intelligence.services import (
     IngestionPolicy,
     build_document_family_service,
@@ -199,6 +206,30 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("rill-shadow-snapshot", help="persist Rill and drift state")
     sub.add_parser("rill-shadow-reset", help="snapshot then reset Shadow state")
 
+    rill = sub.add_parser("rill", help="manage the verified Rill 1.2.0 adoption bundle")
+    rill_commands = rill.add_subparsers(dest="rill_command", required=True)
+    rill_commands.add_parser("status", help="show the active bundle qualification")
+    verify_release = rill_commands.add_parser(
+        "verify-release", help="verify the pinned stable index"
+    )
+    verify_release.add_argument("--index", type=Path, default=None)
+    install = rill_commands.add_parser("install", help="install and qualify a complete bundle")
+    install.add_argument("--index", type=Path, default=None)
+    install.add_argument("--model", type=Path, required=True)
+    install.add_argument("--handler", type=Path, required=True)
+    install.add_argument("--model-id", required=True)
+    install.add_argument("--model-version", default="1.2.0")
+    install.add_argument("--handler-id", required=True)
+    install.add_argument("--handler-version", default="1.2.0")
+    install.add_argument("--model-key-id", required=True)
+    install.add_argument("--model-public-key", required=True)
+    install.add_argument("--handler-key-id", required=True)
+    install.add_argument("--handler-public-key", required=True)
+    install.add_argument("--rill-pack", type=Path, default=Path("rill-pack"))
+    probe = rill_commands.add_parser("probe", help="run the active bundle Stable v2 probe")
+    probe.add_argument("--feature-schema-hash", default="0" * 64)
+    rill_commands.add_parser("rollback", help="rollback the complete previous-good bundle")
+
     assist_attest = sub.add_parser("rill-assist-attest", help="submit expert evidence JSON")
     assist_attest.add_argument("file", type=Path)
     assist_attest.add_argument("--output", type=Path, default=None)
@@ -331,6 +362,93 @@ def _emit(payload: object, output: Path | None = None) -> None:
         print(rendered)
 
 
+def _read_release_index(path: Path | None) -> bytes:
+    if path is not None:
+        raw = path.read_bytes()
+    else:
+        lock = load_adoption_lock()
+        url = (
+            f"https://github.com/{lock.upstream_repository}/releases/download/"
+            f"{lock.tag}/stable-index.json"
+        )
+        with urllib.request.urlopen(url, timeout=30) as response:
+            raw = response.read(MAX_RELEASE_INDEX_BYTES + 1)
+    if len(raw) > MAX_RELEASE_INDEX_BYTES:
+        raise ValueError("stable-index.json exceeds the bounded index size")
+    return raw
+
+
+def _run_rill_command(settings: Settings, args: argparse.Namespace) -> int:
+    manager = RillAdoptionManager(settings.workspace)
+    if args.rill_command == "status":
+        _emit(manager.status())
+        return 0
+    if args.rill_command == "verify-release":
+        index = verify_locked_release_index(_read_release_index(args.index))
+        lock = load_adoption_lock()
+        _emit(
+            {
+                "status": "VERIFIED",
+                "tag": lock.tag,
+                "commit": lock.commit,
+                "indexSha256": lock.release_index_sha256,
+                "schemaVersion": index.payload.schema_version,
+                "channel": index.payload.channel,
+                "artifacts": len(index.payload.artifacts),
+            }
+        )
+        return 0
+    if args.rill_command == "install":
+        metadata = manager.install_bundle(
+            _read_release_index(args.index),
+            model_path=args.model,
+            handler_path=args.handler,
+            model_id=args.model_id,
+            model_version=args.model_version,
+            handler_id=args.handler_id,
+            handler_version=args.handler_version,
+            model_key_id=args.model_key_id,
+            model_public_key=args.model_public_key,
+            handler_key_id=args.handler_key_id,
+            handler_public_key=args.handler_public_key,
+            rill_pack_command=(str(args.rill_pack),),
+        )
+        _emit({"status": "VERIFIED", "qualification": metadata["qualification"]})
+        return 0
+    if args.rill_command == "rollback":
+        metadata = manager.rollback_bundle()
+        _emit({"status": "ROLLED_BACK", "qualification": metadata["qualification"]})
+        return 0
+    if args.rill_command == "probe":
+        bundle = manager.active_bundle()
+        if bundle is None or bundle.get("qualification") != "VERIFIED":
+            raise ValueError("no verified active Rill adoption bundle exists")
+        from document_intelligence.rill.stable_client import StableV2RillClient
+
+        client = StableV2RillClient(
+            tuple(str(item) for item in bundle["command"]),
+            feature_schema_hash=args.feature_schema_hash,
+            feedback_capability=None,
+            expected_runtime_sha256=bundle["runtime"]["sha256"],
+            expected_runtime_version=bundle["runtime"]["version"],
+            expected_model_pack_id=bundle["model"]["id"],
+            expected_model_pack_version=bundle["model"]["version"],
+            expected_handler_id=bundle["handler"]["id"],
+            expected_handler_version=bundle["handler"]["version"],
+            expected_effective_capabilities=bundle["capabilities"],
+        )
+        try:
+            output = client.invoke(
+                "org.lessonforge.shadow.evaluate",
+                {"operation": "qualification", "allowedActions": ["HUMAN_REVIEW"]},
+            )
+        finally:
+            client.close()
+        _emit({"status": "VERIFIED", "output": output})
+        return 0
+    raise ValueError(f"unknown Rill command: {args.rill_command}")
+
+
 def _require_domain_writes(settings: Settings) -> None:
     if not settings.enable_domain_pack_writes:
         raise DomainPackWriteDisabledError(
@@ -399,6 +517,8 @@ def _require_campaign_writes(settings: Settings) -> None:
 def main() -> int:
     args = build_parser().parse_args()
     settings = Settings.from_env()
+    if args.command == "rill":
+        return _run_rill_command(settings, args)
     if args.command in {"freeze-inspect", "freeze-verify"}:
         service = FreezeService()
         payload = (

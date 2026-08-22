@@ -54,8 +54,7 @@ class RillAdoptionLock(BaseModel):
     release_index_schema: int = Field(alias="releaseIndexSchema")
     stable_runtime_api: int = Field(alias="stableRuntimeApi")
     production_protocol: Literal["stable-v2"] = Field(alias="productionProtocol")
-    upstream_latest: str = Field(alias="upstreamLatest")
-    upstream_latest_informational_only: bool = Field(alias="upstreamLatestInformationalOnly")
+    upstream_latest_stable: str = Field(alias="upstreamLatestStable")
     release_index_sha256: str = Field(alias="releaseIndexSha256")
     trust: AdoptionTrust
     qualification: dict[str, str]
@@ -75,8 +74,8 @@ class RillAdoptionLock(BaseModel):
             raise ValueError("RillML adoption identity is not the verified v1.2.0 release")
         if self.release_index_schema != 3 or self.stable_runtime_api != 2:
             raise ValueError("RillML 1.2.0 stable contract is schema 3 / API 2")
-        if not self.upstream_latest_informational_only:
-            raise ValueError("upstream latest must remain informational only")
+        if self.upstream_latest_stable != self.supported:
+            raise ValueError("upstream latest stable must equal the qualified stable release")
         return self
 
 
@@ -241,19 +240,60 @@ def parse_and_verify_release_index(
     return index
 
 
+def verify_locked_release_index(
+    raw: bytes,
+    *,
+    lock: RillAdoptionLock | None = None,
+) -> SignedReleaseIndex:
+    """Verify one immutable release index against the complete adoption lock.
+
+    Callers must use this boundary instead of composing the lower-level parser
+    and identity checks themselves.  The pinned digest is deliberately checked
+    before signature and artifact selection so a validly signed index from a
+    different immutable release cannot be adopted accidentally.
+    """
+
+    adoption = lock or load_adoption_lock()
+    if len(raw) == 0 or len(raw) > MAX_RELEASE_INDEX_BYTES:
+        raise RillDistributionError(
+            "RILL_INDEX_TOO_LARGE", "signed Rill release index exceeds its limit"
+        )
+    if hashlib.sha256(raw).hexdigest() != adoption.release_index_sha256:
+        raise RillDistributionError(
+            "RILL_INDEX_DIGEST_MISMATCH",
+            "signed Rill release index differs from the immutable adoption lock",
+        )
+    index = parse_and_verify_release_index(raw, lock=adoption)
+    verify_release_index_identity(index, lock=adoption)
+    return index
+
+
 def verify_release_index_identity(
     index: SignedReleaseIndex,
     *,
     lock: RillAdoptionLock | None = None,
 ) -> None:
     adoption = lock or load_adoption_lock()
-    prefix = f"https://github.com/{adoption.upstream_repository}/releases/download/{adoption.tag}/"
+    expected_prefix = (
+        f"/" f"{adoption.upstream_repository}/releases/download/{adoption.tag}/"
+    )
     for artifact in index.payload.artifacts:
         if artifact.version != adoption.supported:
             raise RillDistributionError(
                 "RILL_ARTIFACT_VERSION_MISMATCH", "release artifact version is not 1.2.0"
             )
-        if not artifact.url.startswith(prefix):
+        parsed = urlparse(artifact.url)
+        if (
+            parsed.scheme != "https"
+            or parsed.hostname != "github.com"
+            or parsed.username
+            or parsed.password
+            or parsed.fragment
+            or parsed.query
+            or not parsed.path.startswith(expected_prefix)
+            or not parsed.path[len(expected_prefix) :]
+            or "/" in parsed.path[len(expected_prefix) :]
+        ):
             raise RillDistributionError(
                 "RILL_ARTIFACT_URL_MISMATCH", "release artifact is not from the immutable tag"
             )

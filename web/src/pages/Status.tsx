@@ -73,11 +73,15 @@ const nextSteps = [
 ];
 
 type RillStatus = {
-  upstreamLatest: string;
+  upstreamLatestStable: string;
   supported: string;
   tested: string;
   installed: string | null;
   protocol: string;
+  qualification: "VERIFIED" | "DEGRADED" | "NOT_INSTALLED" | "UNSUPPORTED_TARGET" | "INVALID_BUNDLE";
+  runtimeApi: number;
+  hostOwnedFeedback: boolean;
+  runtimeReset: boolean;
   previewV3Compatibility: string;
 };
 
@@ -144,19 +148,20 @@ export default function Status() {
             </div>
             <h2 className="font-serif text-xl font-bold text-ink mt-1">Stable Runtime 版本边界</h2>
           </div>
-          <Badge tone={rill?.installed ? "ok" : "default"}>
-            {rill?.installed ? "Runtime 已安装" : "Runtime 未安装 / 未连接"}
+          <Badge tone={rill?.qualification === "VERIFIED" ? "ok" : rill?.qualification === "INVALID_BUNDLE" ? "warn" : "default"}>
+            {rill?.qualification === "VERIFIED" ? "Bundle 已验证" : `Bundle ${rill?.qualification ?? "未连接"}`}
           </Badge>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mt-5 text-xs">
-          <div><div className="text-ink-4">Rill upstream latest</div><div className="font-mono text-ink mt-1">{rill?.upstreamLatest ?? "—"}</div></div>
+          <div><div className="text-ink-4">Rill latest Stable</div><div className="font-mono text-ink mt-1">{rill?.upstreamLatestStable ?? "—"}</div></div>
           <div><div className="text-ink-4">LessonForge supported</div><div className="font-mono text-ink mt-1">{rill?.supported ?? "—"}</div></div>
           <div><div className="text-ink-4">LessonForge tested</div><div className="font-mono text-ink mt-1">{rill?.tested ?? "—"}</div></div>
           <div><div className="text-ink-4">Installed Rill</div><div className="font-mono text-ink mt-1">{rill?.installed ?? "—"}</div></div>
-          <div><div className="text-ink-4">Protocol</div><div className="font-mono text-ink mt-1">{rill?.protocol ?? "—"}</div></div>
+          <div><div className="text-ink-4">Protocol / API</div><div className="font-mono text-ink mt-1">{rill?.protocol ?? "—"} / {rill?.runtimeApi ?? "—"}</div></div>
         </div>
         <div className="mt-4 text-xs text-ink-3">
           {rill?.previewV3Compatibility ?? "Preview v3 compatibility code: present/disabled；Production v3 runtime: not claimed"}
+          <span className="ml-3">Host-owned feedback: {rill?.hostOwnedFeedback ? "是" : "否"}；Runtime reset: {rill?.runtimeReset ? "是" : "否"}</span>
         </div>
       </Card>
 

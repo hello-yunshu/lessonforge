@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 
 import pytest
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -13,6 +14,7 @@ from document_intelligence.rill.adoption import (
     resolve_target,
     select_runtime,
     verify_release_index_identity,
+    verify_locked_release_index,
 )
 
 
@@ -27,8 +29,7 @@ def lock(key: str) -> RillAdoptionLock:
             "releaseIndexSchema": 3,
             "stableRuntimeApi": 2,
             "productionProtocol": "stable-v2",
-            "upstreamLatest": "1.3.0",
-            "upstreamLatestInformationalOnly": True,
+            "upstreamLatestStable": "1.2.0",
             "releaseIndexSha256": "0" * 64,
             "trust": {
                 "releaseIndex": {"test-key": key},
@@ -83,6 +84,10 @@ def test_release_index_signature_and_identity_are_strict() -> None:
     assert (
         select_runtime(index, target=("linux", "x86_64", "gnu"), lock=adoption).id == "rill-runtime"
     )
+    locked = adoption.model_copy(
+        update={"release_index_sha256": hashlib.sha256(signed_index(private)).hexdigest()}
+    )
+    verify_locked_release_index(signed_index(private), lock=locked)
 
     bad = json.loads(signed_index(private))
     bad["signature"] = "0" * 128

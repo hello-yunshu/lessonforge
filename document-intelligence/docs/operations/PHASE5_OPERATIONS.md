@@ -10,7 +10,7 @@ DI_RILL_REFERENCE_BACKEND_ALLOWED=false
 
 ## 真实Runtime
 
-`DI_RILL_RUNTIME_COMMAND_JSON`必须是JSON参数数组，而不是Shell字符串。正式环境应指向固定SHA-256的 `rill-runtime`、签名模型包、签名handler和独立信任密钥。Runtime启动失败只会把Rill状态标记为不可用，不会阻止解析API启动。
+`DI_RILL_RUNTIME_COMMAND_JSON`必须是JSON参数数组，而不是Shell字符串。正式环境优先使用 `doc-intelligence rill install` 生成的完整 managed bundle；若采用显式 unmanaged command，必须同时提供固定 SHA-256 的 Runtime/model/handler、独立信任密钥，并显式设置 `DI_RILL_ALLOW_UNMANAGED_STABLE_V2=true`。production Stable v2 缺少这些条件时启动直接失败，不会静默降级成“不可用”。
 
 ## Reference后端
 
