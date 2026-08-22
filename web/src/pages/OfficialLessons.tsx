@@ -20,7 +20,6 @@ import {
   Layers,
   ChevronRight,
   MapPin,
-  Box,
   ShieldCheck,
   Clock,
   AlertCircle,

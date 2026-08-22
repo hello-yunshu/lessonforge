@@ -193,11 +193,13 @@ class DomainRuntimeEngine:
         # 统一移除空白后再做关键词匹配，避免"练 习 一"匹配不到"练习"。
         folded = re.sub(r"\s+", "", text.casefold())
         if rule.text_contains_any and not any(
-            term.casefold() in folded for term in rule.text_contains_any
+            re.sub(r"\s+", "", term.casefold()) in folded
+            for term in rule.text_contains_any
         ):
             return False
         if rule.text_starts_with_any and not any(
-            folded.startswith(term.casefold()) for term in rule.text_starts_with_any
+            folded.startswith(re.sub(r"\s+", "", term.casefold()))
+            for term in rule.text_starts_with_any
         ):
             return False
         return True

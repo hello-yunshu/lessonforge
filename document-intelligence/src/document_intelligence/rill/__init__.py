@@ -43,6 +43,8 @@ from document_intelligence.rill.models import (
     ShadowSnapshotRecord,
 )
 from document_intelligence.rill.policy import StaticShadowPolicy, calculate_reward
+from document_intelligence.rill.adoption import RillAdoptionLock, load_adoption_lock
+from document_intelligence.rill.stable_client import StableV2RillClient
 
 __all__ = [
     "ASSIST_SCHEMA_VERSION",
@@ -87,4 +89,7 @@ __all__ = [
     "ShadowSnapshotRecord",
     "StaticShadowPolicy",
     "calculate_reward",
+    "RillAdoptionLock",
+    "StableV2RillClient",
+    "load_adoption_lock",
 ]

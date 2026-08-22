@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "@/components/ui/PageHeader";
 import Card from "@/components/ui/Card";
-import Badge, { ConfBadge } from "@/components/ui/Badge";
+import { ConfBadge } from "@/components/ui/Badge";
 import ImageUpload from "@/components/ui/ImageUpload";
 import { userUploads, coordinateTransforms, objects, pages } from "@/data";
 import { cn, fmtDate } from "@/lib/utils";

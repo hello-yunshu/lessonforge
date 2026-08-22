@@ -34,8 +34,10 @@ from document_intelligence.rill.assist import RillAssistService
 from document_intelligence.rill.assist_store import RillAssistStore
 from document_intelligence.rill.client import (
     ReferenceRillShadowClient,
+    RillShadowClient,
     SubprocessRillClient,
 )
+from document_intelligence.rill.stable_client import StableV2RillClient
 from document_intelligence.rill.drift import ShadowDriftMonitor
 from document_intelligence.rill.features import ShadowFeatureBuilder
 from document_intelligence.rill.service import RillShadowService
@@ -188,9 +190,24 @@ def build_rill_shadow_service(
         domains,
         feature_schema_path=schema_path,
     )
-    client = None
-    backend_name = settings.rill_shadow_backend
-    if settings.rill_shadow_backend == "subprocess" and settings.rill_runtime_command:
+    client: RillShadowClient | None = None
+    backend_name: str = settings.rill_shadow_backend
+    if settings.rill_shadow_backend in {"stable-v2", "subprocess"} and settings.rill_runtime_command:
+        try:
+            client = StableV2RillClient(
+                settings.rill_runtime_command,
+                feature_schema_hash=feature_builder.feature_schema_hash,
+                evaluate_capability=settings.rill_evaluate_capability,
+                feedback_capability=settings.rill_feedback_capability,
+                request_timeout_seconds=settings.rill_request_timeout_seconds,
+                startup_timeout_seconds=settings.rill_startup_timeout_seconds,
+                max_message_bytes=settings.rill_max_message_bytes,
+                expected_runtime_sha256=settings.rill_runtime_artifact_sha256,
+            )
+        except Exception:
+            client = None
+            backend_name = "stable-v2-unavailable"
+    elif settings.rill_shadow_backend == "preview-v3" and settings.rill_runtime_command:
         try:
             client = SubprocessRillClient(
                 settings.rill_runtime_command,
@@ -202,7 +219,7 @@ def build_rill_shadow_service(
             )
         except Exception:
             client = None
-            backend_name = "subprocess-unavailable"
+            backend_name = "preview-v3-unavailable"
     elif (
         settings.rill_shadow_backend == "reference"
         and settings.rill_reference_backend_allowed

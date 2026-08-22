@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageHeader from "@/components/ui/PageHeader";
 import Card from "@/components/ui/Card";
@@ -71,7 +72,29 @@ const nextSteps = [
   { no: 6, text: "修复解析验证 warn 项：玫瑰单价推理、练习二题组拆分、例3试一试独立对象", to: "/verify" },
 ];
 
+type RillStatus = {
+  upstreamLatest: string;
+  supported: string;
+  tested: string;
+  installed: string | null;
+  protocol: string;
+  previewV3Compatibility: string;
+};
+
 export default function Status() {
+  const [rill, setRill] = useState<RillStatus | null>(null);
+  useEffect(() => {
+    let active = true;
+    fetch("/api/di/health")
+      .then((response) => response.json() as Promise<{ rill?: RillStatus }>)
+      .then((body) => {
+        if (active && body.rill) setRill(body.rill);
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
+  }, []);
   const done = phases.filter((p) => p.status === "done").length;
   const inProg = phases.filter((p) => p.status === "in-progress").length;
   const overall = (done + inProg * 0.5) / phases.length;
@@ -112,6 +135,30 @@ export default function Status() {
           <div className="mt-1.5 font-serif text-2xl font-bold text-teal-2">{p1Met}/{p1Metrics.length}</div>
         </div>
       </div>
+
+      <Card className="mb-10" bodyClassName="p-5">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div>
+            <div className="text-2xs uppercase tracking-[0.15em] text-ink-3 font-mono">
+              RILLML CONSUMER CONTRACT
+            </div>
+            <h2 className="font-serif text-xl font-bold text-ink mt-1">Stable Runtime 版本边界</h2>
+          </div>
+          <Badge tone={rill?.installed ? "ok" : "default"}>
+            {rill?.installed ? "Runtime 已安装" : "Runtime 未安装 / 未连接"}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mt-5 text-xs">
+          <div><div className="text-ink-4">Rill upstream latest</div><div className="font-mono text-ink mt-1">{rill?.upstreamLatest ?? "—"}</div></div>
+          <div><div className="text-ink-4">LessonForge supported</div><div className="font-mono text-ink mt-1">{rill?.supported ?? "—"}</div></div>
+          <div><div className="text-ink-4">LessonForge tested</div><div className="font-mono text-ink mt-1">{rill?.tested ?? "—"}</div></div>
+          <div><div className="text-ink-4">Installed Rill</div><div className="font-mono text-ink mt-1">{rill?.installed ?? "—"}</div></div>
+          <div><div className="text-ink-4">Protocol</div><div className="font-mono text-ink mt-1">{rill?.protocol ?? "—"}</div></div>
+        </div>
+        <div className="mt-4 text-xs text-ink-3">
+          {rill?.previewV3Compatibility ?? "Preview v3 compatibility code: present/disabled；Production v3 runtime: not claimed"}
+        </div>
+      </Card>
 
       {/* 阶段状态 */}
       <h2 className="font-serif text-xl font-bold text-ink mb-4 flex items-center gap-2">

@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import { textbook, pages, units, sections } from "@/data";
 import { cn, toCN } from "@/lib/utils";
-import { FileText, Hash, ChevronRight, ChevronLeft, BookOpen, Layers } from "lucide-react";
+import { FileText, Hash, ChevronRight, ChevronLeft, BookOpen } from "lucide-react";
 
 const PAGE_SIZE = 8; // 每页显示8条
 

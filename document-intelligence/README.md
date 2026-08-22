@@ -7,7 +7,7 @@
 - Phase 2：标准文档库、全页/局部截图匹配和安全标准结果调用；
 - Phase 3：阅读顺序、标题层级、内容分组、图文关联、跨页关系和整文档一致性；
 - Phase 4：声明式 Domain Pack Runtime、完整性与兼容性校验、领域结果隔离和审核桥接；
-- Phase 5：真实 RillML IPC v3 Shadow适配、静态基线、延迟反馈、离线回放、漂移监视与快照；
+- Phase 5：RillML Stable IPC v2 consumer、Host-owned Shadow 状态、静态基线、延迟反馈、离线回放、漂移监视与快照；
 - Phase 6：资格门禁、人工激活、Tier 1白名单、第二解析器/高分辨率/专家解析器候选、审核优先级、隔离队列与可逆解析器熔断；
 - Phase 7：主动学习、DVC/MLflow血缘、黄金与挑战门禁、Candidate/Shadow/Champion、灰度证明与一键回滚；
 - Phase 8：多领域内置包、声明式领域脚手架、建议性文档族识别与跨领域隔离回归；
@@ -44,7 +44,7 @@ doc-intelligence domain-pack-install-builtin technical-manual --activate
 doc-intelligence domain-pack-list
 ```
 
-Rill Shadow本地开发（Reference后端仅用于测试）：
+Rill Shadow 本地开发（Reference 后端仅用于测试）：
 
 ```bash
 export DI_RILL_SHADOW_BACKEND=reference
@@ -53,7 +53,9 @@ export DI_ENABLE_RILL_SHADOW_WRITES=true
 doc-intelligence rill-shadow-inspect
 ```
 
-真实Runtime必须通过 `DI_RILL_RUNTIME_COMMAND_JSON` 提供明确参数向量，并通过IPC v3握手、feature schema hash及capability检查。Reference后端不会冒充真实Runtime。
+正式 Runtime 必须通过 `DI_RILL_RUNTIME_COMMAND_JSON` 提供明确参数向量，并通过官方 RillML `v1.2.0` 的 Stable IPC v2 Handshake、Health、Invoke、模型/handler identity 和 capability 检查。LessonForge 不编译、不 fork、也不内嵌 Rill Runtime；Runtime 由签名 release index 的 immutable `v1.2.0` 资产独立分发。Reference 后端和旧 IPC v3 client 都不会冒充生产 Runtime。
+
+RillML adoption lock 位于 `src/document_intelligence/defaults/rill_adoption.json`，是唯一 machine-readable 版本边界：supported/tested 均为 `1.2.0`，`v1.2.0` tag commit、release-index schema 3、Stable Runtime API 2 和分开的 release/model/handler trust domain 均固定在此。上游 `1.3.0` 只作为 informational latest，不进入生产配置。
 
 应用领域包并导出审核任务：
 

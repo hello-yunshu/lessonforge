@@ -30,6 +30,15 @@ export const teacherBookUnits: TeacherBookUnit[] = [];
 export const teacherBookLessons: TeacherBookLesson[] = [];
 export const teacherBookReferences: TeacherBookReference[] = [];
 
-export const tbPagesBySection = (section: string): TeacherBookPage[] => [];
-export const tbLessonsByUnit = (unitId: string): TeacherBookLesson[] => [];
-export const tbRefsByLesson = (lessonId: string): TeacherBookReference[] => [];
+export const tbPagesBySection = (section: string): TeacherBookPage[] => {
+  void section;
+  return [];
+};
+export const tbLessonsByUnit = (unitId: string): TeacherBookLesson[] => {
+  void unitId;
+  return [];
+};
+export const tbRefsByLesson = (lessonId: string): TeacherBookReference[] => {
+  void lessonId;
+  return [];
+};

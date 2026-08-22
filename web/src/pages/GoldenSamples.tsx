@@ -138,7 +138,6 @@ export default function GoldenSamples() {
         <div className="divide-y divide-ink-line-2">
           {metrics.map((m) => {
             const ratio = m.key === "decoration-false" ? 1 - m.current : m.current;
-            const targetRatio = m.key === "decoration-false" ? 1 - m.target : m.target;
             const meetTarget = m.key === "decoration-false" ? m.current <= m.target : m.current >= m.target;
             return (
               <div key={m.key} className="px-4 py-3 flex items-center gap-4">

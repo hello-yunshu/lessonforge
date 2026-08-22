@@ -9,20 +9,16 @@ import {
   phases,
   metrics,
   reviewTasks,
-  corrections,
   versions,
   verifyItems,
   computeVerifySummaries,
   teacherBook,
   teacherBookLessons,
 } from "@/data";
-import { cn, toCN, fmtDate } from "@/lib/utils";
+import { cn, fmtDate } from "@/lib/utils";
 import {
   Library,
-  ScanSearch,
   ListChecks,
-  GitCommitVertical,
-  Target,
   ArrowUpRight,
   Lock,
   BookMarked,

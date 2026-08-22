@@ -109,7 +109,7 @@ export function documentIntelligenceProxyPlugin() {
   return {
     name: "document-intelligence-proxy",
     configureServer(server: ViteDevServer) {
-      server.middlewares.use("/api/di", async (req, res, next) => {
+      server.middlewares.use("/api/di", async (req, res) => {
         const url = req.url ?? "/";
         const targetPath = url.replace(/^\/+/, "");
 
@@ -138,10 +138,5 @@ export function documentIntelligenceProxyPlugin() {
         await forward(req, res, targetPath);
       });
     },
-  } as ReturnType<typeof buildPlugin>;
-}
-
-// 辅助类型（仅用于满足 TS 返回类型）
-function buildPlugin() {
-  return { name: "", configureServer(_s: ViteDevServer) {} };
+  };
 }

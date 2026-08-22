@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card";
 import Badge, { ConfBadge, ReviewBadge } from "@/components/ui/Badge";
 import { pages, blocksByPage, coordsByBlock, blockTypeColor } from "@/data";
 import type { ContentBlock, PixelRect, NormalizedRect } from "@/data";
-import { cn, blockTypeCN, objectTypeCN } from "@/lib/utils";
+import { cn, blockTypeCN } from "@/lib/utils";
 import { ArrowLeft, Grid2x2, MapPin, ImageIcon, Square, ZoomIn, X } from "lucide-react";
 
 const PAGE_W = 812;

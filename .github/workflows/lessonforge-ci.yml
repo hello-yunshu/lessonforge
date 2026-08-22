@@ -1,0 +1,127 @@
+name: lessonforge-ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lessonforge-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: document-intelligence/requirements/development.txt
+      - name: Install backend and test dependencies
+        run: python -m pip install -e ".[dev,render-pymupdf]"
+      - name: Generate deterministic fixtures
+        run: python scripts/generate_fixtures.py
+      - name: Rill consumer static gate
+        run: |
+          ruff format --check \
+            src/document_intelligence/rill/adoption.py \
+            src/document_intelligence/rill/distribution.py \
+            src/document_intelligence/rill/stable_protocol.py \
+            src/document_intelligence/rill/stable_client.py \
+            tests/rill/fake_runtime_v2.py \
+            tests/rill/test_adoption.py \
+            tests/rill/test_distribution.py \
+            tests/rill/test_stable_protocol.py \
+            tests/rill/test_stable_v2.py \
+            scripts/verify_rill_release.py \
+            scripts/rill_v2_smoke.py
+          ruff check \
+            src/document_intelligence/rill/adoption.py \
+            src/document_intelligence/rill/distribution.py \
+            src/document_intelligence/rill/stable_protocol.py \
+            src/document_intelligence/rill/stable_client.py \
+            tests/rill/fake_runtime_v2.py \
+            tests/rill/test_adoption.py \
+            tests/rill/test_distribution.py \
+            tests/rill/test_stable_protocol.py \
+            tests/rill/test_stable_v2.py \
+            scripts/verify_rill_release.py \
+            scripts/rill_v2_smoke.py
+      - name: Backend test suite
+        run: pytest --timeout=45 -q
+      - name: Generate SPDX SBOM
+        run: python scripts/generate_sbom.py
+      - name: Wheel and sdist build
+        run: python -m build
+      - name: Clean wheel install smoke
+        run: |
+          clean_env="${RUNNER_TEMP}/lessonforge-clean-install"
+          python -m venv "$clean_env"
+          "$clean_env/bin/python" -m pip install --no-deps dist/*.whl
+          "$clean_env/bin/python" -c "from importlib.resources import files; import document_intelligence; assert document_intelligence.__version__ == '1.0.3rc1'; assert (files('document_intelligence') / 'defaults' / 'rill_adoption.json').is_file()"
+
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install locked web dependencies
+        run: npm ci
+      - name: Web lint
+        run: npm run lint
+      - name: Web type check
+        run: npm run check
+      - name: Web production build
+        run: npm run build
+
+  distribution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: document-intelligence
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.11"
+      - name: Install consumer dependencies
+        run: python -m pip install --no-cache-dir -e "."
+      - name: Verify signed immutable release index
+        run: python scripts/verify_rill_release.py
+      - name: Download exact official Linux assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/rill-v1.2.0"
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" \
+            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/stable-index.json
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" \
+            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/rill-runtime-1.2.0-linux-x86_64
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" \
+            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/example-default-1.2.0.rillpack
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler" \
+            https://github.com/hello-yunshu/rill-ml/releases/download/v1.2.0/echo-handler-1.2.0.rillhandler
+          chmod 700 "$RUNNER_TEMP/rill-v1.2.0/rill-runtime"
+      - name: Run official Stable IPC v2 smoke
+        run: |
+          python scripts/rill_v2_smoke.py \
+            --index "$RUNNER_TEMP/rill-v1.2.0/stable-index.json" \
+            "$RUNNER_TEMP/rill-v1.2.0/rill-runtime" \
+            "$RUNNER_TEMP/rill-v1.2.0/example-default.rillpack" \
+            "$RUNNER_TEMP/rill-v1.2.0/echo-handler.rillhandler"
