@@ -275,17 +275,13 @@ jobs:
           cargo +1.94.0 test --locked --manifest-path rill-handler/Cargo.toml
           cargo install wasm-tools --locked --version "1.254.0"
           cargo +1.94.0 build --locked --release --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
-          handler_module=""
-          for candidate in \
-            target/wasm32-unknown-unknown/release/lessonforge-shadow-handler \
-            target/wasm32-unknown-unknown/release/lessonforge-shadow-handler.wasm \
-            target/wasm32-unknown-unknown/release/lessonforge_shadow_handler \
-            target/wasm32-unknown-unknown/release/lessonforge_shadow_handler.wasm; do
-            if [[ -f "$candidate" ]]; then
-              handler_module="$candidate"
-              break
-            fi
-          done
+          handler_module="$(find target rill-handler/target -type f \
+            \( -name 'lessonforge-shadow-handler' \
+            -o -name 'lessonforge-shadow-handler.wasm' \
+            -o -name 'lessonforge_shadow_handler' \
+            -o -name 'lessonforge_shadow_handler.wasm' \) \
+            ! -name '*.d' ! -name '*.rlib' ! -name '*.rmeta' \
+            -print -quit 2>/dev/null)"
           test -n "$handler_module"
           wasm-tools component new "$handler_module" --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm"
       - name: Build deterministic TEST model and handler packages
