@@ -19,9 +19,9 @@ from document_intelligence.rill.adoption import (
     RillDistributionError,
     load_adoption_lock,
     select_runtime,
-    verify_locked_release_index,
     verify_artifact_bytes,
     verify_artifact_file,
+    verify_locked_release_index,
 )
 
 
@@ -482,8 +482,7 @@ class RillAdoptionManager(RillRuntimeManager):
             runtime_staging = runtime_path
             runtime_is_temporary = False
         bundle_id = (
-            f"{lock.supported}-{runtime_artifact.sha256[:12]}-"
-            f"{handler_artifact.sha256[:12]}"
+            f"{lock.supported}-{runtime_artifact.sha256[:12]}-{handler_artifact.sha256[:12]}"
         )
         bundle_dir = self.bundles / bundle_id
         bundle_dir.mkdir(parents=True, exist_ok=True)
@@ -533,12 +532,77 @@ class RillAdoptionManager(RillRuntimeManager):
             request_timeout_seconds=10,
         )
         try:
+            qualification_features = {
+                key: 0.0
+                for key in (
+                    "parse.page_count",
+                    "parse.element_count",
+                    "parse.average_confidence",
+                    "parse.minimum_confidence",
+                    "parse.p0_warnings",
+                    "parse.p1_warnings",
+                    "parse.p2_warnings",
+                    "parse.empty_native_text",
+                    "parse.duration_ms_log1p",
+                    "parse.estimated_cost_usd_log1p",
+                    "match.present",
+                    "match.top1_score",
+                    "match.margin",
+                    "match.candidate_count",
+                    "match.safe_standard_reuse",
+                    "structure.present",
+                    "structure.reading_order_coverage",
+                    "structure.relation_evidence_coverage",
+                    "structure.consistency_score",
+                    "structure.diagnostics_warning",
+                    "structure.diagnostics_error",
+                    "structure.cross_page_relations",
+                    "domain.present",
+                    "domain.fallback_used",
+                    "domain.error_findings",
+                    "domain.evidence_coverage",
+                )
+            }
+            qualification_features.update(
+                {
+                    "parse.average_confidence": 0.95,
+                    "parse.minimum_confidence": 0.90,
+                    "structure.consistency_score": 0.95,
+                    "match.margin": 0.80,
+                }
+            )
             output = client.invoke(
                 "org.lessonforge.shadow.evaluate",
                 {
                     "operation": "qualification",
+                    "eventId": "lessonforge-qualification",
+                    "observation": {
+                        "schema_version": "0.5",
+                        "event_id": "lessonforge-qualification",
+                        "parse_run_id": "lessonforge-qualification",
+                        "parser_id": "qualification",
+                        "document_family": None,
+                        "structure_id": None,
+                        "domain_result_id": None,
+                        "signals": {},
+                        "shadow_only": True,
+                        "generated_at": "2026-08-22T00:00:00Z",
+                    },
+                    "features": qualification_features,
                     "allowedActions": ["HUMAN_REVIEW"],
-                    "features": {},
+                    "staticSuggestion": {
+                        "decision_id": "lessonforge-qualification-static",
+                        "action": "HUMAN_REVIEW",
+                        "selected_arm": 7,
+                        "policy_version": "qualification",
+                        "confidence": 0.5,
+                        "reason_codes": ["QUALIFICATION"],
+                        "source": "static_policy",
+                        "model_generation": 0,
+                        "state_generation": 0,
+                    },
+                    "deterministicSeed": 1,
+                    "hostState": {"modelGeneration": 0, "stateGeneration": 0},
                 },
             )
             if not isinstance(output, dict) or not isinstance(output.get("suggestion"), dict):
@@ -655,8 +719,7 @@ class RillAdoptionManager(RillRuntimeManager):
                     public_key,
                 ],
                 stdin=subprocess.DEVNULL,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                capture_output=True,
                 text=True,
                 shell=False,
                 check=False,

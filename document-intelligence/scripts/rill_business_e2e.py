@@ -1,5 +1,9 @@
 """Qualify LessonForge's real Stable v2 consumer path on official Runtime 1.2.0."""
 
+# The script is also runnable directly from a checkout, so its import path is
+# intentionally prepared before importing the editable consumer package.
+# ruff: noqa: E402
+
 from __future__ import annotations
 
 import argparse
@@ -12,12 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
+from tests.rill.helpers import build_committed_run
+
 from document_intelligence.config import Settings
 from document_intelligence.rill.adoption import load_adoption_lock
 from document_intelligence.rill.distribution import RillAdoptionManager
-from document_intelligence.rill.models import FeedbackSeverity, ShadowFeedbackInput
+from document_intelligence.rill.models import ACTION_ARMS, FeedbackSeverity, ShadowFeedbackInput
 from document_intelligence.services import build_rill_shadow_service
-from tests.rill.helpers import build_committed_run
 
 
 def main() -> None:
@@ -54,13 +59,15 @@ def main() -> None:
             feature_schema_hash="0" * 64,
             target=("linux", "x86_64", "gnu"),
         )
-        cases.append({
-            "name": "managed-bundle-qualified",
-            "passed": metadata["qualification"] == "VERIFIED"
-            and metadata["runtimeApi"] == 2
-            and metadata["handlerApi"] == 1
-            and metadata["capabilities"] == ["org.lessonforge.shadow.evaluate"],
-        })
+        cases.append(
+            {
+                "name": "managed-bundle-qualified",
+                "passed": metadata["qualification"] == "VERIFIED"
+                and metadata["runtimeApi"] == 2
+                and metadata["handlerApi"] == 1
+                and metadata["capabilities"] == ["org.lessonforge.shadow.evaluate"],
+            }
+        )
 
         settings = Settings(
             workspace=workspace,
@@ -74,19 +81,93 @@ def main() -> None:
         parse_run_id, structure_id = build_committed_run(settings)
         service = build_rill_shadow_service(settings)
         try:
+            client = service.client
+            if client is None:
+                raise SystemExit("managed Stable v2 client was not created")
             evaluation = service.evaluate(parse_run_id, structure_id=structure_id)
             suggestion = evaluation.rill_suggestion
-            cases.append({
-                "name": "real-rill-shadow-service-evaluate",
-                "passed": evaluation.status.value == "succeeded"
-                and suggestion is not None
-                and suggestion.action.value == "HUMAN_REVIEW"
-                and evaluation.runtime_identity is not None
-                and evaluation.runtime_identity.name == "org.lessonforge.shadow.handler"
-                and evaluation.runtime_identity.version == lock.supported,
-            })
+            cases.append(
+                {
+                    "name": "real-rill-shadow-service-evaluate",
+                    "passed": evaluation.status.value == "succeeded"
+                    and suggestion is not None
+                    and evaluation.runtime_identity is not None
+                    and evaluation.runtime_identity.name == "org.lessonforge.shadow.handler"
+                    and evaluation.runtime_identity.version == lock.supported,
+                }
+            )
             if suggestion is None:
                 raise SystemExit("LessonForge business handler returned no suggestion")
+
+            event = service.feature_builder.build(parse_run_id, structure_id=structure_id)
+            static_suggestion = service.static_policy.decide(event).model_dump(mode="json")
+            base_features = event.feature_dict()
+
+            def invoke_case(name: str, updates: dict[str, float], expected: str) -> None:
+                event_id = f"business-{name}"
+                features = {**base_features, **updates}
+                observation = event.model_dump(mode="json")
+                observation["event_id"] = event_id
+                payload = {
+                    "operation": "evaluate",
+                    "eventId": event_id,
+                    "observation": observation,
+                    "features": features,
+                    "allowedActions": [action.value for action in ACTION_ARMS],
+                    "staticSuggestion": static_suggestion,
+                    "deterministicSeed": 1 + len(cases),
+                    "hostState": {"modelGeneration": 0, "stateGeneration": 0},
+                }
+                output = client.invoke("org.lessonforge.shadow.evaluate", payload)
+                candidate = output["suggestion"]
+                cases.append(
+                    {
+                        "name": name,
+                        "passed": candidate["action"] == expected
+                        and 0.0 <= candidate["confidence"] <= 1.0
+                        and candidate["action"] in payload["allowedActions"]
+                        and bool(candidate["reasonCodes"]),
+                        "action": candidate["action"],
+                        "reasonCodes": candidate["reasonCodes"],
+                    }
+                )
+
+            invoke_case(
+                "high-quality-features",
+                {
+                    "parse.average_confidence": 0.98,
+                    "parse.minimum_confidence": 0.95,
+                    "parse.p0_warnings": 0.0,
+                    "parse.p1_warnings": 0.0,
+                    "structure.consistency_score": 0.95,
+                    "structure.diagnostics_error": 0.0,
+                    "domain.error_findings": 0.0,
+                    "match.margin": 0.80,
+                },
+                "ACCEPT",
+            )
+            invoke_case(
+                "recoverable-risk-features",
+                {
+                    "parse.average_confidence": 0.72,
+                    "parse.minimum_confidence": 0.45,
+                    "parse.p1_warnings": 1.0,
+                    "structure.consistency_score": 0.75,
+                    "match.margin": 0.10,
+                },
+                "RETRY",
+            )
+            invoke_case(
+                "critical-risk-features",
+                {
+                    "parse.p0_warnings": 1.0,
+                    "parse.average_confidence": 0.40,
+                    "parse.minimum_confidence": 0.10,
+                    "structure.consistency_score": 0.20,
+                    "structure.diagnostics_error": 1.0,
+                },
+                "QUARANTINE",
+            )
             feedback = service.feedback(
                 ShadowFeedbackInput(
                     evaluation_id=evaluation.evaluation_id,
@@ -100,20 +181,24 @@ def main() -> None:
                     outcome_time_ms=1,
                 )
             )
-            cases.append({
-                "name": "host-owned-feedback",
-                "passed": feedback.runtime_feedback_accepted is False
-                and feedback.runtime_error_code == "RILL_HOST_OWNED_FEEDBACK",
-            })
+            cases.append(
+                {
+                    "name": "host-owned-feedback",
+                    "passed": feedback.runtime_feedback_accepted is False
+                    and feedback.runtime_error_code == "RILL_HOST_OWNED_FEEDBACK",
+                }
+            )
             snapshot = service.snapshot()
             snapshot_state = json.loads(service.store.read_snapshot(snapshot.snapshot_id)[1])
             reset = service.reset()
-            cases.append({
-                "name": "host-owned-snapshot-reset",
-                "passed": reset.runtime_reset is False
-                and reset.local_drift_reset is True
-                and snapshot_state["hostOwned"] is True,
-            })
+            cases.append(
+                {
+                    "name": "host-owned-snapshot-reset",
+                    "passed": reset.runtime_reset is False
+                    and reset.local_drift_reset is True
+                    and snapshot_state["hostOwned"] is True,
+                }
+            )
         finally:
             service.close()
 

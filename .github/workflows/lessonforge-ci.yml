@@ -114,9 +114,18 @@ jobs:
         run: |
           PYTHONPATH=src python scripts/generate_dependency_report.py
           python scripts/generate_sbom.py
-      - name: pip-audit
-        run: pip-audit --strict --desc
+      - name: pip-audit production dependency set
+        run: |
+          set +e
+          pip-audit --strict --desc \
+            --requirement requirements/production.txt \
+            --format json \
+            --output docs/phase-12/pip-audit.json
+          audit_status=$?
+          set -e
+          test "$audit_status" -eq 0
       - name: Upload dependency evidence
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: lessonforge-dependency-evidence
@@ -256,9 +265,16 @@ jobs:
           cargo +1.94.0 build --locked --release --manifest-path "$RUNNER_TEMP/rill-ml-v1.2.0/Cargo.toml" -p rill-runtime --bin rill-pack --no-default-features
       - name: Build LessonForge-owned Handler API v1 component
         run: |
+          python scripts/verify_handler_contract.py \
+            --canonical "$RUNNER_TEMP/rill-ml-v1.2.0/crates/rill-handler-api/wit/rill-handler.wit"
+          rustup component add rustfmt clippy --toolchain 1.94.0
           rustup target add wasm32-unknown-unknown --toolchain 1.94.0
+          cargo +1.94.0 fmt --manifest-path rill-handler/Cargo.toml -- --check
+          cargo +1.94.0 check --locked --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
+          cargo +1.94.0 clippy --locked --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown --all-targets -- -D warnings
+          cargo +1.94.0 test --locked --manifest-path rill-handler/Cargo.toml
           cargo install wasm-tools --locked --version "1.254.0"
-          cargo +1.94.0 build --release --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
+          cargo +1.94.0 build --locked --release --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
           wasm-tools component new target/wasm32-unknown-unknown/release/lessonforge-shadow-handler.wasm --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm"
       - name: Build deterministic TEST model and handler packages
         env:

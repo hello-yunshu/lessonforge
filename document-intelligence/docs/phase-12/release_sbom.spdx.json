@@ -3,7 +3,7 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "document-intelligence-1.0.3-rc.1",
-  "documentNamespace": "urn:uuid:2b732240-43b8-54b2-b95d-234e2153089e",
+  "documentNamespace": "urn:uuid:50c7c4a2-6666-5fc8-9cfc-6625401eb68d",
   "creationInfo": {
     "created": "2026-08-04T00:00:00Z",
     "creators": [
@@ -25,14 +25,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "466f29f7a960f3121a61df2caf8551c779e8cd7e9dee810d5f7a2a85e2f2ee92"
+          "checksumValue": "da44742959a628410b48a9672f7e3e9521ef2b53e53d26ccf15f33160b72a514"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-1",
       "name": "fastapi",
-      "versionInfo": "0.128.2",
+      "versionInfo": "0.141.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "MIT",
@@ -40,7 +40,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "c72b607b28ad8e0212b876a15753bead69ccdbccd0cafce964f0e1294a7f7425"
+          "checksumValue": "8d7a12059bbdba76b56708c46aa2baac88070bc1e92581dfcb5b8061edb48f8c"
         }
       ]
     },
@@ -55,14 +55,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "28eeab865ba547f8700b5f71b4b87feaf97efe1e99f469ac6902c63193fe1caa"
+          "checksumValue": "cc97810abed172201f226eb2203b6a61b6427a73e5cd9a1da17d5a98e2068244"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-3",
       "name": "pillow",
-      "versionInfo": "12.2.0",
+      "versionInfo": "12.3.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "MIT-CMU",
@@ -70,7 +70,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "f6aec00f33338f9644a9d46657a6695a7f734697613f769b2ceaddf2340bf518"
+          "checksumValue": "47f78ad45f3f47ae5d1f690ae8e11197804d83967715c7d424cbd224c1093263"
         }
       ]
     },
@@ -85,14 +85,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "e4dcd856c00c5bc4cbbcb7a3d65183d97199eeb565cbf4525822a65db10967b7"
+          "checksumValue": "18bfb6365033f14d3ff59c90400862582c16e2603df8cd18f2600ab9c0cd5fbb"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-5",
       "name": "pydantic-settings",
-      "versionInfo": "2.14.1",
+      "versionInfo": "2.14.2",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "MIT",
@@ -100,14 +100,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "c864abd69cc1f217c18e6c7db310d63830209cab5696fb7e5d4e1674e546ddcd"
+          "checksumValue": "80b56c4c2d053d60661c5d29650ad58f3dbe8f7597d50bf120497b9488a554df"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-6",
       "name": "pypdf",
-      "versionInfo": "5.9.0",
+      "versionInfo": "6.16.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "BSD-3-Clause",
@@ -115,7 +115,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "2ad72561f2ecf05aa38f43168e4a38673a1e20302cb97e64cce35b6cf1554d25"
+          "checksumValue": "d161912a3262c71fb8bd19cbf1756c007c367aa3ffed41049d8d9b1f823bbde0"
         }
       ]
     },
@@ -130,7 +130,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "2dfb328dfffc8f98b26b291407d80d71b12b182a361db1439fb215e44c8de0d9"
+          "checksumValue": "475dab6577904b27a258b794f44ce2be4117b5528ed9d244688a6cfd5d98d5df"
         }
       ]
     },
@@ -145,14 +145,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "db85eacf225c5a16aeb4c9cd457cbb830236c18d0456e5313a543ebfc34887fe"
+          "checksumValue": "5ee710ab2311c0d95bdbe68e4e0d27d05493e06bec4f2e739096d4c84414f876"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-9",
       "name": "python-multipart",
-      "versionInfo": "0.0.29",
+      "versionInfo": "0.0.31",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "Apache-2.0",
@@ -160,7 +160,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "c792df0a8d3f6761cefbb4f67d22eb2b20717c2bd6a59866f0a565a92630e282"
+          "checksumValue": "05925e5a17137a4e7da82b32ab1477567d13673667ef3b4bccffaba92640c097"
         }
       ]
     },
@@ -175,7 +175,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "76dfa9231cb41e5b22d98e8c6bc41b3fbf2820afbc38b640226443eb77417614"
+          "checksumValue": "9da406cb92a9797b330fb58cb2ce29c541ed42f48838c5ce9d410f4c87eb279e"
         }
       ]
     },
@@ -190,14 +190,14 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "7ae3c34a264e1f80daee463e10f698f5435cc8fce7b91bcfd11efd81e2560062"
+          "checksumValue": "73984dee0806cc6d675af3103c88b0b6baf73113b20bcb039187594eb2776a0f"
         }
       ]
     },
     {
       "SPDXID": "SPDXRef-Package-Dependency-12",
       "name": "cryptography",
-      "versionInfo": "46.0.4",
+      "versionInfo": "50.0.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "Apache-2.0 OR BSD-3-Clause",
@@ -205,7 +205,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "3b8a1c559c792aaec3df2d05a8fe379f610e1ea4c0567cfb2a726e08cb69c090"
+          "checksumValue": "5328ba527ad2dddad9c7b29e2705161b64ab9d11fc01a8001c1f5253761bd1fc"
         }
       ]
     },
@@ -220,7 +220,7 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "4809aefd9a9f2a0d3428f4bda22e0a44124259ec3976915cb1ec48b7a350e635"
+          "checksumValue": "9a38196597aa5dd0b0f619c313b489883634c7d955081ab4676d3d448c230768"
         }
       ]
     }

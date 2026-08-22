@@ -5,92 +5,92 @@
     {
       "name": "fastapi",
       "installed": true,
-      "version": "0.128.2",
-      "tree_sha256": "7a3d1d7d44bd33597669284b130057111dd3d7e29edbd20b841d05830960b80c",
+      "version": "0.141.1",
+      "tree_sha256": "8d7a12059bbdba76b56708c46aa2baac88070bc1e92581dfcb5b8061edb48f8c",
       "license": "MIT"
     },
     {
       "name": "httpx",
       "installed": true,
       "version": "0.28.1",
-      "tree_sha256": "2ab39e7e592599331023529a5d1348fc1fb3e15382e956efe337e861239cb26f",
+      "tree_sha256": "cc97810abed172201f226eb2203b6a61b6427a73e5cd9a1da17d5a98e2068244",
       "license": "BSD-3-Clause"
     },
     {
       "name": "Pillow",
       "installed": true,
-      "version": "12.2.0",
-      "tree_sha256": "3bd6f3ff142c0c0b2fd83efb5861a9a0f2d838c0a914fe87c0d7e6eb2543dbd8",
+      "version": "12.3.0",
+      "tree_sha256": "47f78ad45f3f47ae5d1f690ae8e11197804d83967715c7d424cbd224c1093263",
       "license": "MIT-CMU"
     },
     {
       "name": "pydantic",
       "installed": true,
       "version": "2.13.4",
-      "tree_sha256": "2499a54a636eec4ececb4270d09dcd109c5915e40cdb07d34bcdbfe342dbbe0d",
+      "tree_sha256": "18bfb6365033f14d3ff59c90400862582c16e2603df8cd18f2600ab9c0cd5fbb",
       "license": "MIT"
     },
     {
       "name": "pydantic-settings",
       "installed": true,
-      "version": "2.14.1",
-      "tree_sha256": "6db5e7d6083182504c1239199c13b0e78a810d9982f29988313900b2c0b4a7c9",
+      "version": "2.14.2",
+      "tree_sha256": "80b56c4c2d053d60661c5d29650ad58f3dbe8f7597d50bf120497b9488a554df",
       "license": "MIT"
     },
     {
       "name": "pypdf",
       "installed": true,
-      "version": "5.9.0",
-      "tree_sha256": "99047eb292bb92803e1feeae740a371cbf001590da0626a55631f07155cdf8bc",
+      "version": "6.16.1",
+      "tree_sha256": "d161912a3262c71fb8bd19cbf1756c007c367aa3ffed41049d8d9b1f823bbde0",
       "license": "BSD-3-Clause"
     },
     {
       "name": "numpy",
       "installed": true,
       "version": "2.3.5",
-      "tree_sha256": "fc76c1f87a92a707a897c562cd75623a3c5381754b6ac2c944d6626d4ea1d903",
+      "tree_sha256": "475dab6577904b27a258b794f44ce2be4117b5528ed9d244688a6cfd5d98d5df",
       "license": "Copyright (c) 2005-2025, NumPy Developers."
     },
     {
       "name": "opencv-python-headless",
       "installed": true,
       "version": "4.13.0.92",
-      "tree_sha256": "718aff963694b590729e186dcde52b0254b4b14954ddb8f2ba82d7a45834b9ae",
+      "tree_sha256": "5ee710ab2311c0d95bdbe68e4e0d27d05493e06bec4f2e739096d4c84414f876",
       "license": "Apache 2.0"
     },
     {
       "name": "packaging",
       "installed": true,
       "version": "25.0",
-      "tree_sha256": "56c4464a9d8313259aa6ffba91713fb7114c074c253e304064aff5de7e1823c4",
+      "tree_sha256": "73984dee0806cc6d675af3103c88b0b6baf73113b20bcb039187594eb2776a0f",
       "license": null
     },
     {
       "name": "cryptography",
       "installed": true,
-      "version": "46.0.4",
-      "tree_sha256": "79fd506811755361e35747a461414f6dce8c64e5a5b94f0b640902624e718f5c",
+      "version": "50.0.0",
+      "tree_sha256": "5328ba527ad2dddad9c7b29e2705161b64ab9d11fc01a8001c1f5253761bd1fc",
       "license": "Apache-2.0 OR BSD-3-Clause"
     },
     {
       "name": "python-multipart",
       "installed": true,
-      "version": "0.0.29",
-      "tree_sha256": "711ff1f5e02687f8fb577db1e4ca96e5b2f4d56dcc0069ea224f122ca7bb7e56",
+      "version": "0.0.31",
+      "tree_sha256": "05925e5a17137a4e7da82b32ab1477567d13673667ef3b4bccffaba92640c097",
       "license": "Apache-2.0"
     },
     {
       "name": "PyYAML",
       "installed": true,
       "version": "6.0.3",
-      "tree_sha256": "1ee7c0bfc54933c35c0b5b2c5f63ccbf2e0a78dd0956fbbd0b7ae417c3f27d10",
+      "tree_sha256": "9da406cb92a9797b330fb58cb2ce29c541ed42f48838c5ce9d410f4c87eb279e",
       "license": "MIT"
     },
     {
       "name": "uvicorn",
       "installed": true,
       "version": "0.48.0",
-      "tree_sha256": "3c1f5b4577e3568b8587d93ff107f292722d3ae19a38f3ec7325f23d3afee4ef",
+      "tree_sha256": "9a38196597aa5dd0b0f619c313b489883634c7d955081ab4676d3d448c230768",
       "license": "BSD-3-Clause"
     }
   ],
@@ -99,31 +99,43 @@
       "name": "pytest",
       "installed": true,
       "version": "9.0.2",
-      "tree_sha256": "42d0a31aee7a2d13a6d038f9e725aa13c820ec4d83d8c92cd1bd775d0290fdd2",
+      "tree_sha256": "f8be9fb40a48bd31a5e0f35d643fd4a81a8adf7e8f2cd43074e7df3c3ca98bc1",
       "license": "MIT"
     },
     {
       "name": "coverage",
       "installed": true,
       "version": "7.13.3",
-      "tree_sha256": "e9e0f45b04f6db8990605dba50fe111637a20c92ec72a9a4ffb40d3636fca6a0",
+      "tree_sha256": "a215b17d681a905097699f3b53147399fad4ca6e914134446aa8977c0db826f3",
       "license": "Apache-2.0"
     },
     {
       "name": "ruff",
-      "installed": false
+      "installed": true,
+      "version": "0.14.14",
+      "tree_sha256": "0a82c35cc39bc398fd059e9854b33655589b6fe436b8654b0d1560d6227fe4ae",
+      "license": null
     },
     {
       "name": "mypy",
-      "installed": false
+      "installed": true,
+      "version": "1.19.1",
+      "tree_sha256": "f41a9244b6a688e366d2ebfad19919471c5a01d5b7493e4a4d3c8f3ab896834e",
+      "license": "MIT"
     },
     {
       "name": "cyclonedx-bom",
-      "installed": false
+      "installed": true,
+      "version": "7.2.1",
+      "tree_sha256": "163f8b4b3f65de13260872c9318037f1e468e439043e9a06f2002cc09f4a3c9e",
+      "license": "Apache-2.0"
     },
     {
       "name": "pip-audit",
-      "installed": false
+      "installed": true,
+      "version": "2.9.0",
+      "tree_sha256": "10de217e48a00a01d9147779cb964804f25a740d0d72a0beb7ce1405a85ff7eb",
+      "license": null
     }
   ],
   "optional_components": [
@@ -131,7 +143,7 @@
       "name": "PyMuPDF",
       "installed": true,
       "version": "1.26.7",
-      "tree_sha256": "6ceaa7971ea1254eb4cc2cf02fad6f03de3bd3fdde25cb4621e28cc790ae40c3",
+      "tree_sha256": "3209ce6230da66ad0a6fc5a121fad8d7ddd2c7e78d901a1914aab348dd39b62d",
       "license": "Dual Licensed - GNU AFFERO GPL 3.0 or Artifex Commercial License"
     },
     {
@@ -160,10 +172,7 @@
     }
   ],
   "system_binaries": {
-    "tesseract": {
-      "path": "/usr/bin/tesseract",
-      "sha256": "74b76a5b994adcc18be362bf64ed5118082b2401d5d9a35242e92fc4c62e2b4b"
-    }
+    "tesseract": null
   },
   "license_gate": {
     "core_native_pdf": "cleared-pypdf-bsd-3-clause",
