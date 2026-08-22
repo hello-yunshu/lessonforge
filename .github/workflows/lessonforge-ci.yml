@@ -274,15 +274,34 @@ jobs:
           cargo +1.94.0 clippy --locked --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown --all-targets -- -D warnings
           cargo +1.94.0 test --locked --manifest-path rill-handler/Cargo.toml
           cargo install wasm-tools --locked --version "1.254.0"
-          cargo +1.94.0 build --locked --release --manifest-path rill-handler/Cargo.toml --target wasm32-unknown-unknown
-          handler_module="$(find target rill-handler/target -type f \
-            \( -name 'lessonforge-shadow-handler' \
-            -o -name 'lessonforge-shadow-handler.wasm' \
-            -o -name 'lessonforge_shadow_handler' \
-            -o -name 'lessonforge_shadow_handler.wasm' \) \
-            ! -name '*.d' ! -name '*.rlib' ! -name '*.rmeta' \
-            -print -quit 2>/dev/null)"
-          test -n "$handler_module"
+          handler_build_log="$RUNNER_TEMP/rill-business/handler-build.jsonl"
+          cargo +1.94.0 build --locked --release \
+            --manifest-path rill-handler/Cargo.toml \
+            --target wasm32-unknown-unknown \
+            --target-dir "$RUNNER_TEMP/rill-business/handler-target" \
+            --message-format=json-render-diagnostics > "$handler_build_log"
+          handler_module="$(python - "$handler_build_log" <<'PY'
+          import json
+          import sys
+
+          log_path = sys.argv[1]
+          for line in open(log_path, encoding="utf-8"):
+              try:
+                  event = json.loads(line)
+              except json.JSONDecodeError:
+                  continue
+              target = event.get("target", {})
+              executable = event.get("executable")
+              if (
+                  event.get("reason") == "compiler-artifact"
+                  and target.get("name") == "lessonforge-shadow-handler"
+                  and executable
+              ):
+                  print(executable)
+                  break
+          PY
+          )"
+          test -f "$handler_module"
           wasm-tools component new "$handler_module" --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm"
       - name: Build deterministic TEST model and handler packages
         env:
