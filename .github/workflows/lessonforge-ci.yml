@@ -305,7 +305,7 @@ jobs:
           wasm-tools component new "$handler_module" --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-handler.wasm"
       - name: Build deterministic TEST model and handler packages
         env:
-          RILL_SIGNING_KEY_HEX: 0000000000000000000000000000000000000000000000000000000000000001
+          RILL_SIGNING_KEY_HEX: "0000000000000000000000000000000000000000000000000000000000000001"
         run: |
           pack="$RUNNER_TEMP/rill-ml-v1.2.0/target/release/rill-pack"
           "$pack" create --manifest rill-handler/model-manifest.json --model rill-handler/model.json --output "$RUNNER_TEMP/rill-business/lessonforge-shadow-1.2.0.rillpack"
